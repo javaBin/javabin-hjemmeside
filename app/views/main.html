@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/text.css'}">
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/960.css'}">
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/style.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/java_no_2007.css'}">
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
         <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
@@ -15,27 +16,37 @@
         #{get 'moreScripts' /}
     </head>
     <body>
-		<div id="header"></div>
-		<div class="container_12">
-			<div id="nav">
-				<ul>
+
+
+<div id="header_bg"> </div>
+<div id="header">
+  <div class="wrapper">
+      <a href="/">
+    <div id="header_logo"> </div></a>
+    <!-- close: header_logo -->
+    <h1>Java Brukerforening i Norge</h1>
+  </div>
+  <!-- close: wrapper -->
+</div>
+
+
+<div id="mainmenu">
+  <div class="wrapper">
+
+				<ul class="horiz">
 					<li><a href="/tidligere">Tidligere møter</a></li>
 					<li><a href="http://www.javazone.no">javaZone.no</a></li>
 					<li><a href="/foredragsholdere">Foredragsholdere</a></li>
 					<li><a href="http://shop.java.no">Butikk</a></li>
 					<li><a href="/om-javabin">Om javaBin</a></li>
 				</ul>
-			</div>
+      </div></div>
 
 			<div class="clear"></div>
 
-			<div id="headline" class="grid_12">
-				<h2><a href="/">javaBin</a></h2>
-				<p>Norges største community. Deling av kunnskap og sånt.</p>
-			</div>
-
+		<div class="container_12">
 			<div class="clear"></div>
-	
+
         	#{doLayout /}
 
 			<div class="clear"></div>
@@ -50,7 +61,7 @@
 			</div>
 
 
-			</body>	
+			</body>
 
     </body>
 </html>
