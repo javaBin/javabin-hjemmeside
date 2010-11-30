@@ -19,16 +19,29 @@
 	<div class="lineItemText grid_8">
 		<h2>${event?.title}</h2>
 		<p>${event?.description}  
-			<img src="/public/images/map.png" alt="kart" class="map"/>
+			<a  href="javascript:" onclick="$('#kart').modal({
+				overlayClose:true,
+				minHeight:600,
+				minWidth: 600,
+				maxHeight:600,
+				maxWidth: 600
+				});">
+            <img src="/public/images/map.png" alt="kart" class="map"/>
+            </a>
 			<a class="awesome" id="awesome" href="javascript:" onclick="$('#registrering').modal({
 				overlayClose:true,
 				minHeight:400,
 				minWidth: 330,
 				maxHeight:400,
 				maxWidth: 330
-				});$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region} : ${event?.title}');">Meld meg på</a> 
+				});$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region} : ${event?.title}');">Meld meg på</a>
 	</div>
 	<div class="clear"></div>
 	#{/list}
 
 	<input type="hidden" id="eventId" value=""/>
+
+    <div id="kart" style="display:none">
+        <h2>Kart</h2>
+        <iframe width="590" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.no/?q=scotsman,oslo&amp;ie=UTF8&amp;hq=scotsman&amp;hnear=Oslo&amp;z=14&amp;iwloc=A&amp;cid=11535085172773240985&amp;ll=59.91266,10.743449&amp;output=embed"></iframe>
+    </div>

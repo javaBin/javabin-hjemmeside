@@ -6,7 +6,9 @@
 		var name = $('#name').val();
 		var email = $('#email').val();
 		var howMany = $('#howMany').val();
-		$.post('@{signUpForEvent()}', {eventId : eventId, randomId : randomId, code : code, name: name, email: email, howMany: howMany}); 
+		$.post('@{signUpForEvent()}', {eventId : eventId, randomId : randomId, code : code, name: name, email: email, howMany: howMany}, function(data){
+            alert(data[0]);
+        });
     });
 </script>
 <h2>Påmelding til møte</h2>

@@ -71,17 +71,17 @@ public class Application extends Controller {
     
 
     public static void signUpForEvent(Long eventId, String randomId, String code, @Required @Email String email, @Required String name, @Required Integer howMany) {
-		validation.equals(code, Cache.get(randomId)).message("Feil kode!");
+    	validation.equals(code, Cache.get(randomId)).message("Feil kode!");
 		validation.match(howMany, "[1-9]").message("Feltet må være et siffer mellom 1 og 9");
 		if(!validation.hasErrors()) {
 			Participant participant = null;
 			List<Participant> participantList = Participant.find("email = ?", email).fetch();
 			if(participantList == null || participantList.isEmpty()){
-				participant = new Participant(email, name);							
+				participant = new Participant(email, name);
 			} else {
 				participant = participantList.get(0);
 			}
-			
+
 			Event event = Event.findById(eventId);
             String crypto = Crypto.encryptAES(participant.email + "_" + event.title);
 			if(event.participants.contains(participant)){
@@ -95,14 +95,14 @@ public class Application extends Controller {
 				// add to json that participant already was signed up. we have sent you another email with the details.
 				MailMan.signUp(participant, event, crypto);
 			}
-		} else {			
+		} else {
 			params.flash();
 			validation.keep();
-			renderJSON(validation.errors()); // gi tilbakemelding.
+			renderJSON(validation); // gi tilbakemelding.
 		}
-		Cache.delete(randomId);		
+		Cache.delete(randomId);
 		renderJSON("status:ok"); // be bruker sjekke postkassa si.
-	}
+}
 	
 	public static void regretSigningUp(String id) {
         String decrypted = Crypto.decryptAES(id);
@@ -122,7 +122,6 @@ public class Application extends Controller {
 	}
 	
 	public static void listOldEvents() {
-
         List<Event> osloEvents = Event.find("current is false and region = ?", Event.Region.OSLO).fetch();
         List<Event> trondheimEvents = Event.find("current is false and region = ?", Event.Region.TRONDHEIM).fetch();
         List<Event> sorlandetEvents = Event.find("current is false and region = ?", Event.Region.SORLANDET).fetch();

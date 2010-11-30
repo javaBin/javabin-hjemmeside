@@ -148,7 +148,7 @@
 	position: relative;
 	cursor: pointer;
 }
-.awesome:hover { background-color: #111; color: #fff; }
+.awesome:hover { background-color: #111; color: #fff; text-decoration: none;}
 .awesome:active { top: 1px; }
 
 .map {
