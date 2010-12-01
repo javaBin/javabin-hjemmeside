@@ -83,7 +83,6 @@
 .lineItemText h2 {
 	font-family: 'Lobster13Regular', Helvetica, sans-serif;
 	font-weight: normal;
-	font-size: 30px;
 	margin-bottom: 0;
 }
 
@@ -219,7 +218,13 @@ div.jqi button.jqidefaultbutton{
 }
 
 #simplemodal-overlay {background-color:#000;}
-#simplemodal-container {color:white; background-color:#333; border:8px solid #444; padding:12px;font-family: 'CaviarDreamsRegular', Helvetica, sans-serif;}
+#simplemodal-container {
+  text-shadow: 0 0 4px #000; /* horizontal-offset vertical-offset 'blur' colour */
+  -moz-text-shadow: 0 0 4px #000;
+  -webkit-text-shadow: 0 0 4px #000;
+color:#FFFFFF;
+background-color:#1F477F;
+border:8px solid #FFFFFF; padding:12px;font-family: 'CaviarDreamsRegular', Helvetica, sans-serif;}
 #simplemodal-container a.modalCloseImg {
 	background:url('/public/images/x.png'); no-repeat;
 	width:25px;
@@ -247,7 +252,7 @@ td.input {
 
 span.infotxt {
 	font-size:90%;
-	color:#CCC;
+	color:#FFFFFF;
 }
 
 #footer {

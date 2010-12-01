@@ -137,8 +137,8 @@ h3 a {
 }
 /* ------------------- Grid and element styling ------------------- */
 .wrapper {
-	background:transparent;
 	margin:0 auto;
+	background:transparent;
 	position:relative;
 	width:765px;
 }
@@ -153,61 +153,9 @@ h3 a {
 #header {
 	background:transparent;
 	height:132px;
+	text-align:center;
 }
 
-#header #header_logo {
-	position: relative;
-	background:#3A71A5 url('/public/images/header_logo2.gif') 0 0 no-repeat;
-	float:left;
-	height:132px;
-	margin:0 -30px 0 0px;
-	width:362px;
-}
-
-#header h1 {
-	position: relative;
-	float:left;
-	z-index:2;
-	font-size:1.4em;
-	padding:62px 0 0 0;
-}
-
-#login-wrapper {
-  z-index:3;
-  position: absolute;
-  top: 3px;
-  width: 100%;
-}
-
-/*#header*/ #login {
-  background:#3A71A5 url('/public/images/login.gif') 0 0 no-repeat;
-	float:right;
-	height:25px;
-	margin-right:25px;
-	width:208px;
-}
-
-/* IE6 fix */
-*html /*#header*/ #login {
-	margin-right: 12px;
-}
-
-/*#header*/ #login ul {
-	margin:4px 0 0 15px;
-}
-
-/*#header*/ #login li {
-	background:#FFFFFF url('/public/images/orange_double_arw.gif') 0 3px no-repeat;
-	float:left;
-	margin:0 7px;
-}
-
-/*#header*/ #login a {
-	color:#3387D7;
-	font-size:1.1em;
-	font-weight:bold;
-	padding-left:15px;
-}
 
 /* ------------------- Main Menu ------------------- */
 #mainmenu {
@@ -217,25 +165,19 @@ h3 a {
 	padding:0;
 }
 
-#mainmenu ul {
-	float:left;
+#mainmenu .horiz {
+    margin: 0 auto;
+    text-align:center;
 }
 
-#mainmenu ul li {
-	float:left;
+#mainmenu a {
 	line-height:115px;
 	padding:0 9px;
-}
-
-#mainmenu ul li a {
 	color:#1C5890;
-	font-size:1em;
+	font-size:120%;
 	font-weight:bold;
 }
 
-#mainmenu ul li.current {
-	background:transparent url('/public/images/mainmenu_bg.gif') center 0 no-repeat;
-}
 
 #search {
 	margin: 10px 0 5px 8px;
