@@ -1,5 +1,14 @@
 <script type="text/javascript" charset="utf-8">
 	$('#register').click(function(e) {
+        $('#nameError').css("display", "none");
+        $('#codeError').css("display", "none");
+        $('#howManyError').css("display", "none");
+        $('#emailError').css("display", "none");
+        $('#name').css("background-color", "white");
+        $('#code').css("background-color", "white");
+        $('#howMany').css("background-color", "white");
+        $('#email').css("background-color", "white");
+
 		var eventId = $('#eventId').val();
 		var randomId = $('#randomId').val();
 		var code = $('#code').val();
@@ -7,7 +16,10 @@
 		var email = $('#email').val();
 		var howMany = $('#howMany').val();
 		$.post('@{signUpForEvent()}', {eventId : eventId, randomId : randomId, code : code, name: name, email: email, howMany: howMany}, function(data){
-            alert(data[0]);
+            for(var i = 0; i < data['errors'].length; i++){
+               $('#' + data['errors'][i].key).css("background-color", "#FF3333");
+               $('#' + data['errors'][i].key + 'Error').css("background-color", "#FF3333");
+            }
         });
     });
 </script>
@@ -19,7 +31,7 @@
 <table border="0" cellspacing="5" cellpadding="5">
 	<tr>
 		<td class="label">Navn</td>
-		<td class="input" ><input type="text" name="name" id="name"/></td>
+		<td class="input" ><input type="text" name="name" id="name"/><span id="nameError" style="display:None;">FYLL UT NAVNET DITT!!!!!!</span></td>
 	</tr>
 	<tr>
 		<td class="label">&nbsp;</td>
@@ -31,11 +43,11 @@
 	</tr>
 	<tr>
 		<td class="label">&nbsp;</td>
-		<td class="input"><span class="infotxt">Påmeldingen sendes til deg på mail.</span></td>
+		<td class="input"><span class="infotxt">Bekreftelse sendes til deg på mail.</span></td>
 	</tr>
 	<tr>
 		<td class="label">Antall</td>
-		<td class="input"><input type="text" id="howMany" value="1" size="1"/></td>
+		<td class="input">#{select 'howMany', size:1, id:'howMany', items:1..10/}</td>
 	</tr>
 	<tr>
 		<td class="label">&nbsp;</td>
@@ -58,5 +70,5 @@
 
 </table>
 <span class="status"></span>
-<span style="float:right;"><input type="button" value="Registrer" id="register"/></span>
+<span style="position: relative; top: 45px; left: 260px;"><input type="button" value="Registrer" id="register"/></span>
 
