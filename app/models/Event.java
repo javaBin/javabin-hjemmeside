@@ -34,11 +34,15 @@ public class Event extends Model {
 	public Integer participantCount = 0;
 
 	public enum Region {
-		OSLO("OSLO"), BERGEN("BERGEN"), SORLANDET("SØRLANDET"), TRONDHEIM("TRONDHEIM"), STAVANGER("STAVANGER");
-	
-		String value;
-		private Region(String value) {
+		OSLO("OSLO", "oslo.png"), BERGEN("BERGEN", "bergen.png"), 
+		SORLANDET("SØRLANDET", "grimstad.png"), 
+		TRONDHEIM("TRONDHEIM", "trondheim.png"), STAVANGER("STAVANGER", "stavanger.png");
+
+		final String value;
+		public final String picture;
+		private Region(String value, String picture) {
 		        this.value = value;
+				this.picture = picture;
 		}
 		
 		public String toString(){
