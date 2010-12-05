@@ -50,7 +50,7 @@ public class Application extends Controller {
         parser = abdera.getParser();
 
         try {
-            url = new URL("http://wiki.java.no/createrssfeed.action?types=blogpost&sort=created&showContent=true&showDiff=true&spaces=javabin&labelString=forside&rssType=atom&maxResults=10&timeSpan=5&publicFeed=true&title=javaBin+RSS+Feed");
+            url = new URL("http://wiki.java.no/spaces/createrssfeed.action?types=blogpost&spaces=forside&maxResults=10&title=[Forsiden]+News+Feed&publicFeed=true&labelString=forside&showContent=true&showDiff=true&rssType=atom&timeSpan=5");
 
             doc = parser.parse(url.openStream());
             feed = doc.getRoot();
