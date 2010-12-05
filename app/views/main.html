@@ -1,80 +1,81 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nb" lang="nb">
+<head>
+    <title>#{get 'title' /}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/text.css'}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/960.css'}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/style.css'}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/java_no_2007.css'}"/>
+    #{get 'moreStyles' /}
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}"/>
+    <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+    <script src="@{'/public/javascripts/jquery-simplemodal.js'}" type="text/javascript" charset="utf-8"></script>
+    #{get 'moreScripts' /}
 
-<html>
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/reset.css'}">
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/text.css'}">
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/960.css'}">
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/style.css'}">
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/java_no_2007.css'}">
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
-        <script src="@{'/public/javascripts/jquery-simplemodal.js'}" type="text/javascript" charset="utf-8"></script>
-        #{get 'moreScripts' /}
+    <script type="text/javascript">
 
-		<script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3676724-2']);
+        _gaq.push(['_trackPageview']);
 
-		  var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-3676724-2']);
-		_gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
 
-		  (function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		  })();
-
-		</script>
-    </head>
-    <body>
+    </script>
+</head>
+<body>
 
 
-<div id="header_bg"> </div>
+<div id="header_bg"></div>
 <div id="header">
-  <div class="wrapper">
-    <div id="header_logo">
-      <a href="/">
-        <img src="/public/images/logo.png" alt="javaBin"/>
-       </a>
+    <div class="wrapper">
+        <div id="header_logo">
+            <a href="/">
+                <img src="/public/images/logo.png" alt="javaBin"/>
+            </a>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <div id="mainmenu">
-  <div class="wrapper">
-				<div class="horiz">
-					<a href="/tidligere">Tidligere møter</a>
-					<a href="http://www.javazone.no">javaZone.no</a>
-					<a href="/foredragsholdere">Foredragsholdere</a>
-					<a href="http://shop.java.no">Butikk</a>
-					<a href="/om-javabin">Om javaBin</a>
-                </div>
-      </div></div>
+    <div class="wrapper">
+        <div class="horiz">
+            <a href="/tidligere">Tidligere møter</a>
+            <a href="http://www.javazone.no">javaZone.no</a>
+            <a href="/foredragsholdere">Foredragsholdere</a>
+            <a href="http://shop.java.no">Butikk</a>
+            <a href="/om-javabin">Om javaBin</a>
+        </div>
+    </div>
+</div>
 
-			<div class="clear"></div>
+<div class="clear"></div>
 
-		<div class="container_12">
-			<div class="clear"></div>
+<div class="container_12">
+    <div class="clear"></div>
 
-        	#{doLayout /}
+    #{doLayout /}
 
-			<div class="clear"></div>
+    <div class="clear"></div>
 
-			</div>
+</div>
 
-			<div id="footer"></div>
-
-
-			<div style="display:none" id="registrering">
-				#{registrering /}
-			</div>
+<div id="footer"></div>
 
 
-			</body>
+<div style="display:none" id="registrering">
+    #{registrering /}
+</div>
 
-    </body>
+</body>
 </html>
