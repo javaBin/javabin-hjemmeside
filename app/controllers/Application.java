@@ -19,14 +19,20 @@ import play.libs.Crypto;
 import play.libs.Images;
 import play.mvc.Controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Application extends Controller {
 
-    public static void index() {
+    private static final String URL_NEWS_RSS = "http://wiki.java.no/spaces/createrssfeed.action?types=blogpost&spaces=forside&maxResults=10&title=[Forsiden]+News+Feed&publicFeed=true&labelString=forside&showContent=true&showDiff=true&rssType=atom&timeSpan=5";
+	private static final String BASE_URL_FLAT_PAGES = "http://dav.java.no/forside_statisk_test/";
+
+	public static void index() {
         List<Announcement> announcements;
 
         announcements = getAnnouncements();
@@ -50,7 +56,7 @@ public class Application extends Controller {
         parser = abdera.getParser();
 
         try {
-            url = new URL("http://wiki.java.no/spaces/createrssfeed.action?types=blogpost&spaces=forside&maxResults=10&title=[Forsiden]+News+Feed&publicFeed=true&labelString=forside&showContent=true&showDiff=true&rssType=atom&timeSpan=5");
+            url = new URL(URL_NEWS_RSS);
 
             doc = parser.parse(url.openStream());
             feed = doc.getRoot();
@@ -132,17 +138,38 @@ public class Application extends Controller {
     }
 
 
-    // todo : finn ut hvordan man router til statiske sider.
-    public static void about() {
-        render();
-    }
-
     public static void lectureholders() {
         render();
     }
 
     public static void contact() {
         render();
+    }
+    
+    public static void flatPage(String path) {
+        URL url;
+
+        String document = null;
+
+        try {
+            url = new URL(BASE_URL_FLAT_PAGES + path);
+
+            InputStream stream = url.openStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            String line = reader.readLine();
+            StringBuffer stringBuffer = new StringBuffer();
+            while (line != null) {
+            	stringBuffer.append(line);
+            	line = reader.readLine();
+            }
+            document = stringBuffer.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        render(document);
+        
     }
 
 }
