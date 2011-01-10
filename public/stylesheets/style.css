@@ -103,8 +103,8 @@
 	left:180px;
 	width:300px;
 	font-size: 15px;
-	font-family: 'CaviarDreamsRegular', Helvetica, sans-serif;
-	color: white;
+	font-family:Arial,Helvetica,sans-serif;
+    color: white;
 	font-weight: bold;
 	letter-spacing: -1px;
 	background: rgb(0, 0, 0); /* fallback color */
@@ -114,18 +114,18 @@
 }
 
 
-.image .hero {
+.image .lectureholder_text {
 	position:absolute;
-	top:90px; 
+	top:110px; 
 	left:10px;
 	width:300px;
 	font-size: 13px;
-	font-family: 'CaviarDreamsRegular', Helvetica, sans-serif;
+	font-family:Arial,Helvetica,sans-serif;
 	color: white;
 	font-weight: bold;
 	letter-spacing: -1px;
 	background: rgb(0, 0, 0); /* fallback color */
-	background: rgba(0, 0, 0, 0.7);
+	background: rgba(0, 0, 0, 0.3);
 	padding: 5px;
 }
 
@@ -153,6 +153,16 @@
 .map {
 	width:25px; 
 	vertical-align:middle;
+}
+
+.people {
+	width:18px;
+	vertical-align:middle;
+	padding:0px;
+}
+
+.people:active {
+	top:2px;
 }
 
 .map:active {
@@ -252,11 +262,24 @@ td.input {
 
 span.infotxt {
 	font-size:90%;
-	color:#FFFFFF;
+	color:#000000;
 }
 
 #footer {
 	margin-top: 100px;
 	height: 30px;
 	background-color: #494949;
+}
+
+
+label {
+	display: block;
+	width: 120px;
+	float: left;
+	cursor: pointer;
+}
+
+h3 a {
+	font-family: Arial, Helvetica, sans-serif;
+	float:right;
 }

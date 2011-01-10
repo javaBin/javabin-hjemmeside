@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import models.Announcement;
 import models.Event;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class Application extends Controller {
 
         announcements = getAnnouncements();
 
-        List<Event> events = Event.find("current is true ").fetch();
+        List<Event> events = Event.find("published is true and date >= ?", new Date()).fetch();
         String randomId = Codec.UUID();
         render(announcements, events, randomId);
     }
@@ -74,7 +76,7 @@ public class Application extends Controller {
 
 
     public static void signUpForEvent(Long eventId, String randomId, String code, @Required @Email String email, @Required String name, @Required Integer howMany) {
-        validation.equals(code, Cache.get(randomId)).message("Feil kode!");
+        validation.equals(code.toLowerCase(), Cache.get(randomId)).message("Feil kode!");
         validation.match(howMany, "[1-9]").message("Feltet må være et siffer mellom 1 og 9");
         if (!validation.hasErrors()) {
             Participant participant = null;
@@ -87,7 +89,7 @@ public class Application extends Controller {
 
             Event event = Event.findById(eventId);
             String crypto = Crypto.encryptAES(participant.email + "_" + event.title);
-            if (event.participants.contains(participant)) {
+            if (!event.participants.contains(participant)) {
                 event.participants.add(participant);
                 event.participantCount += howMany;
                 event.save();
@@ -101,7 +103,7 @@ public class Application extends Controller {
             renderJSON(validation); // gi tilbakemelding.
         }
         Cache.delete(randomId);
-        renderJSON("status:ok"); // be bruker sjekke postkassa si.
+        renderJSON(validation); // be bruker sjekke postkassa si.
     }
 
     public static void regretSigningUp(String id) {
@@ -122,18 +124,18 @@ public class Application extends Controller {
     }
 
     public static void listOldEvents() {
-        List<Event> osloEvents = Event.find("current is false and region = ?", Event.Region.OSLO).fetch();
-        List<Event> trondheimEvents = Event.find("current is false and region = ?", Event.Region.TRONDHEIM).fetch();
-        List<Event> sorlandetEvents = Event.find("current is false and region = ?", Event.Region.SORLANDET).fetch();
-        List<Event> bergenEvents = Event.find("current is false and region = ?", Event.Region.BERGEN).fetch();
-        List<Event> stavangerEvents = Event.find("current is false and region = ?", Event.Region.STAVANGER).fetch();
+        List<Event> osloEvents = Event.find("published is false and region = ?", Event.Region.OSLO).fetch();
+        List<Event> trondheimEvents = Event.find("published is false and region = ?", Event.Region.TRONDHEIM).fetch();
+        List<Event> sorlandetEvents = Event.find("published is false and region = ?", Event.Region.SORLANDET).fetch();
+        List<Event> bergenEvents = Event.find("published is false and region = ?", Event.Region.BERGEN).fetch();
+        List<Event> stavangerEvents = Event.find("published is false and region = ?", Event.Region.STAVANGER).fetch();
         render(osloEvents, trondheimEvents, sorlandetEvents, bergenEvents, stavangerEvents);
     }
 
     public static void captcha(String id) {
         Images.Captcha captcha = Images.captcha();
-        String code = captcha.getText("#FFFFFF");
-        Cache.set(id, code, "10mn");
+        String code = captcha.getText("#000000");
+        Cache.set(id, code.toLowerCase(), "10mn");
         renderBinary(captcha);
     }
 

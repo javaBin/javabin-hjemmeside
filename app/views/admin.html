@@ -23,7 +23,7 @@
 <div id="header">
   <div class="wrapper">
     <div id="header_logo">
-      <a href="/">
+      <a href="/Admin/index">
         <img src="/public/images/logo.png" alt="javaBin"/>
        </a>
     </div>
@@ -34,11 +34,7 @@
 <div id="mainmenu">
   <div class="wrapper">
 				<div class="horiz">
-					<a href="/tidligere">Tidligere møter</a>
-					<a href="http://www.javazone.no">javaZone.no</a>
-					<a href="/foredragsholdere">Foredragsholdere</a>
-					<a href="http://shop.java.no">Butikk</a>
-					<a href="/om-javabin">Om javaBin</a>
+					Pålogget bruker : Espen Schulstad <a href="/loggut">Logg av</a>
                 </div>
       </div></div>
 
@@ -46,7 +42,13 @@
 
 		<div class="container_12">
 			<div class="clear"></div>
-
+			
+			<div class="grid_6">
+			<a class="awesome" href="@{Admin.index()}">Møter</a>
+			<a class="awesome" href="@{Admin.lectureholders()}">Foredragsholdere</a>
+			<a class="awesome" href="@{Admin.participants()}">Deltagere</a>
+			</div>
+			<div class="clear"></div>
         	#{doLayout /}
 
 			<div class="clear"></div>

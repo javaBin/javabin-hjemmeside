@@ -15,12 +15,11 @@ public class Participant extends Model {
 		this.name = name;
 	}
 
-	@Email
 	public String email;	
 	
 	public String name;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="participants")
 	public List<Event> events;
 	
 	public String toString(){

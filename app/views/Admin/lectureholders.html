@@ -1,0 +1,29 @@
+#{extends 'admin.html' /}
+#{set title:'www.java.no' /}
+
+<div class="clear"></div>
+<div class="grid_12">
+<br>
+<h3>Foredragsholdere<a href="javascript:" class="awesome" onclick="$('#addLectureholder').dialog({
+    modal: true,
+    resizable: false,
+    width : 400,
+    height : 150
+    })">+</a></h3>
+<hr>
+
+#{list items:lectureholders, as:'lectureholder'}
+${lectureholder?.fullName}
+${lectureholder?.picture}
+<br>
+
+#{/list}
+</div>
+
+<div id="addLectureholder" title="Legg til foreleser" style="display:none">
+	#{form id:'eventForm', action:@Admin.saveLectureHolder()}
+    Navn : <input name="lectureHolder.fullName" type="text"/><br>
+   	Bilde : <input name="lectureHolder.picture" type="file"/><br><br>
+	<input type="submit"/>
+	#{/form}
+</div>

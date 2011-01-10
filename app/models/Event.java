@@ -1,6 +1,5 @@
 package models;
 
-import play.*;
 import play.db.jpa.*;
 
 import javax.persistence.*;
@@ -11,7 +10,7 @@ import play.data.validation.*;
 @Entity
 public class Event extends Model {
 	
-	public Boolean current = false;
+	public Boolean published = false;
 
 	@MaxSize(1000)
 	public String notepad;
@@ -28,12 +27,23 @@ public class Event extends Model {
 	
 	public Date date;
 	
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy="events")
+	@ManyToMany(cascade=CascadeType.ALL)
 	public List<Participant> participants;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+	public List<LectureHolder> lectureholders;
+
+
+    public Boolean orderedFood = false;
+    public Boolean bookedPlace = false;
+    public Boolean writtenTwitter = false;
+    public Boolean sentOutEMail = false;
+    public Boolean boughtWine = false;
+
 
 	public Integer participantCount = 0;
 
-	public enum Region {
+    public enum Region {
 		OSLO("OSLO", "oslo.png"), BERGEN("BERGEN", "bergen.png"), 
 		SORLANDET("SØRLANDET", "grimstad.png"), 
 		TRONDHEIM("TRONDHEIM", "trondheim.png"), STAVANGER("STAVANGER", "stavanger.png");
@@ -44,7 +54,8 @@ public class Event extends Model {
 		        this.value = value;
 				this.picture = picture;
 		}
-		
+
+
 		public String toString(){
 			return value;
 		}
@@ -62,7 +73,7 @@ public class Event extends Model {
 
         Event event = (Event) o;
 
-        if (current != null ? !current.equals(event.current) : event.current != null) return false;
+        if (published != null ? !published.equals(event.published) : event.published != null) return false;
         if (date != null ? !date.equals(event.date) : event.date != null) return false;
         if (description != null ? !description.equals(event.description) : event.description != null) return false;
         if (location != null ? !location.equals(event.location) : event.location != null) return false;
@@ -79,7 +90,7 @@ public class Event extends Model {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (current != null ? current.hashCode() : 0);
+        result = 31 * result + (published != null ? published.hashCode() : 0);
         result = 31 * result + (notepad != null ? notepad.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);

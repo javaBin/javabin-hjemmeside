@@ -1,26 +1,18 @@
 #{extends 'main.html' /}
-#{set title:'www.java.no - helter' /}
-
-%{ 
-	for(int j = 0; j<6; j++) {
-}%
+#{set title:'www.java.no' /}
 
 
-%{ 
-	for(int i = 0; i<6; i++) {
-}%
+#{list items:lectureholders, as:'lectureholder'}
 
 <div class="lineItem grid_2">
 	<div class="image">
-		<img src="/public/images/${hero?.picture}.png"/>
-		<div class="hero">${hero?.name}Espen Schulstad</div>
+		<img width="140px" src="/lectureholders/attachment?id=${lectureholder?.id}&field=picture"/>
+		<div class="lectureholder_text">${lectureholder?.fullName}</div>
 	</div>
 </div>
 
-%{
-     }
-}%
+#{if lectureholder_index % 6 == 0}
+<div class="clear"></div>        
+#{/if}        
 
-%{
-     }
-}%
+#{/list}

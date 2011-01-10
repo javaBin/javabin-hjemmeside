@@ -15,33 +15,136 @@
 		</div>
 	</div>
 	<div class="lineItemText grid_8">
-		<h2>${event?.title}</h2>
-		<p>${event?.description}  
-			<a  href="javascript:" onclick="$('#kart_${event?.region}').modal({
-				overlayClose:true,
-				minHeight:600,
-				minWidth: 600,
-				maxHeight:600,
-				maxWidth: 600
-				});">
+		<h2>${event?.title} <span style="color:#999">${event?.date.format("dd.MM.yyyy")}</span>
+        <a class="awesome" style="vertical-align:middle; background-color:#1C5890;" onclick="$('#participants_${event?.id}').dialog({
+			    maxHeight : 600,
+			    modal: true
+		        });"> ${event?.participantCount} <img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
+        <a class="awesome"  style="vertical-align:middle; background-color:#1C5890;" href="javascript:" onclick="$('#discussion').dialog({
+			    modal: true,
+			    width : 500,
+			    maxHeight : 600
+		        });$('#eventId').val(${event?.id});"><img src="/public/images/discuss.png" alt="diskusjon" class="people"/></a>
+        </h2>
+		<p>${event?.description}
+			<a  href="javascript:" onclick="$('#kart_${event?.region}').dialog({
+			    modal: true,
+			    resizable: false,
+			    width : 625,
+			    height : 625
+		        });">
             <img src="/public/images/map.png" alt="kart" class="map"/>
             </a>
-			<a class="awesome" id="awesome" href="javascript:" onclick="$('#registrering').modal({
-				overlayClose:true,
-				minHeight:400,
-				minWidth: 330,
-				maxHeight:400,
-				maxWidth: 330
-				});$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region} : ${event?.title}');">Meld meg på</a>
+			<a class="awesome" id="awesome" href="javascript:" onclick="$('#registrering').dialog({
+			    modal: true,
+			    resizable: false,
+			    width : 400,
+			    height : 450,
+			    buttons: {
+                    'Meld meg på!': function() {
+                        $.post('@{signUpForEvent()}', {eventId : $('#eventId').val(), randomId : $('#randomId').val(), code : $('#code').val(), name:  $('#name').val(), email: $('#email').val(), howMany: $('#howMany').val()}, function(data){
+                            if(data['errors'].length > 0){
+                                for(var i = 0; i < data['errors'].length; i++){
+                                    $('#' + data['errors'][i].key).addClass( 'ui-state-error' );
+                                }
+                            } else {
+                              $('#registrering').dialog( 'close' );
+                            }
+                        });
+
+                    }
+				}
+		        });$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region} : ${event?.title}');">meld meg på</a>
+
 	</div>
 
-    <div id="kart_${event?.region}" style="display:none">
-        <h2>Her skal vi møtes:</h2>
+    <div id="kart_${event?.region}" style="display:none" title="Her skal vi møtes">
         <iframe width="595" height="560" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.no/?q=${event?.location}&amp;ie=UTF8&amp;output=embed"></iframe>
+    </div>
+
+    <div id="participants_${event?.id}" style="display:none" title="Deltagere på møtet">
+            #{if event?.participants?.size() == 0}
+            Det er ennå ingen påmeldte deltagere. Sjekk senere :)
+            #{/if}
+            #{list items:event.participants, as:'participant'}
+            ${participant.name}
+            <hr>
+          #{/list}
     </div>
 
 	<div class="clear"></div>
 	#{/list}
 
 	<input type="hidden" id="eventId" value=""/>
+    <input type="hidden" id="randomId" name="randomId" value="${randomId}" />
+
+<div style="display:none" id="registrering" title="Påmelding til møte">
+    <br>
+    <p id="eventTitle"></p>
+    <br>
+
+    <table border="0" cellspacing="5" cellpadding="5">
+        <tr>
+            <td class="label">Navn</td>
+            <td class="input" ><input type="text" name="name" id="name"/></td>
+        </tr>
+        <tr>
+            <td class="label">&nbsp;</td>
+            <td class="input"><span class="infotxt">Kjekt for oss å vite hva du heter.</span></td>
+        </tr>
+        <tr>
+            <td class="label">E-post</td>
+            <td class="input"/><input type="text" name="email" id="email"/></td>
+        </tr>
+        <tr>
+            <td class="label">&nbsp;</td>
+            <td class="input"><span class="infotxt">Bekreftelse sendes til deg på mail.</span></td>
+        </tr>
+        <tr>
+            <td class="label">Antall</td>
+            <td class="input">#{select 'howMany', size:1, id:'howMany', items:1..10/}</td>
+        </tr>
+        <tr>
+            <td class="label">&nbsp;</td>
+            <td class="input"><span class="infotxt">Hvor mange melder du på?</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2"><hr></td>
+        </tr>
+        <tr>
+            <td class="label">&nbsp;</td>
+            <td class="input"><img src="@{Application.captcha(randomId)}" /><input type="hidden" name="randomId" value="${randomId}" /></td>
+        </tr>
+        <tr>
+            <td class="label">Gjenta koden</td>
+            <td class="input"><input type="text" name="code" id="code" value="" /></td>
+        </tr>
+
+    </table>
+</div>
+
+
+<div id="discussion" style="display:none" title="Diskuter møtet">
+ <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'javabin'; // required: replace example with your forum shortname
+    var disqus_developer = 1;
+    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+    var disqus_identifier = 1;
+    // var disqus_url = 'http://example.com/permalink-to-page.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">Kommentarer leveres av Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">Kommentarer leveres av <span class="logo-disqus">Disqus</span></a>
+</div>
 

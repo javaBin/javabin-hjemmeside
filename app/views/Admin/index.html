@@ -1,0 +1,53 @@
+#{extends 'admin.html' /}
+#{set title:'www.java.no' /}
+<div class="grid_6">
+    <br>
+<h3>Upubliserte møter<a href="@{Admin.showEvent()}" class="awesome">+</a></h3>
+<hr>
+
+<table style="width:100%">
+#{list items:unpublishedEvents, as:'event'}
+<tr>
+	<td>${event?.region}</td>
+	<td>${event?.date?.format('dd.MM.yyyy')}</td>
+	<td>${event?.title}</td>
+	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+</tr>
+#{/list}
+</table>
+</div>
+
+
+<div class="grid_6">
+    <br>
+<h3>Publiserte fremtidige møter</h3>
+<hr>
+<table style="width:100%">
+#{list items:currentEvents, as:'event'}
+<tr>
+	<td>${event?.region}</td>
+	<td>${event?.date?.format('dd.MM.yyyy')}</td>
+	<td>${event?.title}</td>
+	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+</tr>
+#{/list}
+</table>
+</div>
+
+<div class="clear"></div>
+
+<div class="grid_6">
+    <br>
+<h3>Publiserte tidligere møter</h3>
+<hr>
+<table style="width:100%">
+#{list items:oldEvents, as:'event'}
+<tr>
+	<td>${event?.region}</td>
+	<td>${event?.date?.format('dd.MM.yyyy')}</td>
+	<td>${event?.title}</td>
+	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+</tr>
+#{/list}
+</table>
+</div>
