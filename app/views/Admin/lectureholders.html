@@ -3,21 +3,21 @@
 
 <div class="clear"></div>
 <div class="grid_12">
-<br>
+<br/>
 <h3>Foredragsholdere<a href="javascript:" class="awesome" onclick="$('#addLectureholder').dialog({
     modal: true,
     resizable: false,
     width : 400,
     height : 150
     })">+</a></h3>
-<hr>
+<hr/>
 
    #{list items:lectureholders, as:'lectureholder'}
                 <div class="grid_2">
-                   <img width="15px" src="/public/images/gtk-edit.png"><img width="15px" src="/public/images/edit-delete.png"> <br>
+                   <img width="15px" src="/public/images/gtk-edit.png"><img width="15px" src="/public/images/edit-delete.png"> <br/>
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
-                    <br>
-                    ${lectureholder?.fullName}<br>
+                    <br/>
+                    ${lectureholder?.fullName}<br/>
                     <a href="mailto:${lectureholder?.gravatarId}">${lectureholder?.gravatarId}</a>
                 </div>
 

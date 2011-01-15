@@ -49,7 +49,7 @@ public class Event extends Model {
 		TRONDHEIM("Trondheim", "trondheim.png", "stevecadman@flickr"), 
 		STAVANGER("Stavanger", "stavanger.png", "dundak@wikimedia");
 
-		final String realName;
+		public final String realName;
 		public final String picture;
 		public final String photographer;
 
