@@ -12,5 +12,5 @@ Now you can start the webapp by executing 'play run'.
 
 IDEA-instructions:
 o Import pom file.
-o In module settings, choose dependencies, then add, then jar directory, choose the lib/ folder
+o In module settings, choose dependencies, then add, then library, java, jar directory, choose the lib/ folder. Also add framework/ and framework/lib from the play folder.
 
