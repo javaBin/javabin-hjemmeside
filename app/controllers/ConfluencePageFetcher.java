@@ -30,26 +30,34 @@ public class ConfluencePageFetcher {
     }
 
     public ConfluencePageFetcher(String username, String password) {
-        try {
-            confluence = new Confluence("http://wiki.java.no/rpc/xmlrpc");
-            confluence.login(username, password);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (ConfluenceException e) {
-            throw new RuntimeException(e);
-        } catch (SwizzleException e) {
-            throw new RuntimeException(e);
+        if (username != null || password != null) {
+            try {
+                confluence = new Confluence("http://wiki.java.no/rpc/xmlrpc");
+                confluence.login(username, password);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            } catch (ConfluenceException e) {
+                throw new RuntimeException(e);
+            } catch (SwizzleException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            confluence = null;
         }
     }
 
     public String getPageAsHTMLFragment(String name) {
-        try {
-            Page page = confluence.getPage(SPACE, name);
-            StringWriter writer = toHTMLFragment(page);
-            return writer.toString();
-        } catch (SwizzleException e) {
-            throw new RuntimeException(e);
+        if (confluence != null) {
+            try {
+                Page page = confluence.getPage(SPACE, name);
+                StringWriter writer = toHTMLFragment(page);
+                return writer.toString();
+            } catch (SwizzleException e) {
+                throw new RuntimeException(e);
+            }
         }
+        return String.format("<div class=\"error\">Static page %s has been disabled because of missing connection to source</div>", name);
     }
 
     private StringWriter toHTMLFragment(Page page) {
