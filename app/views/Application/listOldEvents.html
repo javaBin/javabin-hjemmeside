@@ -1,12 +1,23 @@
 #{extends 'main.html' /}
 #{set title:'www.java.no - tidligere møter' /}
 
+
+
+
 <div class="lineItemText grid_4">
 <h2>Oslo</h2>	
-#{list items:osloEvents, as:'event'}		
-	${event?.date?.format('dd.MM.yyyy')} - ${event?.title} <a id="awesome" href="">Powerpoint</a><br/>
+ <table>
+    #{list items:osloEvents, as:'event'}
+
+        <tr>
+            <td>${event?.date?.format('dd.MM.yyyy')}</td>
+            <td>${event?.title}</td>
+            <td><a href="javascript:"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
+        </tr>
 #{/list}
-</div>	
+ </table>
+
+</div>
 <div class="lineItemText grid_4">
 <h2>Trondheim</h2>	
 #{list items:trondheimEvents, as:'event'}		

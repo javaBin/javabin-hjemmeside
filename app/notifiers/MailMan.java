@@ -10,14 +10,14 @@ public class MailMan extends Mailer {
    public static void signUp(Participant participant, Event event, String crypto) {
       setSubject("javaBin: %s er registrert som deltager!", participant.name);
       addRecipient(participant.email);
-      setFrom("JavaBin <motegruppa@java.no>");
+      setFrom("JavaBin <portal@java.no>");
       send(participant, event, crypto);
    }
 
    public static void takeMeOff(Participant participant, Event event) {
       setSubject("javaBin: %s er avmeldt fra møte", participant.name);
       addRecipient(participant.email);
-      setFrom("JavaBin <motegruppa@java.no>");
+      setFrom("JavaBin <portal@java.no>");
       send(participant, event);
    }
  

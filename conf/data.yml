@@ -1,42 +1,29 @@
 Event(oslo):
-    title: Oracle OpenWorld Oppsummering
-    description: Torsdag 7.oktober vil det være en gjennomgang av hva som skjedde på Oracle OpenWorld 2010. Det skal visstnok ha skjedd en hel del der. De har fått sett mange flotte ting og vil vise oss en del av det de har sett. Pizza fra 17.30.
+    title: Byggmester boooob!
+    description: Torsdag 17.februar vil det være en gjennomgang av byggeverktøy som er aktuelle for den vanlige javautvikler. Ivy, Gradle, Buildr og vi får høre om alt som er nytt med maven 3. Formatet er i lyntaler. Pizza fra 17.30.
     region: OSLO
     location: Scotsman, Oslo
     published: true
-    date: 2011-06-01
+    date: 2011-02-17
     
-Event(trondheim):
-        title: Introduksjon til Scala
-        description: 22.april får vi besøk fra Fredrik Vraalsen og Alf Kristian Støyle fra Know IT, og de skal bruke et par timer på å gi oss en innføring i Scala.
-        region: TRONDHEIM
-        published: true
-        date: 2011-06-01
 
 LectureHolder(1):
-        fullName: Kenneth Schulstad
-        picture: oslo.png
+        fullName: Trygve Lie
+        gravatarId: post@trygve-lie.com
 
 LectureHolder(2):
-        fullName: Espen Schulstad
-        picture: oslo.png
+        fullName: Thomas Kjeldahl Nilsson
+        gravatarId: thomas@kjeldahlnilsson.net
 
-LectureHolder(3):
-        fullName: Atle Schulstad
-        picture: oslo.png
 
-LectureHolder(4):
-        fullName: Konrad
-        picture: oslo.png
+User(espen):
+    email:          es@udp.no
+    password:       espen
+    fullname:       Espen Schulstad
+    isAdmin:        true
 
-LectureHolder(5):
-        fullName: Kristian
-        picture: oslo.png
-
-LectureHolder(6):
-        fullName: Petter
-        picture: oslo.png
-
-LectureHolder(7):
-        fullName: Kåre
-        picture: oslo.png
+User(admin):
+    email:          portal@java.no
+    password:       w0mbat
+    fullname:       javaBin-person
+    isAdmin:        true

@@ -9,14 +9,16 @@
     var lectureholders = ${models.LectureHolder.toJSON().raw()};
         $( "#lectureholderAC" ).autocomplete({
             source: lectureholders,
-            select: function (event, ui) {$("#lectureHolderId").val(ui.item.id);
-        }
-    });
+            select: function (event, ui) {
+                $("#lectureHolderId").val(ui.item.id);
+                $("#gravatarId").val(ui.item.gravatarId);
+            }
+        });
     #{/if}
 
 
 
-    $( "#event_date" ).datepicker({ dateFormat: 'dd.mm.yy' });
+    $( "#event_date" ).datepicker({ dateFormat: 'dd.mm.yy'});
     $( "#published" ).buttonset();
     $( "#checklist" ).buttonset();
 
@@ -34,7 +36,7 @@
 
 #{if event}
 <div class="grid_4 prefix_9 suffix_0">
-    <a href="" class="awesome" style="background-color:red;color:black"
+    <a href="@{Admin.deleteEvent(event?.id)}" class="awesome" style="background-color:red;color:black"
        onclick="return confirm('Er du sikker på at du vil slette møtet?')">Slett</a> <a href="javascript:" onclick="$('#eventForm').submit()"
                                                                                         class="awesome">Oppdater</a>
 </div>
@@ -72,7 +74,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
     <h3>Notater</h3>
     <hr>
-    <textarea rows="4" cols="35" name="${event.notepad}">${event.notepad}</textarea>
+    <textarea rows="4" cols="35" name="event.notepad">${event.notepad}</textarea>
 </div>
 
 
@@ -92,7 +94,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     #{field 'event.region'}
     <div class="field">
         <label for="${field.id}">Region : </label>
-        #{select name:'event.region', items:models.Event.Region, value:event?.region /}
+        #{select name:'event.region', items:models.Event.Region, labelProperty:'value', value:event?.region /}
         <span class="error">${field.error}</span>
     </div>
     #{/field}
@@ -153,36 +155,29 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     <h3>Foreleser(e)<a href="javascript:" class="awesome" onclick="$('#addLectureholder').dialog({
         modal: true,
         resizable: false,
-        width : 300,
-        height : 200,
         buttons: {
                     'Legg til foreleser': function() {
-                        $.post('@{addLectureHolder()}', {eventId : ${event?.id}, lectureholderId: $('#lectureHolderId').val()}, function(data){
-                             $( '#lectureholderTable tbody' ).append('<tr><td>espen</td><td><a href=/'javascript:/' class=/'awesome/'>-</a></td></tr>');
+                        $.post('@{addLectureHolder()}',
+                            {eventId : ${event?.id}, lectureholderId: $('#lectureHolderId').val(), lectureholderName : $('#lectureholderAC').val(), lectureholderGravatar : $('#gravatarId').val()}, function(data){
+                             $( '#lectureholderContainer' ).append($('#lectureholderAC').val() + ' ' +$('#gravatarId').val());
                         });
                         $( this ).dialog( 'close' );
                     }
 				}
 	    });">+</a></h3>
     <hr>
-    #{if event && event.lectureholders?.size() == 0}
-    Så langt ingen forelesere registrert på dette møtet.
-    #{/if}
-
-    <table id="lectureholderTable" width="100%">
-        <tbody>
+    <div id="lectureholderContainer">
         #{list items:event?.lectureholders, as:'lectureholder'}
-            <tr>
-                <td>${lectureholder?.fullName}</td>
-                <td><a href="javascript:" class="awesome">-</a></td>
-            </tr>
+                <div class="grid_2" style="width:120px">
+                   <img width="18px" src="/public/images/remove.png"><br>
+                   <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
+                    <br>
+                    ${lectureholder?.fullName}<br>
+                    <a href="mailto:${lectureholder?.gravatarId}">${lectureholder?.gravatarId}</a>
+                </div>
+
         #{/list}
-        </tbody>
-    </table>
-
-
-
-
+    </div>
 </div>
 <div class="clear"></div>
 
@@ -190,16 +185,21 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
 <div class="grid_11">
     <br>
-
     <h3>Deltager(e) : ${event?.participantCount}<a href="javascript:" class="awesome" onclick="$('#addParticipant').dialog({
         modal: true,
         resizable: false,
-        width : 300,
-        height : 100
-        })">+</a></h3>
+        buttons: {
+        'Legg til deltager': function() {
+            $.post('@{addParticipant()}',
+                            {eventId : ${event?.id}, participantName: $('#participantName').val(), participantEmail : $('#participantEmail').val()}, function(data){
+                        });
+             $( this ).dialog( 'close' );
+        }}
+		});"
+        >+</a></h3>
     <hr>
     #{list items:event?.participants, as:'participant'}
-    ${participant?.name} (${participant?.email})<br>
+    <a class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a>
     #{/list}
 </div>
 #{/if}
@@ -212,10 +212,11 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
 <div id="addLectureholder" title="Legg til foreleser" style="display:none">
     <label>Navn</label><input size="30" id="lectureholderAC"/>
+    <label>Gravatar Id</label><input size="30" id="gravatarId"/>
 	<input type="hidden" name="lectureHolderId" id="lectureHolderId" value="">
 </div>
 
 <div id="addParticipant" title="Legg til deltager" style="display:none">
-    Navn : <input type="text"/><br>
-    Epost : <input type="text"/>
+    <label>Navn</label><input id="participantName" type="text"/>
+    <label>Epost</label><input id="participantEmail" type="text"/>
 </div>

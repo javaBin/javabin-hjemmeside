@@ -4,7 +4,12 @@ import models.Event;
 import models.LectureHolder;
 import models.Participant;
 
+import models.User;
+import org.joda.time.DateMidnight;
 import play.data.validation.Valid;
+import play.db.jpa.JPABase;
+import play.libs.Crypto;
+import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -15,8 +20,19 @@ import com.google.gson.Gson;
 @With(Secure.class)
 public class Admin extends Controller {
 
+    @Before
+     static void setConnectedUser() {
+         if(Security.isConnected()) {
+             User user = User.find("byEmail", Security.connected()).first();
+             if(user != null)
+             renderArgs.put("user", user.fullname);
+         }
+     }
+
+
+
     public static void index() {
-        Date date = new Date();
+        Date date = new DateMidnight().plus(1).toDate();
         List<Event> currentEvents = Event.find("published is true and date >= ?", date).fetch();
         List<Event> oldEvents = Event.find("published is true and date < ?", date).fetch();
         List<Event> unpublishedEvents = Event.find("published is false").fetch();
@@ -39,10 +55,25 @@ public class Admin extends Controller {
         render(event);
     }
 
+    public static void deleteEvent(Long id){
+        Event event = Event.findById(id);
+        event.delete();
+        index();
+    }
 
-    public static void addLectureHolder(Long eventId, Long lectureholderId){
+
+    public static void addLectureHolder(Long eventId, Long lectureholderId, String lectureholderName, String lectureholderGravatar){
         Event event = Event.findById(eventId);
-        LectureHolder lectureholder = LectureHolder.<LectureHolder>findById(lectureholderId);
+        LectureHolder lectureholder = null;
+        if(lectureholderId != null){
+            lectureholder = LectureHolder.<LectureHolder>findById(lectureholderId);
+        }
+
+        if(lectureholder == null){
+            lectureholder = new LectureHolder();
+        }
+        lectureholder.gravatarId = lectureholderGravatar;
+        lectureholder.fullName = lectureholderName;
         event.lectureholders.add(lectureholder);
         event.save();
     }
@@ -61,7 +92,12 @@ public class Admin extends Controller {
 		List<Participant> participants = Participant.findAll();
 		render(participants);
 	}
-	
+
+    public static void addParticipant(Long eventId, String name, String email){
+        Event event = Event.findById(eventId);
+        event.participants.add(new Participant(email, name));
+        event.save();
+    }
 	
 	
 

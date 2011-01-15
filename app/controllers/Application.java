@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import models.Announcement;
 import models.Event;
 import models.Participant;
+import models.LectureHolder;
 import notifiers.MailMan;
 import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Document;
@@ -12,6 +13,7 @@ import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
 import org.apache.abdera.parser.Parser;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateMidnight;
 import play.cache.Cache;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -39,7 +41,7 @@ public class Application extends Controller {
 
         announcements = getAnnouncements();
 
-        List<Event> events = Event.find("published is true and date >= ?", new Date()).fetch();
+        List<Event> events = Event.find("published is true and date >= ? order by date asc", new DateMidnight().plus(1).toDate()).fetch();
         String randomId = Codec.UUID();
         render(announcements, events, randomId);
     }
@@ -88,14 +90,11 @@ public class Application extends Controller {
             }
 
             Event event = Event.findById(eventId);
-            String crypto = Crypto.encryptAES(participant.email + "_" + event.title);
             if (!event.participants.contains(participant)) {
                 event.participants.add(participant);
                 event.participantCount += howMany;
                 event.save();
-                MailMan.signUp(participant, event, crypto);
-            } else {
-                // add to json that participant already was signed up. we have sent you another email with the details.
+                String crypto = Crypto.encryptAES(participant.id + "_" + event.id);
                 MailMan.signUp(participant, event, crypto);
             }
         } else {
@@ -109,26 +108,27 @@ public class Application extends Controller {
     public static void regretSigningUp(String id) {
         String decrypted = Crypto.decryptAES(id);
         String[] strings = StringUtils.split(decrypted, '_');
+        if(strings != null && strings.length == 2){
+            Participant participant = Participant.findById(Long.parseLong(strings[0]));
+            Event event = Event.findById(Long.parseLong(strings[1]));
 
-        Event event = Event.find("title = ?", strings[1]).first();
-
-        Participant p = null;
-        for (Participant participant : event.participants) {
-            if (participant.email.equalsIgnoreCase(strings[0])) {
+            if (event != null && participant != null && event.participants.contains(participant)) {
                 event.participants.remove(participant);
-                p = participant;
+                event.save();
+                render(participant, event);
             }
+
         }
-        event.save();
-        render(p, event);
+        render();
     }
 
     public static void listOldEvents() {
-        List<Event> osloEvents = Event.find("published is false and region = ?", Event.Region.OSLO).fetch();
-        List<Event> trondheimEvents = Event.find("published is false and region = ?", Event.Region.TRONDHEIM).fetch();
-        List<Event> sorlandetEvents = Event.find("published is false and region = ?", Event.Region.SORLANDET).fetch();
-        List<Event> bergenEvents = Event.find("published is false and region = ?", Event.Region.BERGEN).fetch();
-        List<Event> stavangerEvents = Event.find("published is false and region = ?", Event.Region.STAVANGER).fetch();
+        Date today = new DateMidnight().toDate();
+        List<Event> osloEvents = Event.find("published is true and region = ? and date < ? ", Event.Region.OSLO, today).fetch();
+        List<Event> trondheimEvents = Event.find("published is true and region = ? and date < ?", Event.Region.TRONDHEIM, today).fetch();
+        List<Event> sorlandetEvents = Event.find("published is true and region = ? and date < ?", Event.Region.SORLANDET, today).fetch();
+        List<Event> bergenEvents = Event.find("published is true and region = ? and date < ?", Event.Region.BERGEN, today).fetch();
+        List<Event> stavangerEvents = Event.find("published is true and region = ? and date < ?", Event.Region.STAVANGER, today).fetch();
         render(osloEvents, trondheimEvents, sorlandetEvents, bergenEvents, stavangerEvents);
     }
 
@@ -141,7 +141,8 @@ public class Application extends Controller {
 
 
     public static void lectureholders() {
-        render();
+        List<LectureHolder> lectureholders = LectureHolder.findAll();
+		render(lectureholders);
     }
 
     public static void contact() {
@@ -173,5 +174,13 @@ public class Application extends Controller {
         render(document);
         
     }
+
+    public static String gravatarhash(String input){
+        if(input != null)
+          return Codec.hexMD5(input.toLowerCase().trim());
+        else
+            return null;
+    }
+
 
 }

@@ -12,18 +12,23 @@
     })">+</a></h3>
 <hr>
 
-#{list items:lectureholders, as:'lectureholder'}
-${lectureholder?.fullName}
-${lectureholder?.picture}
-<br>
+   #{list items:lectureholders, as:'lectureholder'}
+                <div class="grid_2">
+                   <img width="15px" src="/public/images/gtk-edit.png"><img width="15px" src="/public/images/edit-delete.png"> <br>
+                   <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
+                    <br>
+                    ${lectureholder?.fullName}<br>
+                    <a href="mailto:${lectureholder?.gravatarId}">${lectureholder?.gravatarId}</a>
+                </div>
 
-#{/list}
+        #{/list}
+
 </div>
 
 <div id="addLectureholder" title="Legg til foreleser" style="display:none">
 	#{form id:'eventForm', action:@Admin.saveLectureHolder()}
-    Navn : <input name="lectureHolder.fullName" type="text"/><br>
-   	Bilde : <input name="lectureHolder.picture" type="file"/><br><br>
+    <label>Navn</label><input name="lectureHolder.fullName" type="text"/>
+    <label>Gravatar email</label><input name="lectureHolder.gravatarId" type="text"/>
 	<input type="submit"/>
 	#{/form}
 </div>

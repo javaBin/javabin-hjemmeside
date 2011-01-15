@@ -2,7 +2,7 @@
 #{set title:'www.java.no' /}
 <div class="grid_6">
     <br>
-<h3>Upubliserte møter<a href="@{Admin.showEvent()}" class="awesome">+</a></h3>
+<h3>Planlagte møter som ikke er publisert ennå<a href="@{Admin.showEvent()}" class="awesome">+</a></h3>
 <hr>
 
 <table style="width:100%">
@@ -20,7 +20,7 @@
 
 <div class="grid_6">
     <br>
-<h3>Publiserte fremtidige møter</h3>
+<h3>Møter som ligger på forsida av java.no</h3>
 <hr>
 <table style="width:100%">
 #{list items:currentEvents, as:'event'}
@@ -38,7 +38,7 @@
 
 <div class="grid_6">
     <br>
-<h3>Publiserte tidligere møter</h3>
+<h3>Møter vi har holdt tidligere</h3>
 <hr>
 <table style="width:100%">
 #{list items:oldEvents, as:'event'}

@@ -9,7 +9,7 @@ import models.*;
 public class Bootstrap extends Job {
 
     public void doJob() {
-        if(Event.count() == 0) {
+        if(Event.count() == 0 || User.count() == 0) {
             Fixtures.load("data.yml");
         }
     }

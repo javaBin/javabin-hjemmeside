@@ -27,10 +27,10 @@ public class Event extends Model {
 	
 	public Date date;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<Participant> participants;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<LectureHolder> lectureholders;
 
 
@@ -44,9 +44,11 @@ public class Event extends Model {
 	public Integer participantCount = 0;
 
     public enum Region {
-		OSLO("OSLO", "oslo.png"), BERGEN("BERGEN", "bergen.png"), 
-		SORLANDET("SØRLANDET", "grimstad.png"), 
-		TRONDHEIM("TRONDHEIM", "trondheim.png"), STAVANGER("STAVANGER", "stavanger.png");
+		OSLO("Oslo", "oslo.png"),
+        BERGEN("Bergen", "bergen.png"),
+		SORLANDET("Sørlandet", "grimstad.png"),
+		TRONDHEIM("Trondheim", "trondheim.png"),
+        STAVANGER("Stavanger", "stavanger.png");
 
 		final String value;
 		public final String picture;
@@ -55,10 +57,6 @@ public class Event extends Model {
 				this.picture = picture;
 		}
 
-
-		public String toString(){
-			return value;
-		}
 	}
 	
 	public String toString(){

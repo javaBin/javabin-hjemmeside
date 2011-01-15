@@ -99,9 +99,9 @@
 
 .image .text {
 	position:absolute;
-	top:10px; 
+	top:10px;
 	left:180px;
-	width:300px;
+	width:100px;
 	font-size: 15px;
 	font-family:Arial,Helvetica,sans-serif;
     color: white;
@@ -110,15 +110,15 @@
 	background: rgb(0, 0, 0); /* fallback color */
 	background: rgba(0, 0, 0, 0.7);
 	padding: 10px;
-	
+
 }
 
 
 .image .lectureholder_text {
 	position:absolute;
-	top:110px; 
+	top:97px;
 	left:10px;
-	width:300px;
+	width:120px;
 	font-size: 13px;
 	font-family:Arial,Helvetica,sans-serif;
 	color: white;
@@ -151,7 +151,7 @@
 .awesome:active { top: 1px; }
 
 .map {
-	width:25px; 
+	width:25px;
 	vertical-align:middle;
 }
 

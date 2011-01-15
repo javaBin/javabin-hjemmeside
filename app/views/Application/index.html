@@ -16,30 +16,29 @@
 	</div>
 	<div class="lineItemText grid_8">
 		<h2>${event?.title} <span style="color:#999">${event?.date.format("dd.MM.yyyy")}</span>
-        <a class="awesome" style="vertical-align:middle; background-color:#1C5890;" onclick="$('#participants_${event?.id}').dialog({
-			    maxHeight : 600,
-			    modal: true
-		        });"> ${event?.participantCount} <img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
-        <a class="awesome"  style="vertical-align:middle; background-color:#1C5890;" href="javascript:" onclick="$('#discussion').dialog({
-			    modal: true,
-			    width : 500,
-			    maxHeight : 600
-		        });$('#eventId').val(${event?.id});"><img src="/public/images/discuss.png" alt="diskusjon" class="people"/></a>
-        </h2>
-		<p>${event?.description}
-			<a  href="javascript:" onclick="$('#kart_${event?.region}').dialog({
+        <a  href="javascript:" onclick="$('#kart_${event?.region}').dialog({
 			    modal: true,
 			    resizable: false,
 			    width : 625,
 			    height : 625
 		        });">
             <img src="/public/images/map.png" alt="kart" class="map"/>
-            </a>
+        </a>
+        <a class="awesome" style="vertical-align:middle;" onclick="$('#participants_${event?.id}').dialog({
+			    maxHeight : 600,
+			    modal: true
+		        });"><b> ${event?.participantCount}</b> <img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
+            <a class="awesome" style="vertical-align:middle;" href="javascript:" onclick="$('#discussion').dialog({
+			    modal: true,
+			    width : 500,
+			    maxHeight : 600
+		        });$('#eventId').val(${event?.id});"><img src="/public/images/discuss.png" alt="diskusjon" class="people"/></a>
+        </h2>
+		<p>${event?.description}
+
 			<a class="awesome" id="awesome" href="javascript:" onclick="$('#registrering').dialog({
 			    modal: true,
-			    resizable: false,
-			    width : 400,
-			    height : 450,
+			    width : 420,
 			    buttons: {
                     'Meld meg på!': function() {
                         $.post('@{signUpForEvent()}', {eventId : $('#eventId').val(), randomId : $('#randomId').val(), code : $('#code').val(), name:  $('#name').val(), email: $('#email').val(), howMany: $('#howMany').val()}, function(data){
@@ -67,8 +66,11 @@
             Det er ennå ingen påmeldte deltagere. Sjekk senere :)
             #{/if}
             #{list items:event.participants, as:'participant'}
+            <div style="text-align: center;">
+            <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid"/><br>
             ${participant.name}
             <hr>
+            </div>
           #{/list}
     </div>
 

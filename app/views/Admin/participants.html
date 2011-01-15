@@ -3,7 +3,9 @@
 
 <div class="grid_12">
 <br>
-<h3>Deltagere</h3>
+<h3>Deltagere :  ${participants.size()}</h3>
 <hr>
-	
+   #{list items:participants, as:'participant'}
+    <a class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a>
+    #{/list}
 </div>
