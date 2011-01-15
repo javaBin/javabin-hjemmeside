@@ -6,7 +6,7 @@ import javax.persistence.*;
 import play.db.jpa.*;
 import play.data.validation.*;
 
-@Entity
+@Entity(name="users")
 public class User extends Model {
 
     @Email
