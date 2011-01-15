@@ -1,1 +1,16 @@
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+To run:
+Download Play framework version 1.1.
+Define the environment variable PLAY_HOME to the directory that contains PLAY.
+Include PLAY_HOME in PATH.
+(e.g. export PLAY_HOME=$HOME/play-1.1; export PATH=$PATH:$PLAY_HOME)
+
+From the directory that contains this README-file, run play install maven.
+This installs a maven module we will use later. 
+Then run play mvn:install and wait for the dependencies to download. 
+Then run play mvn:refresh to have the depencies copied to the lib/ folder.
+Now you can start the webapp by executing 'play run'.
+
+IDEA-instructions:
+o Import pom file.
+o In module settings, choose dependencies, then add, then jar directory, choose the lib/ folder
+
