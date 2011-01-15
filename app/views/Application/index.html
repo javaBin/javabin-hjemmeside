@@ -10,7 +10,7 @@
 	#{list items:events, as:'event'}
 	<div class="lineItem grid_4">
 		<div class="image">
-			<img src="/public/images/${event?.region.picture}"/>
+			<img src="/public/images/${event?.region.picture}" title="Photo by: ${event?.region.photographer}"/>
 			<div class="text">${event?.region}</div>
 		</div>
 	</div>
