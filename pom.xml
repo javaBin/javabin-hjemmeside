@@ -33,7 +33,7 @@
 	<dependency>
 		<groupId>postgresql</groupId>
 		<artifactId>postgresql</artifactId>
-		<version>8.4-701.jdbc3</version>
+		<version>8.1-408.jdbc3</version>
 	</dependency>
 
   </dependencies>
