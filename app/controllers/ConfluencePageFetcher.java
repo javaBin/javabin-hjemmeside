@@ -19,13 +19,17 @@ import java.net.MalformedURLException;
  * Time: 1:38 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ConfluencePage {
+public class ConfluencePageFetcher {
     private static final String SPACE = "forside";
 
     private final Confluence confluence;
     private final MarkupParser parser = new MarkupParser(new ConfluenceLanguage());
 
-    public ConfluencePage(String username, String password) {
+    public ConfluencePageFetcher() {
+        this(System.getProperty("confluence.user"), System.getProperty("confluence.password"));
+    }
+
+    public ConfluencePageFetcher(String username, String password) {
         try {
             confluence = new Confluence("http://wiki.java.no/rpc/xmlrpc");
             confluence.login(username, password);
@@ -59,7 +63,7 @@ public class ConfluencePage {
     public static void main(String[] args) {
         String username = args[0];
         String password = args[1];
-        String fragment = new ConfluencePage(username, password).getPageAsHTMLFragment("Om JavaBin");
+        String fragment = new ConfluencePageFetcher(username, password).getPageAsHTMLFragment("Om JavaBin");
         System.out.println("fragment = " + fragment);
     }
 }

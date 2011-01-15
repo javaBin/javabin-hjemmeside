@@ -5,7 +5,7 @@
 # Home page
 GET     /                                       Application.index
 GET 	/tidligere								Application.listOldEvents
-GET 	/om-javabin								Application.flatPage(path:'about.html')
+GET 	/om-javabin								Application.confluence(name:'Om javaBin')
 GET 	/foredragsholdere						Application.lectureholders
 GET 	/medlemskap								Application.membership
 GET 	/kontakt-oss							Application.contact
