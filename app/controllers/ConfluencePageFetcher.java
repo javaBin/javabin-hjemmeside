@@ -17,7 +17,6 @@ import java.net.MalformedURLException;
  * User: maedhros
  * Date: 1/15/11
  * Time: 1:38 PM
- * To change this template use File | Settings | File Templates.
  */
 public class ConfluencePageFetcher {
     private static final String SPACE = "forside";

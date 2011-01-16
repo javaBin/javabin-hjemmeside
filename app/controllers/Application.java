@@ -32,7 +32,6 @@ import java.util.List;
 public class Application extends Controller {
 
     private static final String URL_NEWS_RSS = "http://wiki.java.no/spaces/createrssfeed.action?types=blogpost&spaces=forside&maxResults=10&title=[Forsiden]+News+Feed&publicFeed=true&labelString=forside&showContent=true&showDiff=true&rssType=atom&timeSpan=5";
-	private static final String BASE_URL_FLAT_PAGES = "http://dav.java.no/forside_statisk_test/";
 
     private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
 
