@@ -29,7 +29,7 @@ public class ConfluencePageFetcher {
     }
 
     public ConfluencePageFetcher(String username, String password) {
-        if (username != null || password != null) {
+        if (username != null && password != null) {
             try {
                 confluence = new Confluence("http://wiki.java.no/rpc/xmlrpc");
                 confluence.login(username, password);
