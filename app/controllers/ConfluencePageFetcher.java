@@ -8,6 +8,7 @@ import org.codehaus.swizzle.confluence.SwizzleException;
 import org.eclipse.mylyn.wikitext.confluence.core.ConfluenceLanguage;
 import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
 import org.eclipse.mylyn.wikitext.core.parser.builder.HtmlDocumentBuilder;
+import util.Confluence2;
 
 import java.io.StringWriter;
 import java.net.MalformedURLException;
@@ -21,7 +22,7 @@ import java.net.MalformedURLException;
 public class ConfluencePageFetcher {
     private static final String SPACE = "forside";
 
-    private final Confluence confluence;
+    private final Confluence2 confluence;
     private final MarkupParser parser = new MarkupParser(new ConfluenceLanguage());
 
     public ConfluencePageFetcher() {
@@ -31,7 +32,7 @@ public class ConfluencePageFetcher {
     public ConfluencePageFetcher(String username, String password) {
         if (username != null && password != null) {
             try {
-                confluence = new Confluence("http://wiki.java.no/rpc/xmlrpc");
+                confluence = new Confluence2("http://wiki.java.no/rpc/xmlrpc");
                 confluence.login(username, password);
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
