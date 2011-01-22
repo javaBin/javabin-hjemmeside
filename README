@@ -9,7 +9,7 @@ From the directory that contains this README-file, run:
 'play install playapps'
 'play install maven'
 
-This installs a maven module we will use later. 
+This installs a maven module we will use later. (Maven 2.2 or newer is required.) 
 Then run 'play mvn:install' and wait for the dependencies to download. 
 Then run 'play mvn:refresh' to have the depencies copied to the lib/ folder.
 Now you can start the webapp by executing 'play run'.
