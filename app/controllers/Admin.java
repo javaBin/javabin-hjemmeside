@@ -78,13 +78,23 @@ public class Admin extends Controller {
         event.save();
     }
 
+    public static void deleteLectureholder(Long lectureholderId){
+        if(lectureholderId == null)
+            lectureholders();
+
+        LectureHolder.delete("id = ?", lectureholderId);
+        lectureholders();
+    }
+
+
 	public static void lectureholders(){
 		List<LectureHolder> lectureholders = LectureHolder.findAll();
 		render(lectureholders);
 	}
 	
 	public static void saveLectureHolder(LectureHolder lectureHolder){
-		lectureHolder.save();
+        lectureHolder.edit("lectureHolder", params.all());
+        lectureHolder.save();
 		lectureholders();
 	}
 	
