@@ -10,7 +10,7 @@ GET 	/foredragsholdere						Application.lectureholders
 GET 	/medlemskap								Application.membership
 GET 	/kontakt-oss							Application.contact
 GET		/avregistrer/{id}						Application.regretSigningUp
-GET		/static/{<[^/].*>path}					Application.flatPage
+GET		/static/{<[^/].*>name}					Application.confluence
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
