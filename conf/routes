@@ -20,3 +20,5 @@ GET     /public/                                staticDir:public
 *       /{controller}/{action}                  {controller}.{action}
 *       /admin                                  Admin.index
 *       /admin                                  module:secure
+
+GET		/{<[^/].*>name}							Application.confluence
