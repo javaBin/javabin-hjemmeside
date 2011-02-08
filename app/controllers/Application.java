@@ -11,6 +11,7 @@ import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
 import org.apache.abdera.parser.Parser;
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.swizzle.confluence.BlogEntry;
 import org.joda.time.DateMidnight;
 import play.cache.Cache;
 import play.data.validation.Email;
@@ -31,48 +32,14 @@ import java.util.List;
 
 public class Application extends Controller {
 
-    private static final String URL_NEWS_RSS = "http://wiki.java.no/spaces/createrssfeed.action?types=blogpost&spaces=forside&maxResults=10&title=[Forsiden]+News+Feed&publicFeed=true&labelString=forside&showContent=true&showDiff=true&rssType=atom&timeSpan=5";
-
     private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
 
 	public static void index() {
-        List<Announcement> announcements;
-
-        announcements = getAnnouncements();
+        List<Announcement> announcements = fetcher.getNewsFeed();
 
         List<Event> events = Event.find("published is true and date >= ? order by date asc", new DateMidnight().plus(1).toDate()).fetch();
         String randomId = Codec.UUID();
         render(announcements, events, randomId);
-    }
-
-
-    private static List<Announcement> getAnnouncements() {
-        List<Announcement> announcements;
-        Abdera abdera;
-        Parser parser;
-        URL url;
-        Document<Feed> doc;
-        Feed feed;
-
-        announcements = new LinkedList<Announcement>();
-        abdera = new Abdera();
-        parser = abdera.getParser();
-
-        try {
-            url = new URL(URL_NEWS_RSS);
-
-            doc = parser.parse(url.openStream());
-            feed = doc.getRoot();
-
-            for (Entry entry : feed.getEntries()) {
-                announcements.add(new Announcement(entry.getTitle(), entry.getSummary(), entry.getLink("alternate").getHref().toString()));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return announcements;
     }
 
 
