@@ -32,12 +32,18 @@ public class ConfluencePageFetcher {
     private final Confluence confluence;
     private final MarkupParser parser = new MarkupParser(new ConfluenceLanguage());
 
+	private final String username;
+
+	private final String password;
+
     public ConfluencePageFetcher() {
         this(System.getProperty("confluence.user"), System.getProperty("confluence.password"));
     }
 
     public ConfluencePageFetcher(String username, String password) {
-        if (username != null && password != null) {
+        this.username = username;
+		this.password = password;
+		if (username != null && password != null) {
             try {
                 confluence = new Confluence("http://wiki.java.no/rpc/xmlrpc");
                 confluence.login(username, password);
@@ -79,15 +85,27 @@ public class ConfluencePageFetcher {
     public String getPageAsHTMLFragment(String name) {
         if (confluence != null) {
             try {
-                Page page = confluence.getPage(SPACE, name);
-                StringWriter writer = toHTMLFragment(page.getContent());
-                return writer.toString();
+                return fetchPage(name);
             } catch (SwizzleException e) {
-                throw new RuntimeException(e);
+            	try {
+            		//TODO Actually check if exception is caused by session timeout or find a way to read this without login
+					confluence.login(username, password);
+					return fetchPage(name);
+				} catch (ConfluenceException loginError) {
+					throw new RuntimeException("Login failed on retry", loginError);
+				} catch (SwizzleException loginError) {
+					throw new RuntimeException("Login failed on retry", loginError);
+				}
             }
         }
         return String.format("<div class=\"error\">Static page %s has been disabled because of missing connection to source</div>", name);
     }
+
+	private String fetchPage(String name) throws SwizzleException, ConfluenceException {
+		Page page = confluence.getPage(SPACE, name);
+		StringWriter writer = toHTMLFragment(page.getContent());
+		return writer.toString();
+	}
 
     private StringWriter toHTMLFragment(String content) {
         StringWriter writer = new StringWriter();
