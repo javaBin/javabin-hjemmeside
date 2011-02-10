@@ -1,10 +1,9 @@
 #{extends 'main.html' /}
 #{set title:'www.java.no' /}
 #{list items:announcements, as:'announcement'}
-<div class="lineItemText grid_10">
+<div class="grid_12">
    <h2>${announcement?.title}</h2>
     ${announcement?.description?.raw()}
-    <a class="awesome" href="${announcement?.url}">Les mer</a>
 </div>
 #{/list}
 	#{list items:events, as:'event'}
