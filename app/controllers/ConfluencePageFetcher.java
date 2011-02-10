@@ -17,6 +17,8 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +70,12 @@ public class ConfluencePageFetcher {
     	try {
     		//TODO find a way to not load all entries.
 			List<BlogEntrySummary> blogEntries = confluence.getBlogEntries(SPACE);
+			Collections.sort(blogEntries, new Comparator<BlogEntrySummary>() {
+				@Override
+				public int compare(BlogEntrySummary o1, BlogEntrySummary o2) {
+					return o2.getPublishDate().compareTo(o1.getPublishDate());
+				}
+			});
 			for (BlogEntrySummary blogEntrySummary : blogEntries) {
 				if (blogEntrySummary.getPublishDate().after(limit)) {
 					BlogEntry entry = confluence.getBlogEntry(blogEntrySummary.getId());
