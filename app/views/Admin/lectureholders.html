@@ -3,40 +3,21 @@
 
 <div class="clear"></div>
 <div class="grid_12">
-<br>
-<h3>Foredragsholdere<a href="javascript:" class="awesome" onclick="$('#lectureholderId').val('');$('#fullName').val('');$('#gravatarId').val('');$('#lectureholder').dialog({
+<br/>
+<h3>Foredragsholdere<a href="javascript:" class="awesome" onclick="$('#addLectureholder').dialog({
     modal: true,
     resizable: false,
     width : 400,
-    buttons : {
-        'Opprett': function() {
-            $('#lectureholderForm').submit();
-        }
-    }
+    height : 150
     })">+</a></h3>
-<hr>
+<hr/>
 
    #{list items:lectureholders, as:'lectureholder'}
                 <div class="grid_2">
-                   <a href="javascript:" onclick="$('#lectureholder').dialog({
-    modal: true,
-    resizable: false,
-    width : 400,
-    buttons : {
-        'Oppdater': function() {
-              $('#lectureholderForm').submit();
-        }
-    }
-    });$('#lectureholderId').val('${lectureholder?.id}');$('#fullName').val('${lectureholder?.fullName}');$('#gravatarId').val('${lectureholder?.gravatarId}');"><img width="15px" src="/public/images/gtk-edit.png"></a>
-
-                    <a href="@{Admin.deleteLectureholder(lectureholder?.id)}"
-       onclick="return confirm('Er du sikker på at du vil slette foreleseren?')"><img width="15px" src="/public/images/edit-delete.png"></a>
-
-
-                    <br>
+                   <img width="15px" src="/public/images/gtk-edit.png"><img width="15px" src="/public/images/edit-delete.png"> <br/>
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
-                    <br>
-                    ${lectureholder?.fullName}<br>
+                    <br/>
+                    ${lectureholder?.fullName}<br/>
                     <a href="mailto:${lectureholder?.gravatarId}">${lectureholder?.gravatarId}</a>
                 </div>
 
@@ -44,10 +25,10 @@
 
 </div>
 
-<div id="lectureholder" title="Foreleser" style="display:none">
-	#{form id:'lectureholderForm', action:@Admin.saveLectureHolder()}
-    <label>Navn</label><input id="fullName" name="lectureHolder.fullName" type="text"/>
-    <label>Gravatar email</label><input id="gravatarId" name="lectureHolder.gravatarId" type="text"/>
-    <input type="hidden" id="lectureholderId" name="lectureHolder.id"/>
+<div id="addLectureholder" title="Legg til foreleser" style="display:none">
+	#{form id:'eventForm', action:@Admin.saveLectureHolder()}
+    <label>Navn</label><input name="lectureHolder.fullName" type="text"/>
+    <label>Gravatar email</label><input name="lectureHolder.gravatarId" type="text"/>
+	<input type="submit"/>
 	#{/form}
 </div>

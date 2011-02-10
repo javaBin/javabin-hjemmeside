@@ -1,9 +1,9 @@
 #{extends 'admin.html' /}
 #{set title:'www.java.no' /}
 <div class="grid_6">
-    <br>
+    <br/>
 <h3>Planlagte møter som ikke er publisert ennå<a href="@{Admin.showEvent()}" class="awesome">+</a></h3>
-<hr>
+<hr/>
 
 <table style="width:100%">
 #{list items:unpublishedEvents, as:'event'}
@@ -19,9 +19,9 @@
 
 
 <div class="grid_6">
-    <br>
+    <br/>
 <h3>Møter som ligger på forsida av java.no</h3>
-<hr>
+<hr/>
 <table style="width:100%">
 #{list items:currentEvents, as:'event'}
 <tr>
@@ -37,9 +37,9 @@
 <div class="clear"></div>
 
 <div class="grid_6">
-    <br>
+    <br/>
 <h3>Møter vi har holdt tidligere</h3>
-<hr>
+<hr/>
 <table style="width:100%">
 #{list items:oldEvents, as:'event'}
 <tr>

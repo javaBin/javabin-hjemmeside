@@ -4,7 +4,6 @@ import play.db.jpa.*;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.List;
 import play.data.validation.*;
 
 @Entity
@@ -43,20 +42,22 @@ public class Event extends Model {
 
 	public Integer participantCount = 0;
 
-    public enum Region {
-		OSLO("Oslo", "oslo.png"),
-        BERGEN("Bergen", "bergen.png"),
-		SORLANDET("Sørlandet", "grimstad.png"),
-		TRONDHEIM("Trondheim", "trondheim.png"),
-        STAVANGER("Stavanger", "stavanger.png");
+	public enum Region {
+		OSLO("Oslo", "oslo.png", "krakers@wikimedia"), 
+		BERGEN("Bergen", "bergen.png", "Frédéric de Goldschmidt www.frederic.net"), 
+		SORLANDET("Sørlandet", "grimstad.png", "jagels@flickr"), 
+		TRONDHEIM("Trondheim", "trondheim.png", "stevecadman@flickr"), 
+		STAVANGER("Stavanger", "stavanger.png", "dundak@wikimedia");
 
-		final String value;
+		public final String realName;
 		public final String picture;
-		private Region(String value, String picture) {
-		        this.value = value;
-				this.picture = picture;
-		}
+		public final String photographer;
 
+		private Region(String realName, String picture, String photographer) {
+			this.realName = realName;
+			this.picture = picture;
+			this.photographer = photographer;
+		}
 	}
 	
 	public String toString(){

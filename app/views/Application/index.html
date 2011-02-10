@@ -10,7 +10,8 @@
 	#{list items:events, as:'event'}
 	<div class="lineItem grid_4">
 		<div class="image">
-			<img src="/public/images/${event?.region.picture}"/>
+			<img src="/public/images/${event?.region.picture}" title="Photo by: ${event?.region.photographer}"
+                    alt="${event?.region.realName}"/>
 			<div class="text">${event?.region}</div>
 		</div>
 	</div>
@@ -54,7 +55,7 @@
                     }
 				}
 		        });$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region} : ${event?.title}');">meld meg på</a>
-
+        </p>
 	</div>
 
     <div id="kart_${event?.region}" style="display:none" title="Her skal vi møtes">
@@ -67,9 +68,9 @@
             #{/if}
             #{list items:event.participants, as:'participant'}
             <div style="text-align: center;">
-            <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid"/><br>
+            <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid"/><br/>
             ${participant.name}
-            <hr>
+            <hr/>
             </div>
           #{/list}
     </div>
@@ -81,9 +82,9 @@
     <input type="hidden" id="randomId" name="randomId" value="${randomId}" />
 
 <div style="display:none" id="registrering" title="Påmelding til møte">
-    <br>
+    <br/>
     <p id="eventTitle"></p>
-    <br>
+    <br/>
 
     <table border="0" cellspacing="5" cellpadding="5">
         <tr>
@@ -96,7 +97,7 @@
         </tr>
         <tr>
             <td class="label">E-post</td>
-            <td class="input"/><input type="text" name="email" id="email"/></td>
+            <td class="input"><input type="text" name="email" id="email"/></td>
         </tr>
         <tr>
             <td class="label">&nbsp;</td>
@@ -114,7 +115,7 @@
             <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-            <td colspan="2"><hr></td>
+            <td colspan="2"><hr/></td>
         </tr>
         <tr>
             <td class="label">&nbsp;</td>

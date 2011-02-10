@@ -5,12 +5,12 @@
 # Home page
 GET     /                                       Application.index
 GET 	/tidligere								Application.listOldEvents
-GET 	/om-javabin								Application.flatPage(path:'about.html')
+GET 	/om-javabin								Application.confluence(name:'Om javaBin')
 GET 	/foredragsholdere						Application.lectureholders
 GET 	/medlemskap								Application.membership
 GET 	/kontakt-oss							Application.contact
 GET		/avregistrer/{id}						Application.regretSigningUp
-GET		/static/{<[^/].*>path}					Application.flatPage
+GET		/static/{<[^/].*>name}					Application.confluence
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
@@ -20,3 +20,5 @@ GET     /public/                                staticDir:public
 *       /{controller}/{action}                  {controller}.{action}
 *       /admin                                  Admin.index
 *       /admin                                  module:secure
+
+GET		/{<[^/].*>name}							Application.confluence

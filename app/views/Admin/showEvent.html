@@ -42,24 +42,24 @@
 </div>
 
 <div class="grid_4">
-    <br>
+    <br/>
 
     <h3>Status</h3>
-    <hr>
+    <hr/>
     <div id="published" style="float:left">
         <input type="radio" id="radio1" name="event.published"  value="false" ${!event?.published ? 'checked' : ''} /><label for="radio1">Møtet er ikke publisert</label>
         <input type="radio" id="radio2" name="event.published"  value="true" ${event?.published ? 'checked' : ''}/><label for="radio2">Møtet er publisert</label>
     </div>
 
-    <br>
+    <br/>
 
 </div>
 
 <div class="grid_3">
-    <br>
+    <br/>
 
     <h3>Todo</h3>
-    <hr>
+    <hr/>
         <pre style="font-size:10pt">
 Mat er bestilt        <input type="checkbox" id="event.orderedFood" name="event.orderedFood" value="true" ${event?.orderedFood ? 'checked' : ''} />
 Lokalet er bestilt    <input type="checkbox" id="event.bookedPlace" name="event.bookedPlace" value="true" ${event?.bookedPlace ? 'checked' : ''} />
@@ -70,10 +70,10 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 </div>
 
 <div class="grid_4">
-    <br>
+    <br/>
 
     <h3>Notater</h3>
-    <hr>
+    <hr/>
     <textarea rows="4" cols="35" name="event.notepad">${event.notepad}</textarea>
 </div>
 
@@ -84,10 +84,10 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
 
 <div class="grid_7">
-    <br>
+    <br/>
 
     <h3>Møtet</h3>
-    <hr>
+    <hr/>
 
     <input type="hidden" name="event.id" value="${event?.id}"/>
 
@@ -145,13 +145,13 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
         <span class="error">${field.error}</span>
     </div>
     #{/field}
-    <br>
+    <br/>
     #{/form}
 
 </div>
 #{if event}
 <div class="grid_4">
-    <br>
+    <br/>
     <h3>Foreleser(e)<a href="javascript:" class="awesome" onclick="$('#addLectureholder').dialog({
         modal: true,
         resizable: false,
@@ -165,14 +165,14 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
                     }
 				}
 	    });">+</a></h3>
-    <hr>
+    <hr/>
     <div id="lectureholderContainer">
         #{list items:event?.lectureholders, as:'lectureholder'}
                 <div class="grid_2" style="width:120px">
-                   <img width="18px" src="/public/images/remove.png"><br>
+                   <img width="18px" src="/public/images/remove.png"><br/>
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
-                    <br>
-                    ${lectureholder?.fullName}<br>
+                    <br/>
+                    ${lectureholder?.fullName}<br/>
                     <a href="mailto:${lectureholder?.gravatarId}">${lectureholder?.gravatarId}</a>
                 </div>
 
@@ -184,7 +184,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
 
 <div class="grid_11">
-    <br>
+    <br/>
     <h3>Deltager(e) : ${event?.participantCount}<a href="javascript:" class="awesome" onclick="$('#addParticipant').dialog({
         modal: true,
         resizable: false,
@@ -197,7 +197,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
         }}
 		});"
         >+</a></h3>
-    <hr>
+    <hr/>
     #{list items:event?.participants, as:'participant'}
     <a class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a>
     #{/list}

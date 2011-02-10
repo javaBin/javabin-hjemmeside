@@ -1,7 +1,5 @@
 package controllers;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import models.Announcement;
 import models.Event;
 import models.Participant;
@@ -13,6 +11,7 @@ import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
 import org.apache.abdera.parser.Parser;
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.swizzle.confluence.BlogEntry;
 import org.joda.time.DateMidnight;
 import play.cache.Cache;
 import play.data.validation.Email;
@@ -33,47 +32,14 @@ import java.util.List;
 
 public class Application extends Controller {
 
-    private static final String URL_NEWS_RSS = "http://wiki.java.no/spaces/createrssfeed.action?types=blogpost&spaces=forside&maxResults=10&title=[Forsiden]+News+Feed&publicFeed=true&labelString=forside&showContent=true&showDiff=true&rssType=atom&timeSpan=5";
-	private static final String BASE_URL_FLAT_PAGES = "http://dav.java.no/forside_statisk_test/";
+    private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
 
 	public static void index() {
-        List<Announcement> announcements;
-
-        announcements = getAnnouncements();
+        List<Announcement> announcements = fetcher.getNewsFeed();
 
         List<Event> events = Event.find("published is true and date >= ? order by date asc", new DateMidnight().plus(1).toDate()).fetch();
         String randomId = Codec.UUID();
         render(announcements, events, randomId);
-    }
-
-
-    private static List<Announcement> getAnnouncements() {
-        List<Announcement> announcements;
-        Abdera abdera;
-        Parser parser;
-        URL url;
-        Document<Feed> doc;
-        Feed feed;
-
-        announcements = new LinkedList<Announcement>();
-        abdera = new Abdera();
-        parser = abdera.getParser();
-
-        try {
-            url = new URL(URL_NEWS_RSS);
-
-            doc = parser.parse(url.openStream());
-            feed = doc.getRoot();
-
-            for (Entry entry : feed.getEntries()) {
-                announcements.add(new Announcement(entry.getTitle(), entry.getSummary(), entry.getLink("alternate").getHref().toString()));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return announcements;
     }
 
 
@@ -148,31 +114,10 @@ public class Application extends Controller {
     public static void contact() {
         render();
     }
-    
-    public static void flatPage(String path) {
-        URL url;
 
-        String document = null;
-
-        try {
-            url = new URL(BASE_URL_FLAT_PAGES + path);
-
-            InputStream stream = url.openStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            String line = reader.readLine();
-            StringBuffer stringBuffer = new StringBuffer();
-            while (line != null) {
-            	stringBuffer.append(line);
-            	line = reader.readLine();
-            }
-            document = stringBuffer.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
+    public static void confluence(String name) {
+        String document = fetcher.getPageAsHTMLFragment(name);
         render(document);
-        
     }
 
     public static String gravatarhash(String input){
