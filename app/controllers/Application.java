@@ -45,7 +45,7 @@ public class Application extends Controller {
 
     public static void signUpForEvent(Long eventId, String randomId, String code, @Required @Email String email, @Required String name, @Required Integer howMany) {
         validation.equals(code.toLowerCase(), Cache.get(randomId)).message("Feil kode!");
-        validation.match(howMany, "[1-9]").message("Feltet må være et siffer mellom 1 og 9");
+        validation.match(howMany, "[1-3]").message("Feltet må være et siffer mellom 1 og 3");
         if (!validation.hasErrors()) {
             Participant participant = null;
             List<Participant> participantList = Participant.find("email = ?", email).fetch();
