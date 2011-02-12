@@ -100,9 +100,9 @@ public class ConfluencePageFetcher {
 					confluence.login(username, password);
 					return fetchPage(name);
 				} catch (ConfluenceException loginError) {
-					throw new RuntimeException("Login failed on retry", loginError);
+					throw new RuntimeException("Login failed on retry for page: " + name, loginError);
 				} catch (SwizzleException loginError) {
-					throw new RuntimeException("Login failed on retry", loginError);
+					throw new RuntimeException("Login failed on retry for page: " + name, loginError);
 				}
             }
         }
