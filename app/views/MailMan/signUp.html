@@ -5,7 +5,7 @@
 		Vi har registrert følgende informasjon:<br/>
 		</p>
 		<p>
-		Referanse person : <strong>${participant?.name} (${participant?.email})</strong><br/>
+		Ditt navn og e-post : <strong>${participant?.name} (${participant?.email})</strong><br/>
 		Tid og sted: <strong>${event?.location} - ${(event?.date).format('dd.MM.yyyy')}</strong> - <a href="http://maps.google.com/?q=${event?.location}">Link til kart</a><br/>
 		Tema: <strong>${event?.title}</strong><br/>
 		</p>
@@ -15,6 +15,15 @@
 		<p>
 		Mvh
 		javaBin
+		</p>
+
+        <p>
+           <br/>
+           <span style="font-style:italic">
+               Dette er en automatisk generert e-post.<br/>
+               Dersom du ikke vet hvorfor du har mottatt denne mailen, så kan du enten se bort i fra den, eller sende oss en e-post på portal@java.no !
+           </span>
+
 		</p>
 </body>
 </html>
