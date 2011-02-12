@@ -1,10 +1,10 @@
 Event(oslo):
-    title: Byggmester boooob!
-    description: Torsdag 17.februar vil det være en gjennomgang av byggeverktøy som er aktuelle for den vanlige javautvikler. Ivy, Gradle, Buildr og vi får høre om alt som er nytt med maven 3. Formatet er i lyntaler. Pizza fra 17.30.
+    title: Byggekveld
+    description: Torsdag 10.mars vil det være en gjennomgang av byggeverktøy som er aktuelle for den vanlige javautvikler. Ivy, Gradle, Buildr og vi får høre om alt som er nytt med maven 3. Formatet er i lyntaler. Pizza fra 17.30.
     region: OSLO
     location: Scotsman, Oslo
     published: true
-    date: 2011-02-17
+    date: 2011-03-10
     
 
 LectureHolder(1):
