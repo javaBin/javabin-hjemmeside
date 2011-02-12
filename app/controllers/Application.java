@@ -1,18 +1,17 @@
 package controllers;
 
+import java.util.Date;
+import java.util.List;
+
 import models.Announcement;
 import models.Event;
-import models.Participant;
 import models.LectureHolder;
+import models.Participant;
 import notifiers.MailMan;
-import org.apache.abdera.Abdera;
-import org.apache.abdera.model.Document;
-import org.apache.abdera.model.Entry;
-import org.apache.abdera.model.Feed;
-import org.apache.abdera.parser.Parser;
+
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.swizzle.confluence.BlogEntry;
 import org.joda.time.DateMidnight;
+
 import play.cache.Cache;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -20,15 +19,6 @@ import play.libs.Codec;
 import play.libs.Crypto;
 import play.libs.Images;
 import play.mvc.Controller;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Application extends Controller {
 
