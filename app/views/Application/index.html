@@ -48,7 +48,7 @@
 		        });$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region?.realName} : ${event?.title}');"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/></a>
         </h2>
 
-		<p>${event?.description} <a href="@{Application.event(event.id)}">Les mer..</a></p>
+		<p>${event?.description} <br/><a href="@{Application.event(event.id)}">Les mer..</a></p>
 	</div>
 
     <div id="kart_${event?.region}" style="display:none" title="Her skal vi møtes">
