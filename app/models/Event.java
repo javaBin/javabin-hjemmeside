@@ -18,7 +18,10 @@ public class Event extends Model {
 	
 	@MaxSize(200)
 	public String description;
-	
+
+    @MaxSize(400)
+    public String extraInfo;
+
 	public String location;
 	
 	@Enumerated(EnumType.STRING) 

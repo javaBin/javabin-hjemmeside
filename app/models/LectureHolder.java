@@ -43,6 +43,6 @@ public class LectureHolder extends Model {
         return null;
     }
 
-	
+
 }
 

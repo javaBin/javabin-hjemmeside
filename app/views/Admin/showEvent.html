@@ -46,7 +46,7 @@
 
     <h3>Status</h3>
     <hr/>
-    <div id="published" style="float:left">
+    <div id="published" style="float:left;font-size:8pt;">
         <input type="radio" id="radio1" name="event.published"  value="false" ${!event?.published ? 'checked' : ''} /><label for="radio1">Møtet er ikke publisert</label>
         <input type="radio" id="radio2" name="event.published"  value="true" ${event?.published ? 'checked' : ''}/><label for="radio2">Møtet er publisert</label>
     </div>
@@ -146,6 +146,15 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     </div>
     #{/field}
     <br/>
+
+    #{field 'event.extraInfo'}
+    <div class="field">
+        <label for="${field.id}">Extra info : </label>
+        <textarea id="${field.id}" type="text" name="${field.name}" rows="5" cols="48" class="${field.errorClass}">${field.value}</textarea>
+        <span class="error">${field.error}</span>
+    </div>
+    #{/field}
+    <br/>
     #{/form}
 
 </div>
@@ -174,8 +183,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
                     <br/>
                     ${lectureholder?.fullName}<br/>
                     <a href="mailto:${lectureholder?.gravatarId}">${lectureholder?.gravatarId}</a>
-                </div>
-
+     </div>
         #{/list}
     </div>
 </div>

@@ -7,11 +7,7 @@
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
             <td>${event?.title}</td>
-            <td><a href="javascript:" onclick="$('#meetinginfo').dialog({
-			    modal: true,
-			    width : 500,
-			    maxHeight : 600
-		        });$('#title').html('${event?.title}');$('#description').html('${event?.description}');"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a>
+            <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a>
             </td>
         </tr>
     #{/list}
@@ -24,12 +20,7 @@
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
             <td>${event?.title}</td>
-            <td><a href="javascript:" onclick="$('#meetinginfo').dialog({
-			    modal: true,
-			    width : 500,
-			    maxHeight : 600
-		        });$('#title').html('${event?.title}');$('#description').html('${event?.description}');"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a>
-            </td>
+            <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
         </tr>
     #{/list}
 </div>
@@ -39,12 +30,7 @@
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
             <td>${event?.title}</td>
-            <td><a href="javascript:" onclick="$('#meetinginfo').dialog({
-			    modal: true,
-			    width : 500,
-			    maxHeight : 600
-		        });$('#title').html('${event?.title}');$('#description').html('${event?.description}');"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a>
-            </td>
+            <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
         </tr>
     #{/list}
 </div>
@@ -55,12 +41,7 @@
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
             <td>${event?.title}</td>
-            <td><a href="javascript:" onclick="$('#meetinginfo').dialog({
-			    modal: true,
-			    width : 500,
-			    maxHeight : 600
-		        });$('#title').html('${event?.title}');$('#description').html('${event?.description}');"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a>
-            </td>
+            <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
         </tr>
     #{/list}
 </div>
@@ -70,12 +51,7 @@
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
             <td>${event?.title}</td>
-            <td><a href="javascript:" onclick="$('#meetinginfo').dialog({
-			    modal: true,
-			    width : 500,
-			    maxHeight : 600
-		        });$('#title').html('${event?.title}');$('#description').html('${event?.description}');"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a>
-            </td>
+            <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
         </tr>
     #{/list}
 </div>
@@ -85,19 +61,6 @@
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
             <td>${event?.title}</td>
-            <td><a href="javascript:" onclick="$('#meetinginfo').dialog({
-			    modal: true,
-			    width : 500,
-			    maxHeight : 600
-		        });$('#title').html('${event?.title}');$('#description').html('${event?.description}');"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a>
-            </td>
-        </tr>
+            <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>        </tr>
     #{/list}
 </div>
-
-
-<div style="display:none" id="meetinginfo" title="Møteinfo">
-    <p id="title"></p><br/>
-    <p id="description"></p>
-    <p id="lectureholders"></p>
-</div>        

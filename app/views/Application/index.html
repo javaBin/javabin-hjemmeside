@@ -28,10 +28,7 @@
 			    maxHeight : 600,
 			    modal: true
 		        });"><b> ${event?.participantCount}</b> <img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
-        </h2>
-		<p>${event?.description}
-
-			<a class="awesome" id="awesome" href="javascript:" onclick="$('#registrering').dialog({
+			<a href="javascript:" onclick="$('#registrering').dialog({
 			    modal: true,
 			    width : 420,
 			    buttons: {
@@ -48,8 +45,10 @@
 
                     }
 				}
-		        });$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region?.realName} : ${event?.title}');">påmelding</a>
-        </p>
+		        });$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region?.realName} : ${event?.title}');"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/></a>
+        </h2>
+
+		<p>${event?.description} <a href="@{Application.event(event.id)}">Les mer..</a></p>
 	</div>
 
     <div id="kart_${event?.region}" style="display:none" title="Her skal vi møtes">
@@ -121,11 +120,5 @@
         </tr>
 
     </table>
-</div>
-
-
-<div id="discussion" style="display:none" title="Diskuter møtet">
-   <p>Vi har ennå ikke fått opp kommentarer.</p>
-   <p>Det kommer snart.</p>
 </div>
 
