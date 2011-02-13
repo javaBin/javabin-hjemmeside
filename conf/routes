@@ -9,6 +9,7 @@ GET 	/om-javabin								Application.confluence(name:'Om javaBin')
 GET 	/foredragsholdere						Application.lectureholders
 GET 	/kontakt-oss							Application.contact
 GET		/avregistrer/{id}						Application.regretSigningUp
+GET		/event/{id}						        Application.event
 GET		/static/{<[^/].*>name}					Application.confluence
 
 # Map static resources from the /app/public folder to the /public path
