@@ -26,7 +26,6 @@ public class Application extends Controller {
 
 	public static void index() {
         List<Announcement> announcements = fetcher.getNewsFeed();
-
         List<Event> events = Event.find("published is true and date >= ? order by date asc", new DateMidnight().plus(1).toDate()).fetch();
         String randomId = Codec.UUID();
         render(announcements, events, randomId);
@@ -88,6 +87,13 @@ public class Application extends Controller {
         render(osloEvents, trondheimEvents, sorlandetEvents, bergenEvents, stavangerEvents);
     }
 
+
+	public static void event(@Required Long id){
+        String randomId = Codec.UUID();
+		Event event = Event.findById(id);
+		render(event, randomId);
+	}
+
     public static void captcha(String id) {
         Images.Captcha captcha = Images.captcha();
         String code = captcha.getText("#000000");
@@ -95,14 +101,9 @@ public class Application extends Controller {
         renderBinary(captcha);
     }
 
-
     public static void lectureholders() {
         List<LectureHolder> lectureholders = LectureHolder.findAll();
 		render(lectureholders);
-    }
-
-    public static void contact() {
-        render();
     }
 
     public static void confluence(String name) {
