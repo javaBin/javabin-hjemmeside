@@ -178,8 +178,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
                 <div id="lec_${lectureholder?.id}" class="grid_2" style="width:120px">
                    <a href="javascript:" onclick="$.post('@{removeLectureHolder()}', {eventId : ${event?.id}, lectureholderId: ${lectureholder?.id}}, function(data){
                          $('#lec_${lectureholder?.id}').toggle();
-                        });
-"><img width="18px" src="/public/images/remove.png"></a><br/>
+                        });"><img width="18px" src="/public/images/remove.png"></a><br/>
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
                     <br/>
                     ${lectureholder?.fullName}<br/>
@@ -204,7 +203,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
              $( this ).dialog( 'close' );
         }}
 		});"
-        >+</a><a href="@{Admin.remindParticipants(event?.id)}" onclick="return confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')" style="margin-right:2px;background-color:darkblue" class="awesome">Send ut påminnelsesmail til de påmeldte</a></h3>
+        >+</a><a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" style="margin-right:2px;background-color:darkblue" class="awesome">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
     #{list items:event?.participants, as:'participant'}
     <a class="awesome" href="mailto:${participant?.email}"  style="background-color:purple">${participant?.name} (${participant?.email})</a>
