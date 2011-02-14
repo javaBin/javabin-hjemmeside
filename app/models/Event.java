@@ -19,7 +19,7 @@ public class Event extends Model {
 	@MaxSize(200)
 	public String description;
 
-    @MaxSize(400)
+    @MaxSize(1000)
     public String extraInfo;
 
 	public String location;

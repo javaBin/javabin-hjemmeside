@@ -5,9 +5,8 @@ import models.LectureHolder;
 import models.Participant;
 
 import models.User;
+import notifiers.MailMan;
 import org.joda.time.DateMidnight;
-import play.data.validation.Valid;
-import play.db.jpa.JPABase;
 import play.libs.Crypto;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -15,7 +14,6 @@ import play.mvc.With;
 
 import java.util.Date;
 import java.util.List;
-import com.google.gson.Gson;
 
 @With(Secure.class)
 public class Admin extends Controller {
@@ -28,8 +26,6 @@ public class Admin extends Controller {
              renderArgs.put("user", user.fullname);
          }
      }
-
-
 
     public static void index() {
         Date date = new DateMidnight().plus(1).toDate();
@@ -78,6 +74,16 @@ public class Admin extends Controller {
         event.save();
     }
 
+    public static void removeLectureHolder(Long eventId, Long lectureholderId){
+        Event event = Event.findById(eventId);
+        LectureHolder lectureHolder = LectureHolder.findById(lectureholderId);
+        if(event.lectureholders.contains(lectureHolder)){
+            event.lectureholders.remove(lectureHolder);
+            event.save();
+        }
+    }
+
+
     public static void deleteLectureholder(Long lectureholderId){
         if(lectureholderId == null)
             lectureholders();
@@ -108,6 +114,17 @@ public class Admin extends Controller {
         event.participants.add(new Participant(email, name));
         event.save();
     }
+
+
+    public static void remindParticipants(Long eventId){
+	    Event event = Event.findById(eventId);
+        if(event != null && event.participants != null)
+	    for(Participant participant : event.participants){
+            String crypto = Crypto.encryptAES(participant.id + "_" + event.id);
+		    MailMan.remindParticipant(event, participant, crypto);
+	    }
+    }
+
 	
 	
 
