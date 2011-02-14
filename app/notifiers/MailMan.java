@@ -14,19 +14,10 @@ public class MailMan extends Mailer {
       send(participant, event, crypto);
    }
 
-   public static void takeMeOff(Participant participant, Event event) {
-      setSubject("javaBin: %s er avmeldt fra møte", participant.name);
+    public static void remindParticipant(Event event, Participant participant, String crypto) {
+      setSubject("javaBin: Påminnelse for møte: %s!", event.title);
       addRecipient(participant.email);
       setFrom("JavaBin <portal@java.no>");
-      send(participant, event);
-   }
- 
-   public static void nextMeeting(Event event, String emailFrom, String emailTo) {
-      setSubject("Neste javaBin-møte : %s", event.title);
-      setFrom(emailFrom);
-      addRecipient(emailTo);
-      send(event);
-   }
-
- 
+      send(participant, event, crypto);
+    }
 }

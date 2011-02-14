@@ -50,9 +50,7 @@
         <input type="radio" id="radio1" name="event.published"  value="false" ${!event?.published ? 'checked' : ''} /><label for="radio1">Møtet er ikke publisert</label>
         <input type="radio" id="radio2" name="event.published"  value="true" ${event?.published ? 'checked' : ''}/><label for="radio2">Møtet er publisert</label>
     </div>
-
     <br/>
-
 </div>
 
 <div class="grid_3">
@@ -155,7 +153,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     </div>
     #{/field}
     <br/>
-    #{/form}
+
 
 </div>
 #{if event}
@@ -177,8 +175,11 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     <hr/>
     <div id="lectureholderContainer">
         #{list items:event?.lectureholders, as:'lectureholder'}
-                <div class="grid_2" style="width:120px">
-                   <img width="18px" src="/public/images/remove.png"><br/>
+                <div id="lec_${lectureholder?.id}" class="grid_2" style="width:120px">
+                   <a href="javascript:" onclick="$.post('@{removeLectureHolder()}', {eventId : ${event?.id}, lectureholderId: ${lectureholder?.id}}, function(data){
+                         $('#lec_${lectureholder?.id}').toggle();
+                        });
+"><img width="18px" src="/public/images/remove.png"></a><br/>
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
                     <br/>
                     ${lectureholder?.fullName}<br/>
@@ -190,10 +191,9 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 <div class="clear"></div>
 
 
-
 <div class="grid_11">
     <br/>
-    <h3>Deltager(e) : ${event?.participantCount}<a href="javascript:" class="awesome" onclick="$('#addParticipant').dialog({
+    <h3>Deltager(e) : <input type="text" size="3" name="event.participantCount" value="${event?.participantCount}"><a href="javascript:" class="awesome" onclick="$('#addParticipant').dialog({
         modal: true,
         resizable: false,
         buttons: {
@@ -204,15 +204,15 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
              $( this ).dialog( 'close' );
         }}
 		});"
-        >+</a></h3>
+        >+</a><a href="@{Admin.remindParticipants(event?.id)}" onclick="return confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')" style="margin-right:2px;background-color:darkblue" class="awesome">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
     #{list items:event?.participants, as:'participant'}
-    <a class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a>
+    <a class="awesome" href="mailto:${participant?.email}"  style="background-color:purple">${participant?.name} (${participant?.email})</a>
     #{/list}
 </div>
 #{/if}
 
-
+    #{/form}
 <div id="map" title="Her skal vi møtes" style="display:none">
     <iframe id="googlemap" name="googlemap" width="595" height="560" frameborder="0" scrolling="no" marginheight="0"
             marginwidth="0" src="http://maps.google.no/?q=${event?.location}&amp;ie=UTF8&amp;output=embed"></iframe>
