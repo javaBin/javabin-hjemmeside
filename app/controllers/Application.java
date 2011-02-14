@@ -20,17 +20,16 @@ import play.libs.Crypto;
 import play.libs.Images;
 import play.mvc.Controller;
 
-
-
 public class Application extends Controller {
 
-   // private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
+    private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
 
 	public static void index() {
-   //     List<Announcement> announcements = fetcher.getNewsFeed();
+        List<Announcement> announcements = fetcher.getNewsFeed();
+
         List<Event> events = Event.find("published is true and date >= ? order by date asc", new DateMidnight().plus(1).toDate()).fetch();
         String randomId = Codec.UUID();
-        render( events, randomId);
+        render(announcements, events, randomId);
     }
 
 
@@ -110,8 +109,8 @@ public class Application extends Controller {
     }
 
     public static void confluence(String name) {
-//        String document = fetcher.getPageAsHTMLFragment(name);
-        render();
+        String document = fetcher.getPageAsHTMLFragment(name);
+        render(document);
     }
 
     public static String gravatarhash(String input){
