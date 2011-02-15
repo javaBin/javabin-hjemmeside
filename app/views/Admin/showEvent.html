@@ -161,7 +161,6 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     <br/>
     <h3>Foreleser(e)<a href="javascript:" class="awesome" onclick="$('#addLectureholder').dialog({
         modal: true,
-        resizable: false,
         buttons: {
                     'Legg til foreleser': function() {
                         $.post('@{addLectureHolder()}',
@@ -218,8 +217,8 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 </div>
 
 <div id="addLectureholder" title="Legg til foreleser" style="display:none">
-    <label>Navn</label><input size="30" id="lectureholderAC"/>
-    <label>Gravatar Id</label><input size="30" id="gravatarId"/>
+    <label>Navn</label><input size="28" type="text" id="lectureholderAC"/>
+    <label>Gravatar Id</label><input size="28" type="text" id="gravatarId"/>
 	<input type="hidden" name="lectureHolderId" id="lectureHolderId" value="">
 </div>
 

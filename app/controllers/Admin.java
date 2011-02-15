@@ -88,6 +88,12 @@ public class Admin extends Controller {
         if(lectureholderId == null)
             lectureholders();
 
+        LectureHolder lectureholder = LectureHolder.findById(lectureholderId);
+        for(Event event : lectureholder.events) {
+            event.lectureholders.remove(lectureholder);
+            event.save();
+        }
+
         LectureHolder.delete("id = ?", lectureholderId);
         lectureholders();
     }
