@@ -12,6 +12,7 @@ import notifiers.MailMan;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
 
+import play.Logger;
 import play.cache.Cache;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -20,12 +21,22 @@ import play.libs.Crypto;
 import play.libs.Images;
 import play.mvc.Controller;
 
+
+
 public class Application extends Controller {
 
-    private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
+     private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
 
 	public static void index() {
-        List<Announcement> announcements = fetcher.getNewsFeed();
+
+        List<Announcement> announcements = null;
+
+        try{
+        announcements = fetcher.getNewsFeed();
+        } catch (Exception e) {
+            Logger.error("Confluence didn't load.", e);
+        }
+
 
         List<Event> events = Event.find("published is true and date >= ? order by date asc", new DateMidnight().plus(1).toDate()).fetch();
         String randomId = Codec.UUID();
@@ -109,7 +120,12 @@ public class Application extends Controller {
     }
 
     public static void confluence(String name) {
-        String document = fetcher.getPageAsHTMLFragment(name);
+        String document ="Innhold er dessverre utilgjengelig.";
+        try{
+            document = fetcher.getPageAsHTMLFragment(name);
+        } catch (Exception e) {
+            Logger.error("Confluence didn't load.", e);
+        }
         render(document);
     }
 
