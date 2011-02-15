@@ -75,10 +75,10 @@
                 #{/if}
                 #{list items:event.participants, as:'participant'}
                  <div class="grid_1">
-                <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?s=60?d=mm"/><br/>
+                <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}?s=60&d=monsterid"/><br/>
                 ${participant.name}
                 </div>
-               #{if participant_index % 2 == 0}
+               #{if participant_index % 3 == 0}
                 <div class="clear"></div>
                 #{/if}
 
@@ -111,7 +111,8 @@
         </tr>
         <tr>
             <td class="label">Antall</td>
-            <td class="input">#{select 'howMany', size:1, id:'howMany', items:1..3/}</td>
+            <td class="input">#{select '
+                <h></h>owMany', size:1, id:'howMany', items:1..3/}</td>
         </tr>
         <tr>
             <td class="label">&nbsp;</td>
