@@ -206,15 +206,18 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
         'Legg til deltager': function() {
             $.post('@{addParticipant()}',
                             {eventId : ${event?.id}, participantName: $('#participantName').val(), participantEmail : $('#participantEmail').val()}, function(data){
+                            $( '#particiapantContainer' ).append($('#participantName').val() + ' ' + $('#participantEmail').val());
                         });
              $( this ).dialog( 'close' );
         }}
 		});"
         >+</a><a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" style="margin-right:2px;background-color:darkblue" class="awesome">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
+    <p id="particiapantContainer">
     #{list items:event?.participants, as:'participant'}
     <a id="par${participant?.id}" class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a><a class="awesome" id="parx${participant?.id}" href="javascript:" onclick="$.post('@{removeParticipant()}', {eventId : ${event?.id}, participantId: ${participant?.id}}, function(data){$('#par${participant?.id}').toggle();$('#parx${participant?.id}').toggle();});">x</a>
     #{/list}
+    </p>
 </div>
 #{/if}
 
