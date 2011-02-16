@@ -7,6 +7,7 @@ import models.Participant;
 import models.User;
 import notifiers.MailMan;
 import org.joda.time.DateMidnight;
+import play.db.jpa.JPASupport;
 import play.libs.Crypto;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -115,12 +116,23 @@ public class Admin extends Controller {
 		render(participants);
 	}
 
-    public static void addParticipant(Long eventId, String name, String email){
+    public static void addParticipant(Long eventId, String participantName, String participantEmail){
         Event event = Event.findById(eventId);
-        event.participants.add(new Participant(email, name));
+        event.participants.add(new Participant(participantEmail,participantName));
+        if(event.participantCount != null)
+            event.participantCount++;
+
         event.save();
     }
 
+    public static void removeParticipant(Long eventId, Long participantId){
+        Event event  = Event.findById(eventId);
+        if(event.participantCount != null && event.participantCount > 0)
+            event.participantCount--;
+
+        event.participants.remove(Participant.<JPASupport>findById(participantId));
+        event.save();
+    }
 
     public static void remindParticipants(Long eventId){
 	    Event event = Event.findById(eventId);

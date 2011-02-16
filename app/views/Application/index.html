@@ -52,7 +52,8 @@
 	</div>
 
     <div id="kart_${event?.region}" style="display:none" title="Her skal vi møtes">
-        <iframe width="595" height="560" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.no/?q=${event?.location}&amp;ie=UTF8&amp;output=embed"></iframe>
+        ${event?.location}, ${event?.address}<br/>
+        <img src="http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false" alt="Her skal vi møtes!"/>
     </div>
 
     <div id="participants_${event?.id}" style="display:none" title="Deltagere på møtet">
