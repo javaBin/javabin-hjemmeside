@@ -8,7 +8,7 @@
 <table style="width:100%">
 #{list items:unpublishedEvents, as:'event'}
 <tr>
-	<td>${event?.region}</td>
+	<td>${event?.region?.realName}</td>
 	<td>${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
 	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
@@ -25,7 +25,7 @@
 <table style="width:100%">
 #{list items:currentEvents, as:'event'}
 <tr>
-	<td>${event?.region}</td>
+	<td>${event?.region?.realName}</td>
 	<td>${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
 	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
@@ -43,7 +43,7 @@
 <table style="width:100%">
 #{list items:oldEvents, as:'event'}
 <tr>
-	<td>${event?.region}</td>
+	<td>${event?.region?.realName}</td>
 	<td>${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
 	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
