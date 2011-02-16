@@ -215,7 +215,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     <hr/>
     <p id="particiapantContainer">
     #{list items:event?.participants, as:'participant'}
-    <a id="par${participant?.id}" class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a><a class="awesome" id="parx${participant?.id}" href="javascript:" onclick="$.post('@{removeParticipant()}', {eventId : ${event?.id}, participantId: ${participant?.id}}, function(data){$('#par${participant?.id}').toggle();$('#parx${participant?.id}').toggle();});">x</a>
+    <a id="par${participant?.id}" class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a><a class="awesome" id="parx${participant?.id}" href="javascript:" onclick="if(confirm('Er du sikker på at du vil fjerne deltageren?')){$.post('@{removeParticipant()}', {eventId : ${event?.id}, participantId: ${participant?.id}}, function(data){$('#par${participant?.id}').toggle();$('#parx${participant?.id}').toggle();});}">x</a>
     #{/list}
     </p>
 </div>
