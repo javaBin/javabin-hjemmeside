@@ -23,6 +23,8 @@ public class Event extends Model {
     public String extraInfo;
 
 	public String location;
+
+    public String address = "";
 	
 	@Enumerated(EnumType.STRING) 
 	public Region region = Region.OSLO;

@@ -109,11 +109,20 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
     #{field 'event.location'}
     <div class="field">
-        <label for="${field.id}">Møtested : </label>
+        <label for="${field.id}">Møtested: </label>
         <input id="${field.id}" type="text" name="${field.name}" size="30" value="${field.value}"
                class="${field.errorClass}"/>
+        <span class="error">${field.error}</span>
+    </div>
+    #{/field}
 
-        <a href="javascript:" onclick="$('#map').dialog({
+    #{field 'event.address'}
+    <div class="field">
+        <label for="${field.id}">Adresse : </label>
+        <input id="${field.id}" type="text" name="${field.name}" size="30" value="${field.value}"
+               class="${field.errorClass}"/>
+        <span class="error">${field.error}</span>
+       <a href="javascript:" onclick="$('#map').dialog({
         modal: true,
         resizable: false,
         width : 625,
@@ -121,7 +130,6 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
         })">
             <img src="/public/images/map.png" alt="kart" class="map"/>
         </a>
-        <span class="error">${field.error}</span>
     </div>
     #{/field}
 
@@ -205,15 +213,15 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
         >+</a><a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" style="margin-right:2px;background-color:darkblue" class="awesome">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
     #{list items:event?.participants, as:'participant'}
-    <a class="awesome" href="mailto:${participant?.email}"  style="background-color:purple">${participant?.name} (${participant?.email})</a>
+    <a id="par${participant?.id}" class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a><a class="awesome" id="parx${participant?.id}" href="javascript:" onclick="$.post('@{removeParticipant()}', {eventId : ${event?.id}, participantId: ${participant?.id}}, function(data){$('#par${participant?.id}').toggle();$('#parx${participant?.id}').toggle();});">x</a>
     #{/list}
 </div>
 #{/if}
 
     #{/form}
 <div id="map" title="Her skal vi møtes" style="display:none">
-    <iframe id="googlemap" name="googlemap" width="595" height="560" frameborder="0" scrolling="no" marginheight="0"
-            marginwidth="0" src="http://maps.google.no/?q=${event?.location}&amp;ie=UTF8&amp;output=embed"></iframe>
+    ${event?.location}, ${event?.address}<br/>
+    <img src="http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false" alt="Her skal vi møtes!"/>
 </div>
 
 <div id="addLectureholder" title="Legg til foreleser" style="display:none">
@@ -223,6 +231,6 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 </div>
 
 <div id="addParticipant" title="Legg til deltager" style="display:none">
-    <label>Navn</label><input id="participantName" type="text"/>
-    <label>Epost</label><input id="participantEmail" type="text"/>
+    <label>Navn</label><input size="28" id="participantName" type="text"/>
+    <label>Epost</label><input size="28" id="participantEmail" type="text"/>
 </div>
