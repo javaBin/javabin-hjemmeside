@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.*;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,9 @@ import models.Announcement;
 import models.Event;
 import models.LectureHolder;
 import models.Participant;
+import net.fortuna.ical4j.data.CalendarOutputter;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.ValidationException;
 import notifiers.MailMan;
 
 import org.apache.commons.lang.StringUtils;
@@ -25,7 +29,7 @@ import play.mvc.Controller;
 
 public class Application extends Controller {
 
-     private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
+    private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
 
 	public static void index() {
 
@@ -134,6 +138,23 @@ public class Application extends Controller {
             }
         }
         render(document);
+    }
+
+    public static void ical(Long id){
+        try {
+            Event event = Event.findById(id);
+            Calendar calendar = ICalUtil.createCalendar(event);
+            File file = new File("public/javabin.ics");
+            FileOutputStream fos = new FileOutputStream(file);
+            CalendarOutputter outputter = new CalendarOutputter();
+            outputter.output(calendar, fos);
+            response.setHeader("Content-Type", "application/ics");
+            renderBinary(file);
+        } catch (IOException e) {
+            Logger.error("Io feil ved ical", e);
+        } catch (ValidationException e) {
+            Logger.error("Feil ved generering av ical", e);
+        }
     }
 
     public static String gravatarhash(String input){
