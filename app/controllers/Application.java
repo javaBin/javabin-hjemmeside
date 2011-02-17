@@ -29,14 +29,16 @@ public class Application extends Controller {
 
 	public static void index() {
 
-        List<Announcement> announcements = null;
+        List<Announcement> announcements = Cache.get("announcements", List.class);
 
-        try{
-        announcements = fetcher.getNewsFeed();
-        } catch (Exception e) {
-            Logger.error("Confluence didn't load.", e);
+        if (announcements == null) {
+            try {
+                announcements = fetcher.getNewsFeed();
+                Cache.add("announcements", announcements, "5mn");
+            } catch (Exception e) {
+                Logger.error("Confluence didn't load.", e);
+            }
         }
-
 
         List<Event> events = Event.find("published is true and date >= ? order by date asc", new DateMidnight().plus(1).toDate()).fetch();
         String randomId = Codec.UUID();
@@ -120,11 +122,16 @@ public class Application extends Controller {
     }
 
     public static void confluence(String name) {
-        String document ="Innhold er dessverre utilgjengelig.";
-        try{
-            document = fetcher.getPageAsHTMLFragment(name);
-        } catch (Exception e) {
-            Logger.error("Confluence didn't load.", e);
+        String document = Cache.get(name, String.class);
+        if(document == null){
+            try {
+                document = fetcher.getPageAsHTMLFragment(name);
+                if(document != null){
+                    Cache.add(name,document, "5mn");
+                }
+            } catch (Exception e) {
+                Logger.error("Confluence didn't load.", e);
+            }
         }
         render(document);
     }
