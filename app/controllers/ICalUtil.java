@@ -3,6 +3,9 @@ package controllers;
 
 import models.Event;
 import net.fortuna.ical4j.model.*;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.TimeZone;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.property.CalScale;
@@ -10,6 +13,8 @@ import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.util.UidGenerator;
+import org.joda.time.*;
+
 import java.net.SocketException;
 
 
@@ -24,7 +29,10 @@ public class ICalUtil {
         TimeZone timezone = registry.getTimeZone("Europe/Oslo");
         VTimeZone tz = timezone.getVTimeZone();
         // Create the event
-        VEvent meeting = new VEvent(new DateTime(event.date), new DateTime(event.date), "javaBin: " + event.title);
+        org.joda.time.DateTime start = new org.joda.time.DateTime(event.date);
+        start = start.hourOfDay().setCopy(18);
+        org.joda.time.DateTime end = start.plusHours(3);
+        VEvent meeting = new VEvent(new DateTime(start.toDate()), new DateTime(end.toDate()), "javaBin: " + event.title);
         // Add timezone info..
         meeting.getProperties().add(tz.getTimeZoneId());
         UidGenerator ug = new UidGenerator(event.title);
