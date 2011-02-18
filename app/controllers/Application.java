@@ -151,6 +151,7 @@ public class Application extends Controller {
             FileOutputStream fos = new FileOutputStream(file);
             CalendarOutputter outputter = new CalendarOutputter();
             outputter.output(calendar, fos);
+            fos.close();
             response.setHeader("Content-Type", "application/ics");
             renderBinary(file);
         } catch (IOException e) {
