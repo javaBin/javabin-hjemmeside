@@ -106,7 +106,7 @@ public class ConfluencePageFetcher {
 				}
             }
         }
-        return String.format("<div class=\"error\">Static page %s has been disabled because of missing connection to source</div>", name);
+        return null;
     }
 
 	private String fetchPage(String name) throws SwizzleException, ConfluenceException {
