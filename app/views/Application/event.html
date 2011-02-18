@@ -3,13 +3,13 @@
 
 <div class="grid_8">
 <h1>${event?.title}</h1>
-<p>${event?.date.format("dd.MM.yyyy")} på ${event?.location}</p>
+<p>${event?.date?.format("dd.MM.yyyy")} på ${event?.location}</p>
 <br/>
 <p>${event?.description}</p>
 <br/>
 <p>${event?.extraInfo}</p>
 <br/>
-<p>#{if new Date().before(event?.date)}<a href="javascript:" onclick="$('#registrering').dialog({
+<p>#{if event?.date?.after(new Date())}<a href="javascript:" onclick="$('#registrering').dialog({
 			    modal: true,
 			    width : 420,
 			    buttons: {
@@ -76,7 +76,7 @@
                #{if event?.participants?.size() == 0}
                 Det er ennå ingen påmeldte deltagere. <br/>Sjekk senere :)
                 #{/if}
-                #{list items:event.participants, as:'participant'}
+                #{list items:event?.participants, as:'participant'}
                  <div class="grid_1">
                 <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}?s=60&d=monsterid"/><br/>
                 ${participant.name}

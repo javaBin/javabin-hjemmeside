@@ -110,6 +110,9 @@ public class Application extends Controller {
 	public static void event(@Required Long id){
         String randomId = Codec.UUID();
 		Event event = Event.findById(id);
+        if(event == null)
+            notFound();
+
 		render(event, randomId);
 	}
 
