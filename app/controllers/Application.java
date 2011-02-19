@@ -135,14 +135,14 @@ public class Application extends Controller {
                 document = fetcher.getPageAsHTMLFragment(name);
                 if(document != null){
                     Cache.add(name,document, "5mn");
-                } else {
-                    notFound(name);
                 }
-
             } catch (Exception e) {
                 Logger.error("Confluence didn't load.", e);
             }
         }
+        if(document==null)
+            notFound();
+
         render(document);
     }
 
