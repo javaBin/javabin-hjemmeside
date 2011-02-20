@@ -11,6 +11,9 @@ GET 	/kontakt-oss							Application.contact
 GET		/avregistrer/{id}						Application.regretSigningUp
 GET		/event/{id}						        Application.event
 GET		/static/{<[^/].*>name}					Application.confluence
+GET     /admin                                  Admin.index
+GET     /admin/foredragsholdere                 Admin.lectureholders
+GET     /admin/deltagere                        Admin.participants
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
