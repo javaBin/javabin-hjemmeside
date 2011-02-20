@@ -19,6 +19,44 @@
 <br/>
 </div>
 
+<div class="grid_3">
+
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'search',
+  search: 'javaBin',
+  interval: 15000,
+  title: 'Siste resultater av',
+  subject: 'javaBin',
+  width: 350,
+  height: 100,
+  theme: {
+    shell: {
+      background: '#8ec1da',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#1985b5'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: true,
+    live: true,
+    hashtags: true,
+    timestamp: true,
+    avatars: true,
+    toptweets: true,
+    behavior: 'default'
+  }
+}).render().start();
+</script>
+
+</div>
 
 <div class="clear"></div>
 
@@ -56,3 +94,4 @@
 #{/list}
 </table>
 </div>
+
