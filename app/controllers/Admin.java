@@ -7,6 +7,7 @@ import models.Participant;
 import models.User;
 import notifiers.MailMan;
 import org.joda.time.DateMidnight;
+import play.data.validation.Valid;
 import play.db.jpa.JPASupport;
 import play.libs.Crypto;
 import play.mvc.Before;
@@ -37,7 +38,13 @@ public class Admin extends Controller {
     }
 
 
-    public static void saveEvent(Event event){
+    public static void saveEvent(@Valid Event event){
+        if(validation.hasErrors()) {
+            params.flash();
+            validation.keep();
+            showEvent(event.id);
+        }
+
         event.edit("event", params.all());
         event.save();
         showEvent(event.id);
