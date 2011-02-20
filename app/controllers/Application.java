@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Date;
 import java.util.List;
 
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import models.Announcement;
 import models.Event;
 import models.LectureHolder;
@@ -150,18 +151,20 @@ public class Application extends Controller {
         try {
             Event event = Event.findById(id);
             Calendar calendar = ICalUtil.createCalendar(event);
-            File file = new File("public/javabin.ics");
-            FileOutputStream fos = new FileOutputStream(file);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
             CalendarOutputter outputter = new CalendarOutputter();
-            outputter.output(calendar, fos);
-            fos.close();
+            outputter.output(calendar, bos);
             response.setHeader("Content-Type", "application/ics");
-            renderBinary(file);
+            InputStream is = new ByteArrayInputStream(bos.toByteArray());
+            renderBinary(is,"javaBin.ics");
+            bos.close();
+            is.close();
         } catch (IOException e) {
             Logger.error("Io feil ved ical", e);
         } catch (ValidationException e) {
             Logger.error("Feil ved generering av ical", e);
         }
+
     }
 
     public static String gravatarhash(String input){
