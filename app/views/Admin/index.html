@@ -1,6 +1,6 @@
 #{extends 'admin.html' /}
 #{set title:'www.java.no' /}
-<div class="grid_6">
+<div class="grid_8">
     <br/>
 <h3>Planlagte møter som ikke er publisert ennå<a href="@{Admin.showEvent()}" class="awesome">+</a></h3>
 <hr/>
@@ -11,14 +11,18 @@
 	<td>${event?.region?.realName}</td>
 	<td>${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
-	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+	<td style="float:right;"><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
 </tr>
 #{/list}
 </table>
+
+<br/>
 </div>
 
 
-<div class="grid_6">
+<div class="clear"></div>
+
+<div class="grid_8">
     <br/>
 <h3>Møter som ligger på forsida av java.no</h3>
 <hr/>
@@ -28,15 +32,16 @@
 	<td>${event?.region?.realName}</td>
 	<td>${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
-	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+	<td style="float:right;"><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
 </tr>
 #{/list}
 </table>
+<br/>
 </div>
 
 <div class="clear"></div>
 
-<div class="grid_6">
+<div class="grid_8">
     <br/>
 <h3>Møter vi har holdt tidligere</h3>
 <hr/>
@@ -46,7 +51,7 @@
 	<td>${event?.region?.realName}</td>
 	<td>${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
-	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+	<td style="float:right;"><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
 </tr>
 #{/list}
 </table>

@@ -13,7 +13,8 @@ public class Event extends Model {
 
 	@MaxSize(1000)
 	public String notepad;
-	
+
+    @Required
 	public String title;
 	
 	@MaxSize(200)
@@ -29,6 +30,7 @@ public class Event extends Model {
 	@Enumerated(EnumType.STRING) 
 	public Region region = Region.OSLO;
 	
+    @Required
 	public Date date;
 	
 	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
