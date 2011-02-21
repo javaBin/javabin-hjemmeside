@@ -16,7 +16,8 @@
 	</div>
 	<div class="lineItemText grid_8">
 		<h2>${event?.title} <span style="color:#999">${event?.date.format("dd.MM.yyyy")}</span>
-        <a  href="javascript:" onclick="$('#kart_${event?.region}').dialog({
+        <a  href="javascript:" onclick="$('#kart').html('${event?.location}, ${event?.address}<br/><img src=\&quot;http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false\&quot; alt=\&quot;Her skal vi møtes!\&quot;/>');
+        $('#kart').dialog({
 			    modal: true,
 			    resizable: false,
 			    width : 625,
@@ -50,11 +51,6 @@
 
 		<p>${event?.description} <br/><a href="@{Application.event(event.id)}">Les mer..</a></p>
 	</div>
-
-    <div id="kart_${event?.region}" style="display:none" title="Her skal vi møtes">
-        ${event?.location}, ${event?.address}<br/>
-        <img src="http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false" alt="Her skal vi møtes!"/>
-    </div>
 
     <div id="participants_${event?.id}" style="display:none" title="Deltagere på møtet">
             #{if event?.participants?.size() == 0}
@@ -120,3 +116,5 @@
     </table>
 </div>
 
+<div id="kart" style="display:none" title="Her skal vi møtes">
+</div>

@@ -122,14 +122,15 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
         <input id="${field.id}" type="text" name="${field.name}" size="30" value="${field.value}"
                class="${field.errorClass}"/>
         <span class="error">${field.error}</span>
-       <a href="javascript:" onclick="$('#map').dialog({
-        modal: true,
-        resizable: false,
-        width : 625,
-        height : 625
-        })">
-            <img src="/public/images/map.png" alt="kart" class="map"/>
-        </a>
+    <a  href="javascript:" onclick="$('#kart').html('${event?.location}, ${event?.address}<br/><img src=\&quot;http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false\&quot; alt=\&quot;Her skal vi møtes!\&quot;/>');
+    $('#kart').dialog({
+            modal: true,
+            resizable: false,
+            width : 625,
+            height : 625
+            });">
+        <img src="/public/images/map.png" alt="kart" class="map"/>
+    </a>
     </div>
     #{/field}
 
@@ -222,9 +223,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 #{/if}
 
     #{/form}
-<div id="map" title="Her skal vi møtes" style="display:none">
-    ${event?.location}, ${event?.address}<br/>
-    <img src="http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false" alt="Her skal vi møtes!"/>
+<div id="kart" style="display:none" title="Her skal vi møtes">
 </div>
 
 <div id="addLectureholder" title="Legg til foreleser" style="display:none">
@@ -237,3 +236,4 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     <label>Navn</label><input size="28" id="participantName" type="text"/>
     <label>Epost</label><input size="28" id="participantEmail" type="text"/>
 </div>
+
