@@ -33,14 +33,15 @@
     #{if !event?.date?.after(new Date())}
     <a href="javascript:" onclick="$('#kommer').dialog({modal: true});"><img src="/public/images/slides.png" class="map" alt="slides fra foreleser"/></a>
     #{/if}
-    <a  href="javascript:" onclick="$('#kart_${event?.region}').dialog({
-			    modal: true,
-			    resizable: false,
-			    width : 625,
-			    height : 625
-		        });">
-            <img src="/public/images/map.png" alt="kart" class="map"/>
-        </a>
+    <a  href="javascript:" onclick="$('#kart').html('${event?.location}, ${event?.address}<br/><img src=\&quot;http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false\&quot; alt=\&quot;Her skal vi møtes!\&quot;/>');
+    $('#kart').dialog({
+            modal: true,
+            resizable: false,
+            width : 625,
+            height : 625
+            });">
+        <img src="/public/images/map.png" alt="kart" class="map"/>
+    </a>
     <a href="http://twitter.com/share?text=%23javaBin%20ftw!&url=http%3A%2F%2Fjava.no/event/${event?.id}"><img class="map" src="/public/images/twitter_3.png" alt="Del møtet på twitter"></a>
 </p>
 <br/>
@@ -142,13 +143,11 @@
 </div>
 
 
-    <div id="kart_${event?.region}" style="display:none" title="Her skal vi møtes">
-        ${event?.location}, ${event?.address}<br/>
-        <img src="http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false" alt="Her skal vi møtes!"/>
-    </div>
-<div id="kommer" style="display:none" title="Her kommer det noe snart.">
-    <p>Vi jobber med det</p>
-</div>
+        <div id="kart" style="display:none" title="Her skal vi møtes"></div>
+
+            <div id="kommer" style="display:none" title="Her kommer det noe snart.">
+                <p>Vi jobber med det</p>
+            </div>
 
             <input type="hidden" id="randomId" name="randomId" value="${randomId}" />
         	<input type="hidden" id="eventId" value=""/>
