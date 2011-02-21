@@ -8,10 +8,10 @@
 <table style="width:100%">
 #{list items:unpublishedEvents, as:'event'}
 <tr>
-	<td>${event?.region?.realName}</td>
-	<td>${event?.date?.format('dd.MM.yyyy')}</td>
+	<td style="width:100px">${event?.region?.realName}</td>
+	<td style="width:100px">${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
-	<td style="float:right;"><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="float:right;background-color:yellow;color:black;">Rediger</a></td>
 </tr>
 #{/list}
 </table>
@@ -67,8 +67,8 @@ new TWTR.Widget({
 <table style="width:100%">
 #{list items:currentEvents, as:'event'}
 <tr>
-	<td>${event?.region?.realName}</td>
-	<td>${event?.date?.format('dd.MM.yyyy')}</td>
+	<td style="width:100px">${event?.region?.realName}</td>
+	<td style="width:100px">${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
 	<td style="float:right;"><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
 </tr>
@@ -86,8 +86,8 @@ new TWTR.Widget({
 <table style="width:100%">
 #{list items:oldEvents, as:'event'}
 <tr>
-	<td>${event?.region?.realName}</td>
-	<td>${event?.date?.format('dd.MM.yyyy')}</td>
+	<td style="width:100px">${event?.region?.realName}</td>
+	<td style="width:100px">${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
 	<td style="float:right;"><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
 </tr>
