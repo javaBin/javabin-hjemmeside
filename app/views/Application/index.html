@@ -25,10 +25,11 @@
 		        });">
             <img src="/public/images/map.png" alt="kart" class="map"/>
         </a>
-        <a class="awesome" style="vertical-align:middle;" onclick="$('#participants_${event?.id}').dialog({
+        <a class="awesome" style="vertical-align:middle;" onclick="$('#participants').html('#{if event?.participants?.size() == 0}Det er ennå ingen påmeldte deltagere. Sjekk senere :)#{/if}#{list items:event.participants, as:'participant'}<img src=\&quot;http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid\&quot;/><br/>${participant.name}<hr/>#{/list}');
+        $('#participants').dialog({
 			    maxHeight : 600,
 			    modal: true
-		        });"><b> ${event?.participantCount}</b> <img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
+		        });"><b> ${event?.participantCount}</b><img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
 			<a href="javascript:" onclick="$('#registrering').dialog({
 			    modal: true,
 			    width : 420,
@@ -51,20 +52,6 @@
 
 		<p>${event?.description} <br/><a href="@{Application.event(event.id)}">Les mer..</a></p>
 	</div>
-
-    <div id="participants_${event?.id}" style="display:none" title="Deltagere på møtet">
-            #{if event?.participants?.size() == 0}
-            Det er ennå ingen påmeldte deltagere. Sjekk senere :)
-            #{/if}
-            #{list items:event.participants, as:'participant'}
-            <div style="text-align: center;">
-            <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid"/><br/>
-            ${participant.name}
-            <hr/>
-            </div>
-          #{/list}
-    </div>
-
 	<div class="clear"></div>
 	#{/list}
 
@@ -116,5 +103,5 @@
     </table>
 </div>
 
-<div id="kart" style="display:none" title="Her skal vi møtes">
-</div>
+<div id="kart" style="display:none" title="Her skal vi møtes"></div>
+<div id="participants" style="display:none;margin:0 auto;text-align:center;" title="Deltagere på møtet"></div>
