@@ -79,11 +79,9 @@ public class ConfluencePageFetcher {
 			for (BlogEntrySummary blogEntrySummary : blogEntries) {
 				if (blogEntrySummary.getPublishDate().after(limit)) {
 					BlogEntry entry = confluence.getBlogEntry(blogEntrySummary.getId());
-					display.add(new Announcement(entry.getTitle(), toHTMLFragment(entry.getContent()).toString(), entry.getUrl()));
+					display.add(new Announcement(entry.getTitle(), toHTMLFragment(entry.getContent()), entry.getUrl()));
 				}
 			}
-		} catch (ConfluenceException e) {
-			e.printStackTrace();
 		} catch (SwizzleException e) {
 			e.printStackTrace();
 		}
@@ -99,9 +97,7 @@ public class ConfluencePageFetcher {
             		//TODO Actually check if exception is caused by session timeout or find a way to read this without login
 					confluence.login(username, password);
 					return fetchPage(name);
-				} catch (ConfluenceException loginError) {
-					throw new RuntimeException("Login failed on retry for page: " + name, loginError);
-				} catch (SwizzleException loginError) {
+                } catch (SwizzleException loginError) {
 					throw new RuntimeException("Login failed on retry for page: " + name, loginError);
 				}
             }
@@ -109,18 +105,17 @@ public class ConfluencePageFetcher {
         return null;
     }
 
-	private String fetchPage(String name) throws SwizzleException, ConfluenceException {
+	private String fetchPage(String name) throws SwizzleException {
 		Page page = confluence.getPage(SPACE, name);
-		StringWriter writer = toHTMLFragment(page.getContent());
-		return writer.toString();
+        return toHTMLFragment(page.getContent());
 	}
 
-    private StringWriter toHTMLFragment(String content) {
+    private String toHTMLFragment(String content) {
         StringWriter writer = new StringWriter();
         parser.setBuilder(new HtmlDocumentBuilder(writer));
         parser.parse(content, false);
         parser.setBuilder(null);
-        return writer;
+        return writer.toString();
     }
 
     public static void main(String[] args) {
