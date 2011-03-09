@@ -9,7 +9,7 @@
 <br/>
 <p>${event?.extraInfo}</p>
 <br/>
-<p>#{if event?.date?.after(new Date())}<a href="javascript:" onclick="$('#registrering').dialog({
+<p>#{if new Date().before(event?.date?.plus(1))}<a href="javascript:" onclick="$('#registrering').dialog({
 			    modal: true,
 			    width : 420,
 			    buttons: {
@@ -30,7 +30,7 @@
     <a href="@{Application.ical(event?.id)}"><img src="/public/images/ical.png" class="map" alt="kalender"/></a>
     <a href="javascript:" onclick="$('#kommer').dialog({modal: true});"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
     #{/if}
-    #{if !event?.date?.after(new Date())}
+    #{if new Date().after(event?.date)}
     <a href="javascript:" onclick="$('#kommer').dialog({modal: true});"><img src="/public/images/slides.png" class="map" alt="slides fra foreleser"/></a>
     #{/if}
     <a  href="javascript:" onclick="$('#kart').html('${event?.location}, ${event?.address}<br/><img src=\&quot;http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false\&quot; alt=\&quot;Her skal vi møtes!\&quot;/>');
