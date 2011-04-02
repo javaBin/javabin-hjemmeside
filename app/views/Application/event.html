@@ -28,7 +28,7 @@
 				}
 		        });$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region?.realName} : ${event?.title}');"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/></a>
     <a href="@{Application.ical(event?.id)}"><img src="/public/images/ical.png" class="map" alt="kalender"/></a>
-    <a href="javascript:" onclick="$('#kommer').dialog({modal: true});"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
+    <a href="@{Application.pdf(event?.id)}"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
     #{/if}
     #{if new Date().after(event?.date)}
     <a href="javascript:" onclick="$('#kommer').dialog({modal: true});"><img src="/public/images/slides.png" class="map" alt="slides fra foreleser"/></a>

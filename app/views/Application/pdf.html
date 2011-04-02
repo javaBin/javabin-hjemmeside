@@ -1,0 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Neste javaBin-møte</title>
+</head>
+<body>
+
+<h4>Neste javaBin-møte</h4>
+<h2>${event?.title}</h2>
+<p>${event?.date?.format("dd.MM.yyyy")} på ${event?.location}</p>
+<p>${event?.description}</p>
+<p>${event?.extraInfo}</p>
+<br/>
+${event?.address}
+<img src="http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false" alt="Her skal vi møtes!"/>
+</body>
+</html>

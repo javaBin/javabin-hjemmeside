@@ -55,7 +55,8 @@ public class Event extends Model {
 		BERGEN("Bergen", "bergen.png", "Frédéric de Goldschmidt www.frederic.net"), 
 		SORLANDET("Sørlandet", "grimstad.png", "jagels@flickr"), 
 		TRONDHEIM("Trondheim", "trondheim.png", "stevecadman@flickr"), 
-		STAVANGER("Stavanger", "stavanger.png", "dundak@wikimedia");
+		STAVANGER("Stavanger", "stavanger.png", "dundak@wikimedia"),
+		SCALABIN("ScalaBin", "scalabin.png", "");
 
 		public final String realName;
 		public final String picture;

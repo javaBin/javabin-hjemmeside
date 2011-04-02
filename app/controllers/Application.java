@@ -1,9 +1,5 @@
 package controllers;
 
-import java.io.*;
-import java.util.Date;
-import java.util.List;
-
 import models.Announcement;
 import models.Event;
 import models.LectureHolder;
@@ -14,18 +10,25 @@ import net.fortuna.ical4j.model.ValidationException;
 import notifiers.MailMan;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateMidnight;
 
+import org.joda.time.DateMidnight;
 import play.Logger;
 import play.cache.Cache;
 import play.data.validation.Email;
 import play.data.validation.Required;
+import play.db.jpa.JPABase;
 import play.libs.Codec;
 import play.libs.Crypto;
 import play.libs.Images;
 import play.mvc.Controller;
 
-
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
+import static play.modules.pdf.PDF.*;
 
 public class Application extends Controller {
 
@@ -173,5 +176,10 @@ public class Application extends Controller {
             return null;
     }
 
+
+    public static void pdf(Long eventId){
+        Event event = Event.findById(eventId);
+        renderPDF(event);
+    }
 
 }
