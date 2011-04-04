@@ -12,7 +12,9 @@
 <p>${event?.description}</p>
 <p>${event?.extraInfo}</p>
 <br/>
-${event?.address}
+${event?.address}<br/>
 <img src="http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false" alt="Her skal vi møtes!"/>
+<br/>
+<img src="http://qrcode.kaywa.com/img.php?s=4&d=http%3A%2F%2Fwww.java.no%2Fevent%2F${event?.id}" alt="qrcode"  />
 </body>
 </html>
