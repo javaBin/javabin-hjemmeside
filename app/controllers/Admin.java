@@ -31,9 +31,9 @@ public class Admin extends Controller {
 
     public static void index() {
         Date date = new DateMidnight().plus(1).toDate();
-        List<Event> currentEvents = Event.find("published is true and date >= ? order by date asc", date).fetch();
-        List<Event> oldEvents = Event.find("published is true and date < ? order by date asc", date).fetch();
-        List<Event> unpublishedEvents = Event.find("published is false order by date asc").fetch();
+        List<Event> currentEvents = Event.find("published is true and date >= ? order by date desc", date).fetch();
+        List<Event> oldEvents = Event.find("published is true and date < ? order by date desc", date).fetch();
+        List<Event> unpublishedEvents = Event.find("published is false order by date desc").fetch();
         render(unpublishedEvents, currentEvents, oldEvents);
     }
 
