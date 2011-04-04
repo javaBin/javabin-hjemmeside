@@ -177,8 +177,8 @@ public class Application extends Controller {
     }
 
 
-    public static void pdf(Long eventId){
-        Event event = Event.findById(eventId);
+    public static void pdf(Long id){
+        Event event = Event.findById(id);
         renderPDF(event);
     }
 
