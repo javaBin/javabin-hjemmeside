@@ -10,7 +10,7 @@
 <h2>${event?.title}</h2>
 <p>${event?.date?.format("dd.MM.yyyy")} på ${event?.location}</p>
 <p>${event?.description}</p>
-<p>${event?.extraInfo.raw()}</p>
+<p>${event?.extraInfo?.raw()q}</p>
 <br/>
 ${event?.address}<br/>
 <img src="http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=570x570&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false" alt="Her skal vi møtes!"/>
