@@ -7,7 +7,7 @@
 <br/>
 <p>${event?.description}</p>
 <br/>
-<p>${event?.extraInfo}</p>
+<p>${event?.extraInfo?.raw()}</p>
 <br/>
 <p>#{if new Date().before(event?.date?.plus(1))}<a href="javascript:" onclick="$('#registrering').dialog({
 			    modal: true,
