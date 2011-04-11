@@ -183,7 +183,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     <hr/>
     <div id="lectureholderContainer">
         #{list items:event?.lectureholders, as:'lectureholder'}
-                <div id="lec_${lectureholder?.id}" class="grid_2" style="width:120px">
+                <div id="lec_${lectureholder?.id}" class="grid_2" style="width:130px">
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
                     <br/>
                     <a href="mailto:${lectureholder?.gravatarId}" class="awesome" style="background-color:purple">${lectureholder?.fullName}</a><a href="javascript:" onclick="$.post('@{removeLectureHolder()}', {eventId : ${event?.id}, lectureholderId: ${lectureholder?.id}}, function(data){
@@ -197,7 +197,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
 <div class="grid_11">
     <br/>
-    <h3>Deltager(e) : <input type="text" size="3" name="event.participantCount" value="${event?.participantCount}"><a href="javascript:" class="awesome" onclick="$('#addParticipant').dialog({
+    <h3>Antall påmeldte : <input type="text" size="3" name="event.participantCount" value="${event?.participantCount}"/> Maks antall : <input type="text" size="3" name="event.participantLimit“" value="${event?.participantLimit}"><a href="javascript:" class="awesome" onclick="$('#addParticipant').dialog({
         modal: true,
         resizable: false,
         buttons: {

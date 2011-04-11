@@ -37,7 +37,7 @@ public class Event extends Model {
 	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<Participant> participants;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<LectureHolder> lectureholders;
 
 
@@ -49,6 +49,7 @@ public class Event extends Model {
 
 
 	public Integer participantCount = 0;
+    public Integer participantLimit = 100;
 
 	public enum Region {
 		OSLO("Oslo", "oslo.png", "krakers@wikimedia"), 

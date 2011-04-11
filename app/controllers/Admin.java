@@ -70,7 +70,7 @@ public class Admin extends Controller {
         Event event = Event.findById(eventId);
         LectureHolder lectureholder = null;
         if(lectureholderId != null){
-            lectureholder = LectureHolder.<LectureHolder>findById(lectureholderId);
+            lectureholder = LectureHolder.findById(lectureholderId);
         }
 
         if(lectureholder == null){
