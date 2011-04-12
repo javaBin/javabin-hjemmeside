@@ -16,6 +16,7 @@
 </div>
 <div class="lineItemText grid_4">
 <h2>Trondheim</h2>	
+ <table>
     #{list items:trondheimEvents, as:'event'}
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
@@ -23,9 +24,11 @@
             <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
         </tr>
     #{/list}
+  </table>
 </div>
 <div class="lineItemText grid_4">
 <h2>Stavanger</h2>	
+ <table>
     #{list items:stavangerEvents, as:'event'}
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
@@ -33,10 +36,12 @@
             <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
         </tr>
     #{/list}
+    </table>
 </div>
 <div class="clear"></div>
 <div class="lineItemText grid_4">
 <h2>Innlandet</h2>	
+    <table>
     #{list items:innlandetEvents, as:'event'}
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
@@ -44,9 +49,11 @@
             <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
         </tr>
     #{/list}
+    </table>
 </div>
 <div class="lineItemText grid_4">
 <h2>Bergen</h2>	
+    <table>
     #{list items:bergenEvents, as:'event'}
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
@@ -54,13 +61,17 @@
             <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
         </tr>
     #{/list}
+    </table>
 </div>
 <div class="lineItemText grid_4">
 <h2>Sørlandet</h2>
+    <table>
     #{list items:sorlandetEvents, as:'event'}
         <tr>
             <td>${event?.date?.format('dd.MM.yyyy')}</td>
             <td>${event?.title}</td>
-            <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>        </tr>
+            <td><a href="@{Application.event(event.id)}"><img style="vertical-align:middle;"src="/public/images/view_more_text.png"/></a></td>
+        </tr>
     #{/list}
+    </table>
 </div>
