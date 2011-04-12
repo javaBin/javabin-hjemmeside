@@ -107,6 +107,11 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     </div>
     #{/field}
 
+    <div class="field">
+        <label for="klokka">Klokka : </label>
+        #{select 'event.startHour', size:1, id:'event.startHour', items:0..24, value:event.startHour/}#{select 'event.startMin', size:1, id:'event.startMin', items:[0,15,30,45], value:event.startMin/} - #{select 'event.endHour', size:1, id:'event.endHour', items:0..24, value:event.endHour/}#{select 'event.endMin', size:1, id:'event.endMin', items:[0,15,30,45], value:event.endMin/}
+    </div>
+
     #{field 'event.location'}
     <div class="field">
         <label for="${field.id}">Møtested: </label>

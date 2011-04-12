@@ -28,9 +28,8 @@ public class ICalUtil {
         TimeZone timezone = registry.getTimeZone("Europe/Oslo");
         VTimeZone tz = timezone.getVTimeZone();
         // Create the event
-        org.joda.time.DateTime start = new org.joda.time.DateTime(event.date);
-        start = start.hourOfDay().setCopy(18);
-        org.joda.time.DateTime end = start.plusHours(3);
+        org.joda.time.DateTime start = new org.joda.time.DateTime(event.date).hourOfDay().setCopy(event.startHour).minuteOfHour().setCopy(event.startMin);
+        org.joda.time.DateTime end = start.hourOfDay().setCopy(event.endHour).minuteOfHour().setCopy(event.endMin);;
         VEvent meeting = new VEvent(new DateTime(start.toDate()), new DateTime(end.toDate()), "javaBin: " + event.title);
         // Add timezone info..
         meeting.getProperties().add(tz.getTimeZoneId());

@@ -33,7 +33,21 @@ public class Event extends Model {
 	
     @Required
 	public Date date;
-	
+
+    @Required
+    public Integer startHour = 18;
+
+    @Required
+    public Integer startMin = 0;
+
+    @Required
+    public Integer endHour = 21;
+
+    @Required
+    public Integer endMin = 0;
+
+
+
 	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<Participant> participants;
 
