@@ -40,7 +40,7 @@ public class Application extends Controller {
 
         if (announcements == null) {
             try {
-                announcements = fetcher.getNewsFeed();
+                announcements = Announcement.find("published is true and frontpage is true").fetch();
                 Cache.add("announcements", announcements, "5mn");
             } catch (Exception e) {
                 Logger.error("Confluence didn't load.", e);

@@ -61,32 +61,7 @@ public class ConfluencePageFetcher {
             confluence = null;
         }
     }
-    
-    public List<Announcement> getNewsFeed() {
-    	Calendar cal = Calendar.getInstance();
-    	cal.add(Calendar.DATE, -5);
-    	Date limit = cal.getTime();
-    	List<Announcement> display = new ArrayList<Announcement>();
-    	try {
-    		//TODO find a way to not load all entries.
-			List<BlogEntrySummary> blogEntries = confluence.getBlogEntries(SPACE);
-			Collections.sort(blogEntries, new Comparator<BlogEntrySummary>() {
-				@Override
-				public int compare(BlogEntrySummary o1, BlogEntrySummary o2) {
-					return o2.getPublishDate().compareTo(o1.getPublishDate());
-				}
-			});
-			for (BlogEntrySummary blogEntrySummary : blogEntries) {
-				if (blogEntrySummary.getPublishDate().after(limit)) {
-					BlogEntry entry = confluence.getBlogEntry(blogEntrySummary.getId());
-					display.add(new Announcement(entry.getTitle(), toHTMLFragment(entry.getContent()), entry.getUrl()));
-				}
-			}
-		} catch (SwizzleException e) {
-			e.printStackTrace();
-		}
-    	return display;
-    }
+
 
     public String getPageAsHTMLFragment(String name) {
         if (confluence != null) {

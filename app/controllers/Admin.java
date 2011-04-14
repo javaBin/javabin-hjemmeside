@@ -1,8 +1,6 @@
 package controllers;
 
-import models.Event;
-import models.LectureHolder;
-import models.Participant;
+import models.*;
 
 import models.User;
 import notifiers.MailMan;
@@ -150,8 +148,22 @@ public class Admin extends Controller {
 	    }
     }
 
+
+	public static void announcements(){
+		List<Announcement> announcements = Announcement.findAll();
+		render(announcements);
+		
+	}
 	
+	public static void saveAnnouncement(Announcement announcement){
+		announcement.save();
+		announcements();
+	}
 	
+	public static void deleteAnnouncement(Long id){
+		Announcement.delete("id = ?", id);
+		announcements();
+	}
 
 
 }
