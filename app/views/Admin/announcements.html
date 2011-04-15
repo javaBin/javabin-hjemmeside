@@ -1,0 +1,33 @@
+#{extends 'admin.html' /}
+#{set title:'www.java.no' /}
+
+<div class="grid_12">
+<br/>
+<h3>Nyheter :  ${announcements.size()}<a href="javascript:" class="awesome" onclick="
+	$('#announcementId').val('');
+	$('#title').val('');$('#content').val('');
+	$('#announcement').dialog({
+    modal: true,
+    width : 450,
+    height : 450,
+    buttons : {
+        'Opprett': function() {$('#announcementForm').submit();}}})">+</a></h3>
+<hr/>
+   #{list items:announcements, as:'announcement'}
+	<div>
+		<h3>${announcement?.title} <a href="javascript:" onclick=""><img src="/public/images/gtk-edit.png"></a><a href="@{Admin.deleteAnnouncement(announcement?.id)}" onclick="return confirm('Er du sikker på at du vil slette nyheten?')"><img src="/public/images/edit-delete.png"></a></h3>
+		<p>${announcement?.content.raw()}</p>
+		<hr/>
+	</div>
+    #{/list}
+</div>
+<div id="announcement" title="Nyhet" style="display:none">
+	#{form id:'announcementForm', action:@Admin.saveAnnouncement()}
+    <label>Publisert</label><input id="published" name="announcement.published" type="checkbox"></input><br/>
+    <label>Forsiden</label><input id="frontpage" name="announcement.frontpage" type="checkbox"></input><br/>
+    <label>Tittel</label><input size="42" id="title" name="announcement.title" type="text"/><br/>
+    <label>Innhold</label><textarea cols="30" rows="14" id="content" name="announcement.content" type="text"></textarea>
+
+    <input type="hidden" id="announcementId" name="announcement.id"/>
+	#{/form}
+</div>
