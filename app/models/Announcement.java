@@ -10,6 +10,8 @@ import play.data.validation.*;
 public class Announcement extends Model {
 	
 public String title;
+@MaxSize(5000)
+@Column(length = 5000)
 public String content;
 public Boolean frontpage = false;
 public Boolean published = false;
