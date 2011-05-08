@@ -3,9 +3,17 @@
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nb" lang="nb">
 <head>
-        <title>#{get 'title' /}</title>
+        <title>#{get 'title'}www.java.no #{/}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/reset.css'}"/>
+	<meta property="og:title" content="#{get 'ogtitle'}javaBin #{/}"/>
+	<meta property="og:type" content="#{get 'ogtype'}article #{/}"/>
+	<meta property="og:url" content="#{get 'ogurl'}http://www.java.no #{/}"/>
+	<meta property="og:image" content="#{get 'ogimage'}http://java.no/public/images/logo.png #{/}"/>
+	<meta property="og:description" content="#{get 'ogdescription'}Java Brukerforening i Norge #{/}"/>
+	<meta property="og:street-address" content="#{get 'ogstreetaddress'} #{/}"/>
+	<meta property="og:site_name" content="java.no"/>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/reset.css'}"/>
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/text.css'}"/>
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/960.css'}"/>
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/style.css'}"/>

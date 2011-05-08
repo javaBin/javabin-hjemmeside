@@ -1,5 +1,8 @@
 #{extends 'main.html' /}
-#{set title:'www.java.no' /}
+#{set title: event?.title /}
+#{set ogtitle: 'javaBin ' + event?.region.realName + ' ' + event?.date?.format("dd.MM") + " - " + event?.title /}
+#{set ogdescription: event?.description /}
+#{set ogstreetaddress: event?.location + ', ' + event?.address /}
 
 <div class="grid_8">
 <h1>${event?.title}</h1>
