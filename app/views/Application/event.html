@@ -12,39 +12,19 @@
 <br/>
 <p>${event?.extraInfo?.raw()}</p>
 <br/>
-<p>#{if new Date().before(event?.date?.plus(1))}<a href="javascript:" onclick="$('#registrering').dialog({
-			    modal: true,
-			    width : 420,
-			    buttons: {
-                    'Meld meg på!': function() {
-                        $.post('@{signUpForEvent()}', {eventId : $('#eventId').val(), randomId : $('#randomId').val(), code : $('#code').val(), name:  $('#name').val(), email: $('#email').val(), howMany: $('#howMany').val()}, function(data){
-                            if(data['errors'].length > 0){
-                                for(var i = 0; i < data['errors'].length; i++){
-                                    $('#' + data['errors'][i].key).addClass( 'ui-state-error' );
-                                }
-                            } else {
-                              $('#registrering').dialog( 'close' );
-                            }
-                        });
+<p>#{if new Date().before(event?.date?.plus(1))}
 
-                    }
-				}
-		        });$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region?.realName} : ${event?.title}');"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/></a>
-    <a href="@{Application.ical(event?.id)}"><img src="/public/images/ical.png" class="map" alt="kalender"/></a>
+    <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/></a>
+ <a href="@{Application.ical(event?.id)}"><img src="/public/images/ical.png" class="map" alt="kalender"/></a>
     <a href="@{Application.pdf(event?.id)}"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
     #{/if}
     #{if new Date().after(event?.date)}
     <a href="javascript:" onclick="$('#kommer').dialog({modal: true});"><img src="/public/images/slides.png" class="map" alt="slides fra foreleser"/></a>
     #{/if}
-    <a  href="javascript:" onclick="$('#kart').html('${event?.location}, ${event?.address}<br/><img src=\&quot;http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false\&quot; alt=\&quot;Her skal vi møtes!\&quot;/>');
-    $('#kart').dialog({
-            modal: true,
-            resizable: false,
-            width : 625,
-            height : 625
-            });">
-        <img src="/public/images/map.png" alt="kart" class="map"/>
-    </a>
+
+      #{if event?.address}
+          <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img src="/public/images/map.png" alt="kart" class="map"/></a>
+         #{/if}
     <a href="http://twitter.com/share?text=%23javaBin%20ftw!&url=http%3A%2F%2Fjava.no/event/${event?.id}"><img class="map" src="/public/images/twitter_3.png" alt="Del møtet på twitter"></a>
 </p>
 <br/>
@@ -84,13 +64,10 @@
                 Det er ennå ingen påmeldte deltagere. <br/>Sjekk senere :)
                 #{/if}
                 #{list items:event?.participants, as:'participant'}
-                 <div class="grid_1">
+                 <div class="grid_1 participant">
                 <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}?s=60&d=monsterid"/><br/>
-                ${participant.name}
+                    ${participant.name}
                 </div>
-               #{if participant_index % 3 == 0}
-                <div class="clear"></div>
-                #{/if}
 
               #{/list}
 

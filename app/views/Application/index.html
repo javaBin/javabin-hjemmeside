@@ -2,68 +2,62 @@
 #{set title:'www.java.no' /}
 #{list items:announcements, as:'announcement'}
 <div class="grid_12">
-   <h2>${announcement?.title}</h2>
+    <h2>${announcement?.title}</h2>
     ${announcement?.description?.raw()}
 </div>
 #{/list}
-	#{list items:events, as:'event'}
-	<div class="lineItem grid_4">
-		<div class="image">
-			<img src="/public/images/${event?.region.picture}" title="Photo by: ${event?.region.photographer}"
-                    alt="${event?.region.realName}"/>
-			<div class="text">${event?.region.realName}</div>
-		</div>
-	</div>
-	<div class="lineItemText grid_8">
-		<h2>${event?.title} <span style="color:#999">${event?.date.format("dd.MM.yyyy")}</span>
-        <a  href="javascript:" onclick="$('#kart').html('${event?.location}, ${event?.address}<br/><img src=\&quot;http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false\&quot; alt=\&quot;Her skal vi møtes!\&quot;/>');
-        $('#kart').dialog({
-			    modal: true,
-			    resizable: false,
-			    width : 625,
-			    height : 625
-		        });">
-            <img src="/public/images/map.png" alt="kart" class="map"/>
-        </a>
-        <a class="awesome" style="vertical-align:middle;" onclick="$('#participants').html('#{if event?.participants?.size() == 0}Det er ennå ingen påmeldte deltagere. Sjekk senere :)#{/if}#{list items:event.participants, as:'participant'}<img src=\&quot;http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid\&quot;/><br/>${participant.name}<hr/>#{/list}');
-        $('#participants').dialog({
-			    maxHeight : 600,
-			    modal: true
-		        });"><b> ${event?.participantCount}</b><img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
-			<a href="javascript:" onclick="$('#registrering').dialog({
-			    modal: true,
-			    width : 420,
-			    buttons: {
-                    'Meld meg på!': function() {
-                        $.post('@{signUpForEvent()}', {eventId : $('#eventId').val(), randomId : $('#randomId').val(), code : $('#code').val(), name:  $('#name').val(), email: $('#email').val(), howMany: $('#howMany').val()}, function(data){
-                            if(data['errors'].length > 0){
-                                for(var i = 0; i < data['errors'].length; i++){
-                                    $('#' + data['errors'][i].key).addClass( 'ui-state-error' );
-                                }
-                            } else {
-                              $('#registrering').dialog( 'close' );
-                            }
-                        });
+#{list items:events, as:'event'}
+<div class="lineItem grid_4">
+    <div class="image">
+        <a href="@{Application.event(event.id)}"><img src="/public/images/${event?.region.picture}"
+                                                      title="Photo by: ${event?.region.photographer}"
+                                                      alt="${event?.region.realName}"/></a>
 
-                    }
-				}
-		        });$('#eventId').val(${event?.id});$('#eventTitle').html('${event?.region?.realName} : ${event?.title}');"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/></a>
-        </h2>
+        <div class="text">${event?.region.realName}</div>
+    </div>
+</div>
+<div class="lineItemText grid_8">
 
-		<p>${event?.description} <br/><a href="@{Application.event(event.id)}">Les mer..</a></p>
-	</div>
-	<div class="clear"></div>
-	#{/list}
+    <div class="participants hidden">
+        #{list items:event.participants, as:'participant'}
+        <div class="participant">
+            <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid"/><br/>
+            ${participant.name}
+        </div>
+        #{/list}
+    </div>
 
-	<input type="hidden" id="eventId" value=""/>
-    <input type="hidden" id="randomId" name="randomId" value="${randomId}" />
+    <h2>
+        <a class="eventTitle" href="@{Application.event(event.id)}">${event?.title}</a>
+        <span class="date">${event?.date.format("dd.MM.yyyy")}</span>
+
+        #{if event?.address}
+        <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img
+                src="/public/images/map.png" alt="kart" class="map"/></a>
+        #{/if}
+
+        <a class="awesome participants #{if event?.participantCount >0} participantList #{/if}"><b>
+            ${event?.participantCount}</b><img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
+        <a class="attend"
+           href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img
+                style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/></a>
+
+    </h2>
+
+    <p>${event?.description} <br/><a href="@{Application.event(event.id)}">Les mer..</a></p>
+</div>
+<div class="clear"></div>
+#{/list}
+
+<input type="hidden" id="eventId" value=""/>
+<input type="hidden" id="randomId" name="randomId" value="${randomId}"/>
 
 <div style="display:none" id="registrering" title="Påmelding til møte">
     <p id="eventTitle"></p>
     <table border="0" cellspacing="5" cellpadding="5">
         <tr>
             <td class="label">Navn</td>
-            <td class="input" ><input type="text" name="name" id="name"/></td>
+            <td class="input"><input type="text" name="name" id="name"/></td>
         </tr>
         <tr>
             <td class="label">&nbsp;</td>
@@ -89,19 +83,22 @@
             <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-            <td colspan="2"><hr/></td>
+            <td colspan="2">
+                <hr/>
+            </td>
         </tr>
         <tr>
             <td class="label">&nbsp;</td>
-            <td class="input"><img src="@{Application.captcha(randomId)}" /><input type="hidden" name="randomId" value="${randomId}" /></td>
+            <td class="input"><img src="@{Application.captcha(randomId)}"/><input type="hidden" name="randomId"
+                                                                                  value="${randomId}"/></td>
         </tr>
         <tr>
             <td class="label">Gjenta koden</td>
-            <td class="input"><input type="text" name="code" id="code" value="" /></td>
+            <td class="input"><input type="text" name="code" id="code" value=""/></td>
         </tr>
 
     </table>
 </div>
 
-<div id="kart" style="display:none" title="Her skal vi møtes"></div>
-<div id="participants" style="display:none;margin:0 auto;text-align:center;" title="Deltagere på møtet"></div>
+<div id="kart" title="Her skal vi møtes"></div>
+<div id="participants" title="Deltagere på møtet"></div>

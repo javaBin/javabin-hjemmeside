@@ -140,6 +140,9 @@ p ul {
 	position: relative;
 	cursor: pointer;
 }
+.awesome.participants {
+    vertical-align:middle;
+}
 .awesome:hover { text-decoration: none;}
 .awesome:active { top: 1px; }
 
@@ -280,4 +283,35 @@ h3 a {
 p a {
     color:#999;
     background-color:transparent;
+}
+
+h2 span.date {
+    color:#999;
+}
+
+.hidden, #kart {
+    display:none;
+}
+
+div.participant {
+    display:-moz-inline-stack;
+    display:inline-block;
+    zoom:1;
+    *display:inline;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#participants {
+    display:none;
+    margin:0 auto;
+    text-align:left;
+    width: 200px;
+}
+
+
+h2 a.eventTitle {
+    color: #494949;
+    text-decoration: none;
+
 }
