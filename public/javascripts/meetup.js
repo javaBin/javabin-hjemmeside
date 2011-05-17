@@ -52,7 +52,7 @@ $(function() {
                                                                 $('#' + data['errors'][i].key).addClass('ui-state-error');
                                                             }
                                                         } else {
-                                                            $('#registrering').dialog('close');
+                                                            location.reload(true);
                                                         }
                                                     });
 
