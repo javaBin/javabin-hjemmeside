@@ -35,6 +35,21 @@
       <artifactId>ical4j</artifactId>
       <version>1.0-rc1</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.code.facebookapi</groupId>
+      <artifactId>facebook-java-api</artifactId>
+      <version>3.0.4</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>r09</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>1.7.1</version>
+    </dependency>
   </dependencies>
 
   <build>
