@@ -1,2 +1,7 @@
 tmp
 lib
+.classpath
+.project
+.settings
+db
+eclipse
