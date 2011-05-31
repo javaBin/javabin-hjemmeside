@@ -1,4 +1,5 @@
 package controllers.confluence;
 
-public class Nameable {
+public interface Nameable {
+    String getName();
 }
