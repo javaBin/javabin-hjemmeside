@@ -18,7 +18,7 @@
 <p>#{if new Date().before(event?.date?.plus(1))}
 
     <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/> Meld meg på!</a><br/><br/>
- <a href="@{Application.ical(event?.id)}"><img src="/public/images/ical.png" class="map" alt="kalender"/></a>
+    <a href="@{Application.ical(event?.id)}"><img src="/public/images/ical.png" class="map" alt="kalender"/></a>
     <a href="@{Application.pdf(event?.id)}"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
     #{/if}
     #{if new Date().after(event?.date)}
@@ -121,10 +121,36 @@
             <td class="label">Gjenta koden</td>
             <td class="input"><input type="text" name="code" id="code" value="" /></td>
         </tr>
+        <tr>
+            <td colspan="2"><hr/></td>
+        </tr>
+        <tr>
+            <td class="centeredtext" colspan="2">
+                <p>... eller meld meg på med Facebook-kontoen min:</p>
+                <fb:login-button v="2" size="large" autologoutlink="true" perms="email,publish_stream"  onlogin='window.location = "@{signUpForEventWithFacebook()}?eventId=${event?.id}";'>Meld meg på via Facebook</fb:login-button>
+            </td>
+        </tr>
+       
 
     </table>
 </div>
+<div id="fb-root"></div>
+<script>
 
+	/* Facebook connect init */
+	window.fbAsyncInit = function() {
+	  FB.init({appId: '227599930584065', status: true, cookie: true,
+	           xfbml: true});
+	};
+	(function() {
+	  var e = document.createElement('script');
+	  e.type = 'text/javascript';
+	  e.src = document.location.protocol +
+	    '//connect.facebook.net/en_GB/all.js';
+	  e.async = true;
+	  document.getElementById('fb-root').appendChild(e);
+	}());
+</script>
 
         <div id="kart" style="display:none" title="Her skal vi møtes"></div>
 
