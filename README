@@ -26,5 +26,8 @@ play eclipsify
 run developer mode with confluence integration:
 play run -Dconfluence.user=<username> -Dconfluence.password=<password>
 
+Facebook Connect:
+Add localhost.com to your hosts file in order for Facebook Connect to work properly. 
+Please note that Facebook Connect is a proof-of-concept and has not been tested thoroughly. When signing up using Facebook, a messsage will be posted to your wall that you are attending a javaBin meetup. You are warned!
 
 
