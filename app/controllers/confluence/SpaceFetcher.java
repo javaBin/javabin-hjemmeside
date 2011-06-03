@@ -47,7 +47,6 @@ public class SpaceFetcher {
         Page page = pages.get(name);
         if (page == null) {
             Page home = pages.get("Home");
-            System.out.println("home = " + home);
             if (home == null) {
                 throw new IllegalArgumentException("No page called Home, cannot look in descendants");
             }

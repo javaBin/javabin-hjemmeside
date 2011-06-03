@@ -1,5 +1,7 @@
 package controllers;
 
+import controllers.confluence.Confluence;
+import controllers.confluence.Page;
 import models.Announcement;
 import models.Event;
 import models.LectureHolder;
@@ -8,15 +10,12 @@ import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.ValidationException;
 import notifiers.MailMan;
-
 import org.apache.commons.lang.StringUtils;
-
 import org.joda.time.DateMidnight;
 import play.Logger;
 import play.cache.Cache;
 import play.data.validation.Email;
 import play.data.validation.Required;
-import play.db.jpa.JPABase;
 import play.libs.Codec;
 import play.libs.Crypto;
 import play.libs.Images;
@@ -26,15 +25,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
-import static play.modules.pdf.PDF.*;
+import java.util.concurrent.Future;
+
+import static play.modules.pdf.PDF.renderPDF;
 
 public class Application extends Controller {
 
-    private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
+    private static Confluence confluence = new Confluence(URI.create("http://wiki.java.no/rest/atompub/latest/"));
 
-	public static void index() {
+    public static void index() {
 
         List<Announcement> announcements = Cache.get("announcements", List.class);
 
@@ -84,7 +86,7 @@ public class Application extends Controller {
     public static void regretSigningUp(String id) {
         String decrypted = Crypto.decryptAES(id);
         String[] strings = StringUtils.split(decrypted, '_');
-        if(strings != null && strings.length == 2){
+        if (strings != null && strings.length == 2) {
             Participant participant = Participant.findById(Long.parseLong(strings[0]));
             Event event = Event.findById(Long.parseLong(strings[1]));
 
@@ -110,14 +112,14 @@ public class Application extends Controller {
     }
 
 
-	public static void event(@Required Long id){
+    public static void event(@Required Long id) {
         String randomId = Codec.UUID();
-		Event event = Event.findById(id);
-        if(event == null)
+        Event event = Event.findById(id);
+        if (event == null)
             notFound();
 
-		render(event, randomId);
-	}
+        render(event, randomId);
+    }
 
     public static void captcha(String id) {
         Images.Captcha captcha = Images.captcha();
@@ -128,28 +130,32 @@ public class Application extends Controller {
 
     public static void lectureholders() {
         List<LectureHolder> lectureholders = LectureHolder.findAll();
-		render(lectureholders);
+        render(lectureholders);
     }
 
     public static void confluence(String name) {
         String document = Cache.get(name, String.class);
-        if(document == null){
+        if (document == null) {
             try {
-                document = fetcher.getPageAsHTMLFragment(name);
-                if(document != null){
-                    Cache.add(name,document, "5mn");
+                Future<Page> pageFuture = confluence.getPage("Forsiden", name);
+                Page page = pageFuture.get();
+                if (page != null) {
+                    document = page.getBody();
+                }
+                if (document != null) {
+                    Cache.add(name, document, "5mn");
                 }
             } catch (Exception e) {
                 Logger.error("Confluence didn't load.", e);
             }
         }
-        if(document==null)
+        if (document == null)
             notFound();
 
         render(document);
     }
 
-    public static void ical(Long id){
+    public static void ical(Long id) {
         try {
             Event event = Event.findById(id);
             Calendar calendar = ICalUtil.createCalendar(event);
@@ -158,7 +164,7 @@ public class Application extends Controller {
             outputter.output(calendar, bos);
             response.setHeader("Content-Type", "application/ics");
             InputStream is = new ByteArrayInputStream(bos.toByteArray());
-            renderBinary(is,"javaBin.ics");
+            renderBinary(is, "javaBin.ics");
             bos.close();
             is.close();
         } catch (IOException e) {
@@ -169,15 +175,15 @@ public class Application extends Controller {
 
     }
 
-    public static String gravatarhash(String input){
-        if(input != null)
-          return Codec.hexMD5(input.toLowerCase().trim());
+    public static String gravatarhash(String input) {
+        if (input != null)
+            return Codec.hexMD5(input.toLowerCase().trim());
         else
             return null;
     }
 
 
-    public static void pdf(Long id){
+    public static void pdf(Long id) {
         Event event = Event.findById(id);
         renderPDF(event);
     }

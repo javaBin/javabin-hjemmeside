@@ -25,6 +25,10 @@ public class Confluence {
     private ExecutorService service;
     private final HTTPCache cache;
 
+    public Confluence(URI server) {
+        this(server, new HTTPCache(new MemoryCacheStorage(), HTTPClientResponseResolver.createMultithreadedInstance()));
+    }
+
     public Confluence(URI server, HTTPCache cache) {
         this.cache = cache;
         service = Executors.newSingleThreadExecutor();
@@ -57,6 +61,16 @@ public class Confluence {
     public Future<Page> getPage(final Space space, final String name) {
         return service.submit(new Callable<Page>() {
             public Page call() throws Exception {
+                return spaceFetcher.getPage(space, name);
+            }
+        }
+        );
+    }
+
+    public Future<Page> getPage(final String spaceName, final String name) {
+        return service.submit(new Callable<Page>() {
+            public Page call() throws Exception {
+                Space space = spaceFetcher.getSpaces().get(spaceName);
                 return spaceFetcher.getPage(space, name);
             }
         }
