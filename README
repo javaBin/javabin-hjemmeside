@@ -11,6 +11,9 @@ From the directory that contains this README-file, run:
 
 All dependencies are declared in the 'conf/dependencies.yml' file
 
+When changing the dependency graph you must invoke:
+'play dependencies'
+
 IDEA-instructions:
 play idealize
 Create a new IDEA project and import the "meetup" module.
@@ -19,8 +22,8 @@ Eclipse:
 play eclipsify
 
 
-run developer mode with confluence integration:
-play run -Dconfluence.user=<username> -Dconfluence.password=<password>
+run developer mode:
+play run
 
 
 
