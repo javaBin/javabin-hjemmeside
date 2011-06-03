@@ -42,7 +42,25 @@ public class SpaceFetcher {
     }
 
     public Page getPage(Space space, String name) {
-        return pageFetcherMap.get(space).getPages().get(name);
+        PageFetcher pageFetcher = pageFetcherMap.get(space);
+        Map<String, Page> pages = pageFetcher.getPages();
+        Page page = pages.get(name);
+        if (page == null) {
+            Page home = pages.get("Home");
+            System.out.println("home = " + home);
+            if (home == null) {
+                throw new IllegalArgumentException("No page called Home, cannot look in descendants");
+            }
+            page = pageFetcher.getChildrenAsMap(home).get(name);
+            if (page == null) {
+                throw new IllegalArgumentException(String.format("Could not find page with name %s in Home or a direct descendant of the Space", name));
+            }
+        }
+        return page;
+    }
+
+    public List<Page> getChildren(Page page) {
+        return pageFetcherMap.get(page.getSpace()).getChildren(page);
     }
 
     private static class Entry2Space implements Function<Entry, Space> {
