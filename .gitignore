@@ -18,3 +18,5 @@ private
 profiles.xml
 target
 out
+modules
+db
