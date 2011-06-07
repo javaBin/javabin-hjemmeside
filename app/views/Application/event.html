@@ -9,7 +9,7 @@
 <p>
     <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/> Meld meg på!</a>
 </p>
-<p><span class="event-detail-label">Når</span>: ${event?.date?.format("dd.MM.yyyy 'kl.' HH:mm")}<br/>
+<p><span class="event-detail-label">Når</span>: ${event?.date?.format("dd.MM.yyyy")} fra kl. ${event?.startHour?.format('00')}:${event?.startMin?.format('00')} til ${event?.endHour?.format('00')}:${event?.endMin?.format('00')}<br/>
     <span class="event-detail-label">Sted</span>: ${event?.location}</p>
 <br/>
 <p class="bold-text">${event?.description}</p>
