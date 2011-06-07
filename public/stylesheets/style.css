@@ -315,3 +315,24 @@ h2 a.eventTitle {
     text-decoration: none;
 
 }
+
+a.attend {
+
+	color: #1C5890;
+	text-decoration: none;	
+}
+
+a.attend:hover {
+
+	text-decoration: none;	
+}
+
+.event-detail-label {
+    font-weight: bold;	
+}
+
+/* for generic bold text */
+.bold-text {
+
+	font-weight: bold;	
+}

@@ -9,10 +9,10 @@
 <p>
     <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/> Meld meg på!</a>
 </p>
-<p>${event?.date?.format("dd.MM.yyyy")} på ${event?.location}</p>
+<p><span class="event-detail-label">Når</span>: ${event?.date?.format("dd.MM.yyyy 'kl.' HH:mm")}<br/>
+    <span class="event-detail-label">Sted</span>: ${event?.location}</p>
 <br/>
-<p>${event?.description}</p>
-<br/>
+<p class="bold-text">${event?.description}</p>
 <p>${event?.extraInfo?.raw()}</p>
 <br/>
 <p>#{if new Date().before(event?.date?.plus(1))}
