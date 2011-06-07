@@ -38,10 +38,10 @@
 
         <a class="awesome participants #{if event?.participantCount >0} participantList #{/if}"><b>
             ${event?.participantCount}</b><img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
-        <a class="attend"
+        <p><a class="attend"
            href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img
-                style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/></a>
-
+                style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/> Meld meg på!</a>
+        </p>
     </h2>
 
     <p>${event?.description} <br/><a href="@{Application.event(event.id)}">Les mer..</a></p>
