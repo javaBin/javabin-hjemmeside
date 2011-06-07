@@ -1,12 +1,9 @@
 package controllers;
 
 import models.*;
-
-import models.User;
 import notifiers.MailMan;
 import org.joda.time.DateMidnight;
 import play.data.validation.Valid;
-import play.db.jpa.JPASupport;
 import play.libs.Crypto;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -135,7 +132,7 @@ public class Admin extends Controller {
         if(event.participantCount != null && event.participantCount > 0)
             event.participantCount--;
 
-        event.participants.remove(Participant.<JPASupport>findById(participantId));
+        event.participants.remove(Participant.<Participant>findById(participantId));
         event.save();
     }
 

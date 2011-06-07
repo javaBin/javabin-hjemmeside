@@ -2,29 +2,28 @@ To run:
 Download Play framework version 1.1 fra http://www.playframework.org/
 Define the environment variable PLAY_HOME to the directory that contains PLAY.
 Include PLAY_HOME in PATH.
-(e.g. export PLAY_HOME=$HOME/play-1.1; export PATH=$PATH:$PLAY_HOME)
+(e.g. export PLAY_HOME=$HOME/play-1.2.1; export PATH=$PATH:$PLAY_HOME)
 
 
 From the directory that contains this README-file, run:
 'play install playapps'
 'play install pdf'
-'play install maven'
 
-This installs a maven module we will use later. (Maven 2.2 or newer must be installed and in PATH.) 
-Then run 'play mvn:install' and wait for the dependencies to download. 
-Then run 'play mvn:refresh' to have the depencies copied to the lib/ folder.
-Now you can start the webapp by executing 'play run'.
+All dependencies are declared in the 'conf/dependencies.yml' file
+
+When changing the dependency graph you must invoke:
+'play dependencies'
 
 IDEA-instructions:
-o Import pom file.
-o In module settings, choose dependencies, then add, then library, java, jar directory, choose the lib/ folder. Also add framework/ and framework/lib from the play folder.
-
+play idealize
+Create a new IDEA project and import the "meetup" module.
+Add the PDF module <lib> folder to the meetup module.
 Eclipse:
 play eclipsify
 
 
-run developer mode with confluence integration:
-play run -Dconfluence.user=<username> -Dconfluence.password=<password>
+run developer mode:
+play run
 
 
 
