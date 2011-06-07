@@ -92,7 +92,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     #{field 'event.region'}
     <div class="field">
         <label for="${field.id}">Region : </label>
-        #{select name:'event.region', items:models.Event.Region, labelProperty:'value', value:event?.region /}
+        #{select name:'event.region', items:models.Event.Region.values(), labelProperty:'value', value:event?.region /}
         <span class="error">${field.error}</span>
     </div>
     #{/field}
