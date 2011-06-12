@@ -1,8 +1,8 @@
 To run:
-Download Play framework version 1.1 fra http://www.playframework.org/
+Download Play framework version 1.2.1 fra http://www.playframework.org/
 Define the environment variable PLAY_HOME to the directory that contains PLAY.
 Include PLAY_HOME in PATH.
-(e.g. export PLAY_HOME=$HOME/play-1.2.1; export PATH=$PATH:$PLAY_HOME)
+(e.g. export PLAY_HOME=$HOME/play-1.2.1; export PATH=$PLAY_HOME:$PATH)
 
 
 From the directory that contains this README-file, run:
