@@ -8,6 +8,11 @@ repositories:
 
 #application dependencies
 require:
+ - org.fusesource.wikitext -> confluence-core 1.1
+ - org.codehaus.swizzle -> swizzle-confluence 1.4:
+    exclude:
+    -  xmlrpc-client
+ - org.apache.xmlrpc -> xmlrpc-client 3.1.3
  - play 1.2.1
  - com.google.guava -> guava r09
  - org.codehaus.httpcache4j -> httpcache4j-core 3.2

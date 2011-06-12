@@ -34,6 +34,7 @@ import static play.modules.pdf.PDF.renderPDF;
 
 public class Application extends Controller {
 
+    private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
     private static Confluence confluence = new Confluence(URI.create("http://wiki.java.no/rest/atompub/latest/"));
 
     public static void index() {
@@ -42,7 +43,7 @@ public class Application extends Controller {
 
         if (announcements == null) {
             try {
-                announcements = Announcement.find("published is true and frontpage is true").fetch();
+                announcements = fetcher.getNewsFeed();
                 Cache.add("announcements", announcements, "5mn");
             } catch (Exception e) {
                 Logger.error("Confluence didn't load.", e);

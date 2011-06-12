@@ -1,25 +1,18 @@
 package models;
 
-import play.db.jpa.*;
-
-import javax.persistence.*;
+import play.*;
 import java.util.*;
-import play.data.validation.*;
 
-@Entity
-public class Announcement extends Model {
+public class Announcement {
 	
 public String title;
-@MaxSize(5000)
-@Column(length = 5000)
-public String content;
-public Boolean frontpage = false;
-public Boolean published = false;
-public Date date = new Date();
+public String description;
+public String url;
 
-    public Announcement(String title, String content) {
+    public Announcement(String title, String description, String url) {
         this.title = title;
-        this.content = content;
+        this.description = description;
+        this.url = url;
     }
 	
 	

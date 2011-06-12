@@ -145,22 +145,8 @@ public class Admin extends Controller {
 	    }
     }
 
-
-	public static void announcements(){
-		List<Announcement> announcements = Announcement.findAll();
-		render(announcements);
-		
-	}
 	
-	public static void saveAnnouncement(Announcement announcement){
-		announcement.save();
-		announcements();
-	}
 	
-	public static void deleteAnnouncement(Long id){
-		Announcement.delete("id = ?", id);
-		announcements();
-	}
 
 
 }
