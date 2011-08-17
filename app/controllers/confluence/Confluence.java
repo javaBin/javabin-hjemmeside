@@ -116,17 +116,6 @@ public class Confluence {
         service.shutdown();
     }
 
-    public static void main(String[] args) throws Exception {
-        Confluence conf = new Confluence(URI.create("http://wiki.java.no/rest/atompub/latest/"));
-        Future<List<NewsItem>> feed = conf.getNewsFeed("Forsiden");
-        List<NewsItem> items = feed.get();
-        System.out.println("items = " + items);
-        Future<Page> page = conf.getPage("Forsiden", "Om javaBin");
-        Page thePage = page.get();
-        System.out.println("thePage = " + thePage);
-        conf.stop();
-    }
-
     private class SpaceRootCallable implements Callable<URI> {
         private final URI server;
 

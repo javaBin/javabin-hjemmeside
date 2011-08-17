@@ -1,6 +1,10 @@
 package controllers;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import controllers.confluence.Confluence;
+import controllers.confluence.NewsItem;
 import controllers.confluence.Page;
 import models.Announcement;
 import models.Event;
@@ -12,6 +16,8 @@ import net.fortuna.ical4j.model.ValidationException;
 import notifiers.MailMan;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import play.Logger;
 import play.cache.Cache;
 import play.data.validation.Email;
@@ -26,6 +32,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -34,18 +42,31 @@ import static play.modules.pdf.PDF.renderPDF;
 
 public class Application extends Controller {
 
-    private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
-    private static Confluence confluence = new Confluence(URI.create("http://wiki.java.no/rest/atompub/latest/"));
+    private static Confluence confluence;
+
+    private static Confluence getConfluence() {
+        if (confluence == null) {
+            confluence = new Confluence(URI.create("http://wiki.java.no/rest/atompub/latest/"));
+        }
+        return confluence;
+    }
 
     public static void index() {
 
-        List<Announcement> announcements = Cache.get("announcements", List.class);
+        ArrayList<Announcement> announcements = Cache.get("announcements", ArrayList.class);
 
         if (announcements == null) {
             try {
-                announcements = fetcher.getNewsFeed();
+                Future<Collection<NewsItem>> forsiden = getConfluence().getNewsFeed("Forsiden", new DateTime().minus(Days.days(5).toStandardDuration()));
+                Collection<NewsItem> items = forsiden.get();
+                announcements = Lists.newArrayList(Collections2.transform(items, new Function<NewsItem, Announcement>() {
+                    public Announcement apply(NewsItem newsItem) {
+                        return new Announcement(newsItem.getTitle(), newsItem.getBody(), newsItem.getUri().toString());
+                    }
+                }));
                 Cache.add("announcements", announcements, "5mn");
             } catch (Exception e) {
+                e.printStackTrace();
                 Logger.error("Confluence didn't load.", e);
             }
         }
@@ -138,7 +159,7 @@ public class Application extends Controller {
         String document = Cache.get(name, String.class);
         if (document == null) {
             try {
-                Future<Page> pageFuture = confluence.getPage("Forsiden", name);
+                Future<Page> pageFuture = getConfluence().getPage("Forsiden", name);
                 Page page = pageFuture.get();
                 if (page != null) {
                     document = page.getBody();
@@ -147,6 +168,7 @@ public class Application extends Controller {
                     Cache.add(name, document, "5mn");
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 Logger.error("Confluence didn't load.", e);
             }
         }
