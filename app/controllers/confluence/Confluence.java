@@ -1,8 +1,9 @@
 package controllers.confluence;
 
-import org.apache.abdera.Abdera;
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import org.apache.abdera.model.Collection;
-import org.apache.abdera.model.Document;
 import org.apache.abdera.model.Service;
 import org.codehaus.httpcache4j.HTTPRequest;
 import org.codehaus.httpcache4j.HTTPResponse;
@@ -11,9 +12,12 @@ import org.codehaus.httpcache4j.Status;
 import org.codehaus.httpcache4j.cache.HTTPCache;
 import org.codehaus.httpcache4j.cache.MemoryCacheStorage;
 import org.codehaus.httpcache4j.resolver.HTTPClientResponseResolver;
+import org.joda.time.DateTime;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -26,7 +30,11 @@ public class Confluence {
     private final HTTPCache cache;
 
     public Confluence(URI server) {
-        this(server, new HTTPCache(new MemoryCacheStorage(), HTTPClientResponseResolver.createMultithreadedInstance()));
+        this(server, new HTTPCache(new MemoryCacheStorage(), createResolver()));
+    }
+
+    private static HTTPClientResponseResolver createResolver() {
+        return HTTPClientResponseResolver.createMultithreadedInstance();
     }
 
     public Confluence(URI server, HTTPCache cache) {
@@ -36,7 +44,7 @@ public class Confluence {
     }
 
     private URI findSpaceURI(final URI server) {
-        Future<URI> future = service.submit(new SpaceRootCallable(server));
+        Future<URI> future = submit(new SpaceRootCallable(server));
         try {
             return future.get();
         } catch (InterruptedException e) {
@@ -48,7 +56,7 @@ public class Confluence {
     }
 
     public Future<Space> getSpace(final String name) {
-        return service.submit(new Callable<Space>() {
+        return submit(new Callable<Space>() {
             public Space call() throws Exception {
                 Map<String, Space> spaces = spaceFetcher.getSpaces();
                 return spaces.get(name);
@@ -59,7 +67,7 @@ public class Confluence {
 
 
     public Future<Page> getPage(final Space space, final String name) {
-        return service.submit(new Callable<Page>() {
+        return submit(new Callable<Page>() {
             public Page call() throws Exception {
                 return spaceFetcher.getPage(space, name);
             }
@@ -68,7 +76,7 @@ public class Confluence {
     }
 
     public Future<Page> getPage(final String spaceName, final String name) {
-        return service.submit(new Callable<Page>() {
+        return submit(new Callable<Page>() {
             public Page call() throws Exception {
                 Space space = spaceFetcher.getSpaces().get(spaceName);
                 return spaceFetcher.getPage(space, name);
@@ -77,8 +85,46 @@ public class Confluence {
         );
     }
 
+    public Future<List<NewsItem>> getNewsFeed(final String spaceName) {
+        return submit(new Callable<List<NewsItem>>() {
+            public List<NewsItem> call() throws Exception {
+                Space space = spaceFetcher.getSpaces().get(spaceName);
+                return spaceFetcher.getNewsFeed(space);
+            }
+        });
+    }
+
+    public Future<java.util.Collection<NewsItem>> getNewsFeed(final String spaceName, final DateTime limit) {
+        return submit(new Callable<java.util.Collection<NewsItem>>() {
+            public java.util.Collection<NewsItem> call() throws Exception {
+                Space space = spaceFetcher.getSpaces().get(spaceName);
+                List<NewsItem> feed = spaceFetcher.getNewsFeed(space);
+                return Collections2.filter(feed, new Predicate<NewsItem>() {
+                    public boolean apply(NewsItem newsItem) {
+                        return limit.isBefore(newsItem.getPublishDate());
+                    }
+                });
+            }
+        });
+    }
+
+    private <T> Future<T> submit(Callable<T> callable) {
+        return service.submit(callable);
+    }
+
     public void stop() {
         service.shutdown();
+    }
+
+    public static void main(String[] args) throws Exception {
+        Confluence conf = new Confluence(URI.create("http://wiki.java.no/rest/atompub/latest/"));
+        Future<List<NewsItem>> feed = conf.getNewsFeed("Forsiden");
+        List<NewsItem> items = feed.get();
+        System.out.println("items = " + items);
+        Future<Page> page = conf.getPage("Forsiden", "Om javaBin");
+        Page thePage = page.get();
+        System.out.println("thePage = " + thePage);
+        conf.stop();
     }
 
     private class SpaceRootCallable implements Callable<URI> {
@@ -89,30 +135,34 @@ public class Confluence {
         }
 
         public URI call() throws Exception {
-            HTTPResponse response = cache.doCachedRequest(new HTTPRequest(server));
-            Status status = response.getStatus();
-            try {
-                if (status == Status.OK) {
-                    return decodeResponse(response);
+            HTTPResponse response = cache.execute(new HTTPRequest(server));
+            return RequestFunctions.withResponse(response, new Function<HTTPResponse, URI>() {
+                public URI apply(HTTPResponse response) {
+                    Status status = response.getStatus();
+                    if (status == Status.OK) {
+                        return decodeResponse(response);
+                    }
+                    return null;
                 }
-            } finally {
-                response.consume();
-            }
-            return null;
+            });
         }
 
         private URI decodeResponse(HTTPResponse response) {
             if (response.hasPayload() && ATOM_SERVICE.equals(response.getPayload().getMimeType(), false)) {
-                Document<Service> doc = Abdera.getInstance().getParser().parse(response.getPayload().getInputStream());
-                Collection collection = doc.getRoot().getCollection("spaces", "spaces");
-                if (collection != null) {
-                    try {
-                        return collection.getHref().toURI();
-                    } catch (URISyntaxException e) {
-                        throw new RuntimeException(e);
+                InputStream stream = response.getPayload().getInputStream();
+                return RequestFunctions.findInService(stream, new Function<Service, URI>() {
+                    public URI apply(Service feed) {
+                        Collection collection = feed.getCollection("spaces", "spaces");
+                        if (collection != null) {
+                            try {
+                                return collection.getHref().toURI();
+                            } catch (URISyntaxException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        throw new IllegalArgumentException("Did not find URI");
                     }
-                }
-
+                });
             }
             return null;
         }

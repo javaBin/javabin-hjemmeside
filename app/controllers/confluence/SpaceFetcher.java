@@ -20,12 +20,14 @@ public class SpaceFetcher {
     private final HTTPCache cache;
     private Fetcher<Space> spaceFetcher;
     private Map<Space, PageFetcher> pageFetcherMap = Collections.synchronizedMap(new HashMap<Space, PageFetcher>());
+    private NewsFeedFetcher newsFeedFetcher;
 
 
     public SpaceFetcher(URI spacesURI, HTTPCache cache) {
         this.spacesURI = spacesURI;
         this.cache = cache;
         this.spaceFetcher = new Fetcher<Space>(cache);
+        this.newsFeedFetcher = new NewsFeedFetcher(cache);
     }
 
     public Map<String, Space> getSpaces() {
@@ -62,6 +64,11 @@ public class SpaceFetcher {
         return pageFetcherMap.get(page.getSpace()).getChildren(page);
     }
 
+    public List<NewsItem> getNewsFeed(Space space) {
+        return newsFeedFetcher.getNewsFeed(space);
+    }
+
+
     private static class Entry2Space implements Function<Entry, Space> {
         public Space apply(Entry entry) {
             Collection pages = null;
@@ -70,8 +77,7 @@ public class SpaceFetcher {
             for (Collection collection : collections) {
                 if (PAGES.equals(collection.getTitle())) {
                     pages = collection;
-                }
-                else if (NEWS.equals(collection.getTitle())) {
+                } else if (NEWS.equals(collection.getTitle())) {
                     news = collection;
                 }
             }
@@ -86,4 +92,6 @@ public class SpaceFetcher {
             return null;
         }
     }
+
 }
+
