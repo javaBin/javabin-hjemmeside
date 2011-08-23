@@ -5,10 +5,9 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.apache.abdera.model.Collection;
 import org.apache.abdera.model.Service;
-import org.codehaus.httpcache4j.HTTPRequest;
-import org.codehaus.httpcache4j.HTTPResponse;
-import org.codehaus.httpcache4j.MIMEType;
-import org.codehaus.httpcache4j.Status;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.httpcache4j.*;
+import org.codehaus.httpcache4j.auth.ProxyConfiguration;
 import org.codehaus.httpcache4j.cache.HTTPCache;
 import org.codehaus.httpcache4j.cache.MemoryCacheStorage;
 import org.codehaus.httpcache4j.resolver.HTTPClientResponseResolver;
@@ -34,7 +33,11 @@ public class Confluence {
     }
 
     private static HTTPClientResponseResolver createResolver() {
-        return HTTPClientResponseResolver.createMultithreadedInstance();
+        HTTPHost host = null;
+        if (System.getProperty("http.proxyHost") != null) {
+            host = new HTTPHost("http", System.getProperty("http.proxyHost"), Integer.getInteger("http.proxyPort", 80));
+        }
+        return new HTTPClientResponseResolver(new DefaultHttpClient(), new ProxyConfiguration(host, null, null));
     }
 
     public Confluence(URI server, HTTPCache cache) {
