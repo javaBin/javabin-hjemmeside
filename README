@@ -27,3 +27,14 @@ play run
 
 
 
+
+build war file for test or production:
+play dependencies --sync
+play war --zip -o ../play --%prod
+
+upload to test (requires login):
+scp play.war www4.java.no:/pool0/zones/zone1/opt/jb/play/
+ssh -t www4.java.no "sudo zlogin zone1 svcadm restart cswjetty6:play"
+
+
+
