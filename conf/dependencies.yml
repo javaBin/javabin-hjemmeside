@@ -18,5 +18,5 @@ require:
  - play -> pdf 0.2
  - play -> secure
  - play -> playapps 1.4
-
+ - xalan -> xalan 2.7.1
 

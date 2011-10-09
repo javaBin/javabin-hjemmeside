@@ -1,11 +1,28 @@
 package controllers;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
-import controllers.confluence.Confluence;
-import controllers.confluence.NewsItem;
-import controllers.confluence.Page;
+import static play.modules.pdf.PDF.renderPDF;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.Future;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import models.Announcement;
 import models.Event;
 import models.LectureHolder;
@@ -14,10 +31,12 @@ import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.ValidationException;
 import notifiers.MailMan;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+
 import play.Logger;
 import play.cache.Cache;
 import play.data.validation.Email;
@@ -27,22 +46,20 @@ import play.libs.Crypto;
 import play.libs.Images;
 import play.mvc.Controller;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Future;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 
-import static play.modules.pdf.PDF.renderPDF;
+import controllers.confluence.Confluence;
+import controllers.confluence.NewsItem;
+import controllers.confluence.Page;
 
 public class Application extends Controller {
 
-    private static Confluence confluence;
+    private static final String FLATPAGE_TRANSFORMATION_RULES = "/flatpage.xslt";
+	private static final String XML_POSTFIX = "</xml>";
+	private static final String XML_PREFIX = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xml> ";
+	private static Confluence confluence;
 
     private static Confluence getConfluence() {
         if (confluence == null) {
@@ -156,13 +173,14 @@ public class Application extends Controller {
     }
 
     public static void confluence(String name) {
-        String document = Cache.get(name, String.class);
+        String document = null; //Cache.get(name, String.class);
         if (document == null) {
             try {
                 Future<Page> pageFuture = getConfluence().getPage("Forsiden", name);
                 Page page = pageFuture.get();
                 if (page != null) {
-                    document = page.getBody();
+                    
+                    document = transform(page);
                 }
                 if (document != null) {
                     Cache.add(name, document, "5mn");
@@ -178,7 +196,35 @@ public class Application extends Controller {
         render(document);
     }
 
-    public static void ical(Long id) {
+    /**
+     * Transforms xhtml-fragments according to rules specified in {@link #FLATPAGE_TRANSFORMATION_RULES}.
+     * Currently this results in removing http://wiki.java.no/display/forside/ from page links.
+     * @param page
+     * @return
+     */
+    private static String transform(Page page) {
+    	//Possible optimization is to reuse transformerfactory and or transformerinstances, but they are not threadsafe.
+    	//TransformerPool?
+    	String xHtml = XML_PREFIX + page.getBody() + XML_POSTFIX; 
+		TransformerFactory tFactory = TransformerFactory.newInstance();
+		StringWriter result = new StringWriter();
+		try {
+			Transformer transformer = tFactory
+					.newTransformer(new StreamSource(Application.class.getResourceAsStream(FLATPAGE_TRANSFORMATION_RULES)));
+			transformer.transform(new StreamSource(new StringReader(xHtml)), new StreamResult(
+					result));
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+			return page.getBody();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+			return page.getBody();
+		}
+		result.flush();
+		return result.toString();
+	}
+
+	public static void ical(Long id) {
         try {
             Event event = Event.findById(id);
             Calendar calendar = ICalUtil.createCalendar(event);
