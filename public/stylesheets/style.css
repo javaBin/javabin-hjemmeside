@@ -50,7 +50,7 @@ h2 {
 
 
 .lineItem {
-	margin-top: 50px;
+	margin-top: 30px;
 	height: 140px;
 	background-color: #ccc;
 	-webkit-box-shadow: 3px 3px 5px #D4D4D4;
@@ -61,7 +61,7 @@ h2 {
 }
 
 .lineItemText {
-	padding-top: 70px;
+	padding-top: 40px;
 	color: #494949;
 }
 
@@ -318,6 +318,11 @@ h2 a.eventTitle {
 
 a.attend {
 
+	color: #1C5890;
+	text-decoration: none;	
+}
+
+a.show {
 	color: #1C5890;
 	text-decoration: none;	
 }

@@ -7,9 +7,6 @@
 
 <div class="grid_8">
 <h1>${event?.title}</h1>
-<p>
-    <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/> Meld meg på!</a>
-</p>
 <p><span class="event-detail-label">Når</span>: ${event?.date?.format("dd.MM.yyyy")} fra kl. ${event?.startHour?.format('00')}:${event?.startMin?.format('00')} til ${event?.endHour?.format('00')}:${event?.endMin?.format('00')}<br/>
     <span class="event-detail-label">Sted</span>: ${event?.location}</p>
 <br/>
@@ -19,7 +16,7 @@
 <p>#{if new Date().before(event?.date?.plus(1))}
 
     <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/> Meld meg på!</a><br/><br/>
- <a href="@{Application.ical(event?.id)}"><img src="/public/images/ical.png" class="map" alt="kalender"/></a>
+ <a href="@{Application.ical(event?.id)}"><img src="/public/images/icons/calendar.png" class="map" alt="kalender"/></a>
     <a href="@{Application.pdf(event?.id)}"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
     #{/if}
     #{if new Date().after(event?.date)}
@@ -27,7 +24,7 @@
     #{/if}
 
       #{if event?.address}
-          <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img src="/public/images/map.png" alt="kart" class="map"/></a>
+          <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img src="/public/images/icons/map.png" alt="kart" class="map"/></a>
          #{/if}
     <a href="http://twitter.com/share?text=%23javaBin%20ftw!&url=http%3A%2F%2Fjava.no/event/${event?.id}"><img class="map" src="/public/images/twitter_3.png" alt="Del møtet på twitter"></a>
 </p>
