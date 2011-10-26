@@ -313,7 +313,6 @@ div.participant {
 h2 a.eventTitle {
     color: #494949;
     text-decoration: none;
-
 }
 
 a.attend {
@@ -324,6 +323,10 @@ a.attend {
 
 a.show {
 	color: #1C5890;
+	text-decoration: none;	
+}
+
+a.show:hover {
 	text-decoration: none;	
 }
 
