@@ -20,7 +20,7 @@
     <a href="@{Application.pdf(event?.id)}"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
     #{/if}
     #{if new Date().after(event?.date)}
-    <a href="javascript:" onclick="$('#kommer').dialog({modal: true});"><img src="/public/images/slides.png" class="map" alt="slides fra foreleser"/></a>
+    <a href="javascript:" onclick="$('#slides').dialog({modal: true});"><img src="/public/images/slides.png" class="map" alt="slides fra foreleser"/></a>
     #{/if}
 
       #{if event?.address}
@@ -129,6 +129,22 @@
             <div id="kommer" style="display:none" title="Her kommer det noe snart.">
                 <p>Vi jobber med det</p>
             </div>
+            <div id="slides" style="display:none" title="Slides">
+				 #{if !event?.slidedescription1?.equals("Beskrivelse")}
+                <p>${event.slidedescription1} - <a href="${event.slidelink1}">${event.slidelink1}</a></p>
+				#{/if}
+				#{if !event?.slidedescription2?.equals("Beskrivelse")}
+	            <p>${event.slidedescription2} - <a href="${event.slidelink2}">${event.slidelink2}</a></p>
+				#{/if}
+				#{if !event?.slidedescription3?.equals("Beskrivelse")}
+	          	<p>${event.slidedescription3} - <a href="${event.slidelink3}">${event.slidelink3}</a></p>
+				#{/if}
+				#{if !event?.slidedescription4?.equals("Beskrivelse")}
+				<p>${event.slidedescription4} - <a href="${event.slidelink4}">${event.slidelink4}</a></p>
+				#{/if}
+            </div>
+
+
 
             <input type="hidden" id="randomId" name="randomId" value="${randomId}" />
         	<input type="hidden" id="eventId" value=""/>
