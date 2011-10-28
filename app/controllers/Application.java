@@ -4,7 +4,6 @@ import static play.modules.pdf.PDF.renderPDF;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -57,11 +56,15 @@ import controllers.confluence.Page;
 public class Application extends Controller {
 
     private static final String FLATPAGE_TRANSFORMATION_RULES = "/flatpage.xslt";
-	private static final String XML_POSTFIX = "</xml>";
-	private static final String XML_PREFIX = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xml> ";
-	private static Confluence confluence;
+
+    private static final String XML_POSTFIX = "</xml>";
+
+    private static final String XML_PREFIX = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xml> ";
+
+    private static Confluence confluence;
 
     private static Confluence getConfluence() {
+
         if (confluence == null) {
             confluence = new Confluence(URI.create("http://wiki.java.no/rest/atompub/latest/"));
         }
@@ -74,13 +77,19 @@ public class Application extends Controller {
 
         if (announcements == null) {
             try {
-                Future<Collection<NewsItem>> forsiden = getConfluence().getNewsFeed("Forsiden", new DateTime().minus(Days.days(5).toStandardDuration()));
+                Future<Collection<NewsItem>> forsiden = getConfluence().getNewsFeed("Forsiden",
+                        new DateTime().minus(Days.days(5).toStandardDuration()));
                 Collection<NewsItem> items = forsiden.get();
-                announcements = Lists.newArrayList(Collections2.transform(items, new Function<NewsItem, Announcement>() {
-                    public Announcement apply(NewsItem newsItem) {
-                        return new Announcement(newsItem.getTitle(), newsItem.getBody(), newsItem.getUri().toString());
-                    }
-                }));
+                announcements = Lists.newArrayList(Collections2.transform(items,
+                        new Function<NewsItem, Announcement>() {
+
+                            @Override
+                            public Announcement apply(final NewsItem newsItem) {
+
+                                return new Announcement(newsItem.getTitle(), newsItem.getBody(),
+                                        newsItem.getUri().toString());
+                            }
+                        }));
                 Cache.add("announcements", announcements, "5mn");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -88,13 +97,16 @@ public class Application extends Controller {
             }
         }
 
-        List<Event> events = Event.find("published is true and date >= ? order by date asc", new DateMidnight().plus(1).toDate()).fetch();
+        List<Event> events = Event.find("published is true and date >= ? order by date asc",
+                new DateMidnight().plus(1).toDate()).fetch();
         String randomId = Codec.UUID();
         render(announcements, events, randomId);
     }
 
+    public static void signUpForEvent(final Long eventId, final String randomId, final String code,
+            @Required @Email final String email, @Required final String name,
+            @Required final Integer howMany) {
 
-    public static void signUpForEvent(Long eventId, String randomId, String code, @Required @Email String email, @Required String name, @Required Integer howMany) {
         validation.equals(code.toLowerCase(), Cache.get(randomId)).message("Feil kode!");
         validation.match(howMany, "[1-3]").message("Feltet må være et siffer mellom 1 og 3");
         if (!validation.hasErrors()) {
@@ -122,7 +134,8 @@ public class Application extends Controller {
         renderJSON(validation); // be bruker sjekke postkassa si.
     }
 
-    public static void regretSigningUp(String id) {
+    public static void regretSigningUp(final String id) {
+
         String decrypted = Crypto.decryptAES(id);
         String[] strings = StringUtils.split(decrypted, '_');
         if (strings != null && strings.length == 2) {
@@ -141,18 +154,28 @@ public class Application extends Controller {
     }
 
     public static void listOldEvents() {
+
         Date today = new DateMidnight().toDate();
-        List<Event> osloEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.OSLO, today).fetch();
-        List<Event> trondheimEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.TRONDHEIM, today).fetch();
-        List<Event> sorlandetEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.SORLANDET, today).fetch();
-        List<Event> bergenEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.BERGEN, today).fetch();
-        List<Event> stavangerEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.STAVANGER, today).fetch();
+        List<Event> osloEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
+                Event.Region.OSLO, today).fetch();
+        List<Event> trondheimEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
+                Event.Region.TRONDHEIM, today).fetch();
+        List<Event> sorlandetEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
+                Event.Region.SORLANDET, today).fetch();
+        List<Event> bergenEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
+                Event.Region.BERGEN, today).fetch();
+        List<Event> stavangerEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
+                Event.Region.STAVANGER, today).fetch();
         render(osloEvents, trondheimEvents, sorlandetEvents, bergenEvents, stavangerEvents);
     }
 
+    public static void event(@Required final Long id) {
 
-
-    public static void event(@Required Long id) {
         String randomId = Codec.UUID();
         Event event = Event.findById(id);
         if (event == null)
@@ -161,7 +184,8 @@ public class Application extends Controller {
         render(event, randomId);
     }
 
-    public static void captcha(String id) {
+    public static void captcha(final String id) {
+
         Images.Captcha captcha = Images.captcha();
         String code = captcha.getText("#000000");
         Cache.set(id, code.toLowerCase(), "10mn");
@@ -169,18 +193,20 @@ public class Application extends Controller {
     }
 
     public static void lectureholders() {
+
         List<LectureHolder> lectureholders = LectureHolder.findAll();
         render(lectureholders);
     }
 
-    public static void confluence(String name) {
-        String document = null; //Cache.get(name, String.class);
+    public static void confluence(final String name) {
+
+        String document = null; // Cache.get(name, String.class);
         if (document == null) {
             try {
                 Future<Page> pageFuture = getConfluence().getPage("Forsiden", name);
                 Page page = pageFuture.get();
                 if (page != null) {
-                    
+
                     document = transform(page);
                 }
                 if (document != null) {
@@ -198,34 +224,39 @@ public class Application extends Controller {
     }
 
     /**
-     * Transforms xhtml-fragments according to rules specified in {@link #FLATPAGE_TRANSFORMATION_RULES}.
-     * Currently this results in removing http://wiki.java.no/display/forside/ from page links.
+     * Transforms xhtml-fragments according to rules specified in
+     * {@link #FLATPAGE_TRANSFORMATION_RULES}. Currently this results in
+     * removing http://wiki.java.no/display/forside/ from page links.
+     * 
      * @param page
      * @return
      */
-    private static String transform(Page page) {
-    	//Possible optimization is to reuse transformerfactory and or transformerinstances, but they are not threadsafe.
-    	//TransformerPool?
-    	String xHtml = XML_PREFIX + page.getBody() + XML_POSTFIX; 
-		TransformerFactory tFactory = TransformerFactory.newInstance();
-		StringWriter result = new StringWriter();
-		try {
-			Transformer transformer = tFactory
-					.newTransformer(new StreamSource(Application.class.getResourceAsStream(FLATPAGE_TRANSFORMATION_RULES)));
-			transformer.transform(new StreamSource(new StringReader(xHtml)), new StreamResult(
-					result));
-		} catch (TransformerConfigurationException e) {
-			e.printStackTrace();
-			return page.getBody();
-		} catch (TransformerException e) {
-			e.printStackTrace();
-			return page.getBody();
-		}
-		result.flush();
-		return result.toString();
-	}
+    private static String transform(final Page page) {
 
-	public static void ical(Long id) {
+        // Possible optimization is to reuse transformerfactory and or
+        // transformerinstances, but they are not threadsafe.
+        // TransformerPool?
+        String xHtml = XML_PREFIX + page.getBody() + XML_POSTFIX;
+        TransformerFactory tFactory = TransformerFactory.newInstance();
+        StringWriter result = new StringWriter();
+        try {
+            Transformer transformer = tFactory.newTransformer(new StreamSource(Application.class
+                    .getResourceAsStream(FLATPAGE_TRANSFORMATION_RULES)));
+            transformer.transform(new StreamSource(new StringReader(xHtml)), new StreamResult(
+                    result));
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+            return page.getBody();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+            return page.getBody();
+        }
+        result.flush();
+        return result.toString();
+    }
+
+    public static void ical(final Long id) {
+
         try {
             Event event = Event.findById(id);
             Calendar calendar = ICalUtil.createCalendar(event);
@@ -245,17 +276,22 @@ public class Application extends Controller {
 
     }
 
-    public static String gravatarhash(String input) {
+    public static String gravatarhash(final String input) {
+
         if (input != null)
             return Codec.hexMD5(input.toLowerCase().trim());
         else
             return null;
     }
 
+    public static void pdf(final Long id) {
 
-    public static void pdf(Long id) {
         Event event = Event.findById(id);
         renderPDF(event);
     }
 
+    public static void contribute() {
+
+        render();
+    }
 }
