@@ -1,12 +1,17 @@
+
+if (typeof console == "undefined") {
+    window.console = {
+            log: function () {}
+        };
+}
+
 $(function() {
 
             $("a.maplink").click(function(event) {
-                        console.log("foo");
                         event.preventDefault();
 
                         var link = $(this);
                         var params = getQueryParams(link.attr("href"));
-                        console.log(params);
                         $('#kart').html(params['location'] + ", " + params['address'] + "<br/>" + "<img src=\"http://maps.google.com/maps/api/staticmap?center=" + encodeURIComponent(params['address']) + "&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C" + encodeURIComponent(params['address']) + "&sensor=false\" alt=\"Her skal vi møtes!\"/>");
 
                         $('#kart').dialog({
@@ -35,9 +40,6 @@ $(function() {
                         var submitUrl = url.split("?")[0];
                         var params = getQueryParams(url);
 
-                        console.log(submitUrl);
-                        console.log(params);
-                        //need to set id and title since this popup is used for several events.
                         $('#eventId').val(params['eventId']);
                         $('#eventTitle').html(params['eventTitle']);
 
