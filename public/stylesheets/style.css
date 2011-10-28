@@ -325,6 +325,10 @@ a.show:hover {
 	text-decoration: none;	
 }
 
+a.right{
+	float:right;
+}
+
 a.attend:hover {
 
 	text-decoration: none;	

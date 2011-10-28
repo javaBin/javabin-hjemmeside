@@ -173,7 +173,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 #{if event}
 <div class="grid_4">
     <br/>
-    <h3>Foreleser(e)<a href="javascript:" class="awesome" onclick="$('#addLectureholder').dialog({
+    <h3>Foreleser(e)<a href="javascript:" class="awesome right" onclick="$('#addLectureholder').dialog({
         modal: true,
         buttons: {
                     'Legg til foreleser': function() {
@@ -202,7 +202,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
 <div class="grid_11">
     <br/>
-    <h3>Antall påmeldte : <input type="text" size="3" name="event.participantCount" value="${event?.participantCount}"/> Maks antall : <input type="text" size="3" name="event.participantLimit“" value="${event?.participantLimit}"><a href="javascript:" class="awesome" onclick="$('#addParticipant').dialog({
+    <h3>Antall påmeldte : <input type="text" size="3" name="event.participantCount" value="${event?.participantCount}"/> Maks antall : <input type="text" size="3" name="event.participantLimit“" value="${event?.participantLimit}"><a href="javascript:" class="awesome right" onclick="$('#addParticipant').dialog({
         modal: true,
         resizable: false,
         buttons: {
@@ -214,7 +214,9 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
              $( this ).dialog( 'close' );
         }}
 		});"
-        >+</a><a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" style="margin-right:2px;background-color:darkblue" class="awesome">Send ut påminnelsesmail til de påmeldte</a></h3>
+        >+</a>
+		<a class="awesome right" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{sendMeetingMail()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" style="margin-right:2px;background-color:darkblue">Blest om møtet</a>
+		<a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" style="margin-right:2px;background-color:darkblue" class="awesome right">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
     <p id="particiapantContainer">
     #{list items:event?.participants, as:'participant'}

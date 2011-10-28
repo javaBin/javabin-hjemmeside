@@ -145,6 +145,14 @@ public class Admin extends Controller {
 	    }
     }
 
+
+    public static void sendMeetingMail(Long eventId){
+	    Event event = Event.findById(eventId);
+        if(event != null)
+		    MailMan.sendMeetingMail(event);
+	    }
+    }
+
 	
 	
 
