@@ -142,13 +142,14 @@ public class Application extends Controller {
 
     public static void listOldEvents() {
         Date today = new DateMidnight().toDate();
-        List<Event> osloEvents = Event.find("published is true and region = ? and date < ? ", Event.Region.OSLO, today).fetch();
-        List<Event> trondheimEvents = Event.find("published is true and region = ? and date < ?", Event.Region.TRONDHEIM, today).fetch();
-        List<Event> sorlandetEvents = Event.find("published is true and region = ? and date < ?", Event.Region.SORLANDET, today).fetch();
-        List<Event> bergenEvents = Event.find("published is true and region = ? and date < ?", Event.Region.BERGEN, today).fetch();
-        List<Event> stavangerEvents = Event.find("published is true and region = ? and date < ?", Event.Region.STAVANGER, today).fetch();
+        List<Event> osloEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.OSLO, today).fetch();
+        List<Event> trondheimEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.TRONDHEIM, today).fetch();
+        List<Event> sorlandetEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.SORLANDET, today).fetch();
+        List<Event> bergenEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.BERGEN, today).fetch();
+        List<Event> stavangerEvents = Event.find("published is true and region = ? and date < ? order by date desc", Event.Region.STAVANGER, today).fetch();
         render(osloEvents, trondheimEvents, sorlandetEvents, bergenEvents, stavangerEvents);
     }
+
 
 
     public static void event(@Required Long id) {
