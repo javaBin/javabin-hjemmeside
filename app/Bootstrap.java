@@ -10,7 +10,7 @@ public class Bootstrap extends Job {
 
     public void doJob() {
         if(Event.count() == 0 || User.count() == 0) {
-            Fixtures.loadYaml("data.yml");
+            Fixtures.load("data.yml");
         }
     }
     
