@@ -70,9 +70,12 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 <div class="grid_4">
     <br/>
 
-    <h3>Notater</h3>
+    <h3>Presentasjoner</h3>
     <hr/>
-    <textarea rows="4" cols="35" name="event.notepad">${event.notepad}</textarea>
+	#1 <input size="20" type="text" value="${event.slidedescription1}"/><input size="20" type="text" value="${event.slidelink1}"/><br/>
+	#2 <input size="20" type="text" value="${event.slidedescription2}"/><input size="20" type="text" value="${event.slidelink2}"/><br/>
+	#3 <input size="20" type="text" value="${event.slidedescription3}"/><input size="20" type="text" value="${event.slidelink3}"/><br/>
+	#4 <input size="20" type="text" value="${event.slidedescription4}"/><input size="20" type="text" value="${event.slidelink4}"/><br/>
 </div>
 
 
@@ -218,13 +221,22 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 		<a class="awesome right" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{sendMeetingMail()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" style="margin-right:2px;background-color:darkblue">Blest om møtet</a>
 		<a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" style="margin-right:2px;background-color:darkblue" class="awesome right">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
-    <p id="particiapantContainer">
+    <p id="particiapantContainer">		
     #{list items:event?.participants, as:'participant'}
     <a id="par${participant?.id}" class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a><a class="awesome" id="parx${participant?.id}" href="javascript:" onclick="if(confirm('Er du sikker på at du vil fjerne deltageren?')){$.post('@{removeParticipant()}', {eventId : ${event?.id}, participantId: ${participant?.id}}, function(data){$('#par${participant?.id}').toggle();$('#parx${participant?.id}').toggle();});}">x</a>
     #{/list}
     </p>
+	#{if event?.participantCount == 0}
+		Ingen her. INGEN har meldt seg på.<br/><br/>
+	#{/if}
 </div>
 #{/if}
+
+<div class="grid_11">
+	    <h3>Notater</h3>
+	<hr>
+	<textarea rows="4" cols="120" name="event.notepad">${event.notepad}</textarea>
+</div>
 
     #{/form}
 <div id="kart" style="display:none" title="Her skal vi møtes">
