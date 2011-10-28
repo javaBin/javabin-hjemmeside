@@ -15,7 +15,9 @@
 <br/>
 <p>#{if new Date().before(event?.date?.plus(1))}
 
-    <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/icons/add.png" alt="meld meg på!"/> Meld meg på!</a><br/><br/>
+    <a class="attend"
+      href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName}
+      : ${event?.title}"><img class="icon" src="/public/images/icons/add.png" alt="meld meg på!"/> Meld meg på!</a><br/><br/>
  <a href="@{Application.ical(event?.id)}"><img src="/public/images/icons/calendar.png" class="map" alt="kalender"/></a>
     <a href="@{Application.pdf(event?.id)}"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
     #{/if}
@@ -53,7 +55,7 @@
 <div class="grid_4">
 <b>Foredragsholder(e):</b><br/><br/>
     #{list items:event?.lectureholders, as:'lectureholder'}
-    <div style="width:120px" class="grid_2">
+    <div class="grid_2 lectureholder_xsmall">
        <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?s=100&d=monsterid"/>
         <br/>
         ${lectureholder?.fullName}<br/>
@@ -75,7 +77,7 @@
 
 </div>
 
-<div style="display:none" id="registrering" title="Påmelding til møte">
+<div class="hidden" id="registrering" title="Påmelding til møte">
     <br/>
     <p id="eventTitle"></p>
     <br/>
@@ -124,9 +126,9 @@
 </div>
 
 
-        <div id="kart" style="display:none" title="Her skal vi møtes"></div>
+        <div id="kart" class="hidden" title="Her skal vi møtes"></div>
 
-            <div id="kommer" style="display:none" title="Her kommer det noe snart.">
+            <div id="kommer" class="hidden" title="Her kommer det noe snart.">
                 <p>Vi jobber med det</p>
             </div>
 

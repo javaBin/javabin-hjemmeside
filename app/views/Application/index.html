@@ -31,15 +31,18 @@
         <a class="eventTitle" href="@{Application.event(event.id)}">${event?.title}</a>
         <span class="date">${event?.date.format("dd.MM.yyyy")}</span>
     </h2>
-    <p style="height:40px">${event?.description} </p>
+    <p classs="description">${event?.description} </p>
 	<p>#{if event?.address}
     <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img
             src="/public/images/icons/map.png" alt="kart" class="map"/></a>
     #{/if}
     <a class="awesome participants #{if event?.participantCount >0} participantList #{/if}"><b>
         ${event?.participantCount}</b> påmeldte</a> <a class="attend"
-       href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img
-            style="vertical-align:middle" src="/public/images/icons/add.png" alt="meld meg på!"/> Meld meg på!</a> <a class="show" href="@{Application.event(event.id)}"><img style="vertical-align:middle" src="/public/images/icons/information.png"></img> Les mer</a></p>
+       href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName}
+       : ${event?.title}"><img class="icon"
+            src="/public/images/icons/add.png" alt="meld meg på!"/> Meld
+            meg på!</a> <a class="show"
+            href="@{Application.event(event.id)}"><img class="icon" src="/public/images/icons/information.png"></img> Les mer</a></p>
 </div>
 <div class="clear"></div>
 #{/list}
@@ -47,7 +50,7 @@
 <input type="hidden" id="eventId" value=""/>
 <input type="hidden" id="randomId" name="randomId" value="${randomId}"/>
 
-<div style="display:none" id="registrering" title="Påmelding til møte">
+<div class="hidden" id="registrering" title="Påmelding til møte">
     <p id="eventTitle"></p>
     <table border="0" cellspacing="5" cellpadding="5">
         <tr>

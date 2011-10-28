@@ -4,7 +4,7 @@
 <div class="clear"></div>
 <div class="grid_12">
 <br>
-<h3>Foredragsholdere<a href="javascript:" class="awesome" style="float:right" onclick="$('#lectureholderId').val('');$('#fullName').val('');$('#gravatarId').val('');$('#lectureholder').dialog({
+<h3>Foredragsholdere<a href="javascript:" class="awesome right" onclick="$('#lectureholderId').val('');$('#fullName').val('');$('#gravatarId').val('');$('#lectureholder').dialog({
     modal: true,
     resizable: false,
     width : 400,
@@ -17,7 +17,7 @@
 <hr>
 
    #{list items:lectureholders, as:'lectureholder'}
-                <div class="grid_2" style="width:180px;">
+                <div class="grid_2 lectureholder">
                    <a href="javascript:" onclick="$('#lectureholder').dialog({
     modal: true,
     resizable: false,
@@ -36,14 +36,15 @@
                     <br>
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
                     <br>
-                    <a href="mailto:${lectureholder?.gravatarId}" class="awesome" style="background-color:purple">${lectureholder?.fullName}</a>
+                    <a href="mailto:${lectureholder?.gravatarId}"
+                      class="awesome epost_knapp">${lectureholder?.fullName}</a>
                 </div>
 
         #{/list}
 
 </div>
 
-<div id="lectureholder" title="Foreleser" style="display:none">
+<div id="lectureholder" title="Foreleser" class="hidden">
 	#{form id:'lectureholderForm', action:@Admin.saveLectureHolder()}
     <label>Navn</label><input id="fullName" name="lectureHolder.fullName" type="text"/>
     <label>Gravatar email</label><input id="gravatarId" name="lectureHolder.gravatarId" type="text"/>

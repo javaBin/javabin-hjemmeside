@@ -3,16 +3,16 @@
 <div class="grid_8">
 <div class="grid_8">
     <br/>
-<h3>Planlagte møter som ikke er publisert ennå<a href="@{Admin.showEvent()}" class="awesome" style="float:right">+</a></h3>
+<h3>Planlagte møter som ikke er publisert ennå<a href="@{Admin.showEvent()}" class="awesome right">+</a></h3>
 <hr/>
 
-<table style="width:100%">
+<table class="meetings">
 #{list items:unpublishedEvents, as:'event'}
 <tr>
-	<td style="width:100px">${event?.region?.realName}</td>
-	<td style="width:100px">${event?.date?.format('dd.MM.yyyy')}</td>
+	<td class="small">${event?.region?.realName}</td>
+	<td class="small">${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
-	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="float:right;background-color:yellow;color:black;">Rediger</a></td>
+  <td><a href="@{Admin.showEvent(event?.id)}" class="awesome endre_knapp right"> Rediger</a></td>
 </tr>
 #{/list}
 </table>
@@ -26,13 +26,13 @@
     <br/>
 <h3>Møter som ligger på forsida av java.no</h3>
 <hr/>
-<table style="width:100%">
+<table class="meetings">
 #{list items:currentEvents, as:'event'}
 <tr>
-	<td style="width:100px">${event?.region?.realName}</td>
-	<td style="width:100px">${event?.date?.format('dd.MM.yyyy')}</td>
+	<td class="small">${event?.region?.realName}</td>
+	<td class="small">${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
-	<td style="float:right;"><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+  <td><a href="@{Admin.showEvent(event?.id)}" class="awesome right endre_knapp">Rediger</a></td>
 </tr>
 #{/list}
 </table>
@@ -45,13 +45,13 @@
     <br/>
 <h3>Møter vi har holdt tidligere</h3>
 <hr/>
-<table style="width:100%">
+<table class="meetings">
 #{list items:oldEvents, as:'event'}
 <tr>
-	<td style="width:100px">${event?.region?.realName}</td>
-	<td style="width:100px">${event?.date?.format('dd.MM.yyyy')}</td>
+	<td class="small">${event?.region?.realName}</td>
+	<td class="small">${event?.date?.format('dd.MM.yyyy')}</td>
 	<td>${event?.title}</td>
-	<td style="float:right;"><a href="@{Admin.showEvent(event?.id)}" class="awesome" style="background-color:yellow;color:black;">Rediger</a></td>
+	<td><a href="@{Admin.showEvent(event?.id)}" class="awesome right endre_knapp">Rediger</a></td>
 </tr>
 #{/list}
 </table>
