@@ -218,8 +218,8 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
         }}
 		});"
         >+</a>
-		<a class="awesome right" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{sendMeetingMail()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}">Blest om møtet</a>
-		<a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" class="awesome right">Send ut påminnelsesmail til de påmeldte</a></h3>
+		<a class="awesome right bleste_knapp" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{sendMeetingMail()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}">Blest om møtet</a>
+		<a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" class="awesome right bleste_knapp">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
     <p id="particiapantContainer">		
     #{list items:event?.participants, as:'participant'}
