@@ -1,0 +1,9 @@
+Neste javaBin-møte: ${event?.title} - ${event?.date?.format("dd.MM.yyyy")} på ${event?.location}
+
+${event?.description}
+
+${event?.extraInfo?.raw()}
+
+Adresse: ${event?.address}
+
+Påmelding skjer på http://java.no/event/${event?.id}

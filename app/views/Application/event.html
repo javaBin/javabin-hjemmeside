@@ -15,7 +15,7 @@
 <br/>
 <p>#{if new Date().before(event?.date?.plus(1))}
 
-    <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/> Meld meg på!</a><br/><br/>
+    <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img style="vertical-align:middle" src="/public/images/icons/add.png" alt="meld meg på!"/> Meld meg på!</a><br/><br/>
  <a href="@{Application.ical(event?.id)}"><img src="/public/images/icons/calendar.png" class="map" alt="kalender"/></a>
     <a href="@{Application.pdf(event?.id)}"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
     #{/if}

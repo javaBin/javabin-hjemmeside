@@ -66,21 +66,23 @@ public class Event extends Model {
     public Integer participantLimit = 100;
 
 	public enum Region {
-		OSLO("Oslo", "oslo.png", "krakers@wikimedia"), 
-		BERGEN("Bergen", "bergen.png", "Frédéric de Goldschmidt www.frederic.net"), 
-		SORLANDET("Sørlandet", "grimstad.png", "jagels@flickr"), 
-		TRONDHEIM("Trondheim", "trondheim.png", "stevecadman@flickr"), 
-		STAVANGER("Stavanger", "stavanger.png", "dundak@wikimedia"),
-		SCALABIN("ScalaBin", "scalabin.png", "");
+		OSLO("Oslo", "oslo.png", "krakers@wikimedia",""), 
+		BERGEN("Bergen", "bergen.png", "Frédéric de Goldschmidt www.frederic.net",""), 
+		SORLANDET("Sørlandet", "grimstad.png", "jagels@flickr",""), 
+		TRONDHEIM("Trondheim", "trondheim.png", "stevecadman@flickr",""), 
+		STAVANGER("Stavanger", "stavanger.png", "dundak@wikimedia",""),
+		SCALABIN("ScalaBin", "scalabin.png", "","");
 
 		public final String realName;
 		public final String picture;
 		public final String photographer;
+		public final String email;
 
-		private Region(String realName, String picture, String photographer) {
+		private Region(String realName, String picture, String photographer, String email) {
 			this.realName = realName;
 			this.picture = picture;
 			this.photographer = photographer;
+			this.email = email;
 		}
 	}
 	
