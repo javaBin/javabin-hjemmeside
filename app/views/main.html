@@ -3,7 +3,7 @@
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nb" lang="nb" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-        <title>#{get 'title'}www.java.no #{/}</title>
+        <title>java.no - #{get 'title' /}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta property="og:title" content="#{get 'ogtitle'}javaBin #{/}"/>
 	<meta property="og:type" content="#{get 'ogtype'}article #{/}"/>
@@ -23,6 +23,7 @@
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}"/>
         <script src="@{'/public/javascripts/jquery-1.4.4.min.js'}" type="text/javascript"></script>
         <script src="@{'/public/javascripts/jquery-ui-1.8.9.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/queryparam.js'}" type="text/javascript" charset="utf-8"></script>
         <script src="@{'/public/javascripts/meetup.js'}" type="text/javascript" charset="utf-8"></script>
             
 		<script type="text/javascript">
@@ -38,10 +39,10 @@
 			})();
 		    
 		</script>
+		
         #{get 'moreScripts' /}
     </head>
     <body>
-
 
 <div id="header_bg"> </div>
 <div id="header">
@@ -60,8 +61,9 @@
 				<div class="horiz">
 					<a href="/tidligere">Tidligere møter</a>
 					<a href="http://www.javazone.no">JavaZone</a>
+					<a href="/bidra">Bli med og bidra</a>
 					<a href="/foredragsholdere">Foredragsholdere</a>
-					<a href="/medlemskap">Medlemskap</a>
+					<a href="/medlemskap">Bli medlem</a>
 					<a href="/om-javabin">Om javaBin</a>
                 </div>
       </div></div>
@@ -79,15 +81,17 @@
 
 			<div id="footer">
         <div class="container_12">
-                <div style="color:white;font-size:11pt;" class="grid_5">
+                <div class="grid_5 contactus">
                     <br/>
-                    Følg oss på twitter .. @javaBin<a href="http://twitter.com/#!/javabin"><img src="/public/images/twitter_1.png" width="40px" alt="twitter"></a>
-                    <br>
+                    Følg oss på Twitter .. <a href="http://twitter.com/#!/javabin">@javaBin<img src="/public/images/twitter_1.png" width="40px" alt="twitter"/></a>
+                    <br/>
+                    Bli javaBin-fan på <a href="http://www.facebook.com/javabin">Facebook</a>&nbsp;<img src="http://facebook.com/favicon.ico" />
+                    <br/>
                     Chat med oss på irc .. #java.no på efnet
                     <br/>
                     Send oss e-post .. portal at java.no
                     <br/>
-                    Bli medlem av vår gruppe på linkedin .. <a href="http://www.linkedin.com/groups?mostPopular=&gid=107562"><img src="/public/images/linkedin.png" class="map" alt="linkedin"></a>
+                    Bli medlem av vår gruppe på Linkedin .. <a href="http://www.linkedin.com/groups?mostPopular=&gid=107562"><img src="/public/images/linkedin.png" class="map" alt="Linkedin"/></a>
                 </div>
             </div>
 			</div>

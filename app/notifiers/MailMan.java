@@ -20,4 +20,12 @@ public class MailMan extends Mailer {
       setFrom("JavaBin <portal@java.no>");
       send(participant, event, crypto);
     }
+    
+	public static void sendMeetingMail(Event event) {
+      setSubject("javaBin: Nytt møte %s!", event.title);
+      addRecipient(event.region.email);
+      setFrom("JavaBin <portal@java.no>");
+      send(event);
+    }
+
 }

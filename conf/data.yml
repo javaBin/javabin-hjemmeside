@@ -5,17 +5,15 @@ Event(oslo):
     location: The Scotsman
     address: Karl Johans gate 17, Oslo
     published: true
-    date: 2011-03-10
-    
+    date: 2012-03-10
 
 LectureHolder(1):
         fullName: Trygve Lie
         gravatarId: post@trygve-lie.com
-
+        
 LectureHolder(2):
         fullName: Thomas K. Nilsson
         gravatarId: thomas@kjeldahlnilsson.net
-
 
 User(espen):
     email:          es@udp.no

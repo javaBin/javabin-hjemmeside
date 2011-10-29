@@ -7,8 +7,21 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Future;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import models.Announcement;
 import models.Event;
@@ -22,7 +35,8 @@ import notifiers.MailMan;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
-import org.json.JSONArray;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import play.Logger;
 import play.cache.Cache;
@@ -35,30 +49,54 @@ import play.mvc.Controller;
 import play.mvc.Http.Cookie;
 import utils.facebook.FacebookHelper;
 
-import com.google.code.facebookapi.FacebookJsonRestClient;
-import com.google.code.facebookapi.ProfileField;
-import com.google.gson.Gson;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+
+import controllers.confluence.Confluence;
+import controllers.confluence.NewsItem;
+import controllers.confluence.Page;
 
 public class Application extends Controller {
 
-    private static final String FACEBOOK_COOKIE_KEY = "fbs_227599930584065";
+    private static final String FLATPAGE_TRANSFORMATION_RULES = "/flatpage.xslt";
 
-    private static final String FACEBOOK_API_SECRET = "34a5a0101025c27cae5d92882e421a2b";
+    private static final String XML_POSTFIX = "</xml>";
 
-    private static final String FACEBOOK_API_KEY = "e4e44da4796f00b0e97933b35e720f33";
+    private static final String XML_PREFIX = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xml> ";
 
-    private static ConfluencePageFetcher fetcher = new ConfluencePageFetcher();
+    private static Confluence confluence;
+
+    private static Confluence getConfluence() {
+
+        if (confluence == null) {
+            confluence = new Confluence(URI.create("http://wiki.java.no/rest/atompub/latest/"));
+        }
+        return confluence;
+    }
 
     public static void index() {
 
-        List<Announcement> announcements = Cache.get("announcements", List.class);
+        ArrayList<Announcement> announcements = Cache.get("announcements", ArrayList.class);
 
         if (announcements == null) {
             try {
-                announcements = Announcement.find("published is true and frontpage is true")
-                        .fetch();
+                Future<Collection<NewsItem>> forsiden = getConfluence().getNewsFeed("Forsiden",
+                        new DateTime().minus(Days.days(5).toStandardDuration()));
+                Collection<NewsItem> items = forsiden.get();
+                announcements = Lists.newArrayList(Collections2.transform(items,
+                        new Function<NewsItem, Announcement>() {
+
+                            @Override
+                            public Announcement apply(final NewsItem newsItem) {
+
+                                return new Announcement(newsItem.getTitle(), newsItem.getBody(),
+                                        newsItem.getUri().toString());
+                            }
+                        }));
                 Cache.add("announcements", announcements, "5mn");
             } catch (Exception e) {
+                e.printStackTrace();
                 Logger.error("Confluence didn't load.", e);
             }
         }
@@ -76,8 +114,22 @@ public class Application extends Controller {
         validation.equals(code.toLowerCase(), Cache.get(randomId)).message("Feil kode!");
         validation.match(howMany, "[1-3]").message("Feltet må være et siffer mellom 1 og 3");
         if (!validation.hasErrors()) {
-            signUpValidatedUser(eventId, email, name, howMany);
+            Participant participant = null;
+            List<Participant> participantList = Participant.find("email = ?", email).fetch();
+            if (participantList == null || participantList.isEmpty()) {
+                participant = new Participant(email, name);
+            } else {
+                participant = participantList.get(0);
+            }
 
+            Event event = Event.findById(eventId);
+            if (!event.participants.contains(participant)) {
+                event.participants.add(participant);
+                event.participantCount += howMany;
+                event.save();
+                String crypto = Crypto.encryptAES(participant.id + "_" + event.id);
+                MailMan.signUp(participant, event, crypto);
+            }
         } else {
             params.flash();
             renderJSON(validation); // gi tilbakemelding.
@@ -87,6 +139,7 @@ public class Application extends Controller {
         renderJSON(validation); // be bruker sjekke postkassa si.
     }
 
+<<<<<<< HEAD
     private static void signUpValidatedUser(final Long eventId, final String email,
             final String name, final Integer howMany) {
 
@@ -155,6 +208,8 @@ public class Application extends Controller {
         event(eventId); // be bruker sjekke postkassa si.
     }
 
+=======
+>>>>>>> origin/master
     public static void regretSigningUp(final String id) {
 
         String decrypted = Crypto.decryptAES(id);
@@ -177,15 +232,20 @@ public class Application extends Controller {
     public static void listOldEvents() {
 
         Date today = new DateMidnight().toDate();
-        List<Event> osloEvents = Event.find("published is true and region = ? and date < ? ",
+        List<Event> osloEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
                 Event.Region.OSLO, today).fetch();
-        List<Event> trondheimEvents = Event.find("published is true and region = ? and date < ?",
+        List<Event> trondheimEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
                 Event.Region.TRONDHEIM, today).fetch();
-        List<Event> sorlandetEvents = Event.find("published is true and region = ? and date < ?",
+        List<Event> sorlandetEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
                 Event.Region.SORLANDET, today).fetch();
-        List<Event> bergenEvents = Event.find("published is true and region = ? and date < ?",
+        List<Event> bergenEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
                 Event.Region.BERGEN, today).fetch();
-        List<Event> stavangerEvents = Event.find("published is true and region = ? and date < ?",
+        List<Event> stavangerEvents = Event.find(
+                "published is true and region = ? and date < ? order by date desc",
                 Event.Region.STAVANGER, today).fetch();
         render(osloEvents, trondheimEvents, sorlandetEvents, bergenEvents, stavangerEvents);
     }
@@ -216,14 +276,20 @@ public class Application extends Controller {
 
     public static void confluence(final String name) {
 
-        String document = Cache.get(name, String.class);
+        String document = null; // Cache.get(name, String.class);
         if (document == null) {
             try {
-                document = fetcher.getPageAsHTMLFragment(name);
+                Future<Page> pageFuture = getConfluence().getPage("Forsiden", name);
+                Page page = pageFuture.get();
+                if (page != null) {
+
+                    document = transform(page);
+                }
                 if (document != null) {
                     Cache.add(name, document, "5mn");
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 Logger.error("Confluence didn't load.", e);
             }
         }
@@ -231,6 +297,38 @@ public class Application extends Controller {
             notFound();
 
         render(document);
+    }
+
+    /**
+     * Transforms xhtml-fragments according to rules specified in
+     * {@link #FLATPAGE_TRANSFORMATION_RULES}. Currently this results in
+     * removing http://wiki.java.no/display/forside/ from page links.
+     * 
+     * @param page
+     * @return
+     */
+    private static String transform(final Page page) {
+
+        // Possible optimization is to reuse transformerfactory and or
+        // transformerinstances, but they are not threadsafe.
+        // TransformerPool?
+        String xHtml = XML_PREFIX + page.getBody() + XML_POSTFIX;
+        TransformerFactory tFactory = TransformerFactory.newInstance();
+        StringWriter result = new StringWriter();
+        try {
+            Transformer transformer = tFactory.newTransformer(new StreamSource(Application.class
+                    .getResourceAsStream(FLATPAGE_TRANSFORMATION_RULES)));
+            transformer.transform(new StreamSource(new StringReader(xHtml)), new StreamResult(
+                    result));
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+            return page.getBody();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+            return page.getBody();
+        }
+        result.flush();
+        return result.toString();
     }
 
     public static void ical(final Long id) {

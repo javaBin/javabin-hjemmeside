@@ -1,49 +1,26 @@
 #{extends 'admin.html' /}
-#{set title:'www.java.no' /}
+#{set title:'foredragsholdere' /}
 
 <div class="clear"></div>
 <div class="grid_12">
 <br>
-<h3>Foredragsholdere<a href="javascript:" class="awesome" onclick="$('#lectureholderId').val('');$('#fullName').val('');$('#gravatarId').val('');$('#lectureholder').dialog({
-    modal: true,
-    resizable: false,
-    width : 400,
-    buttons : {
-        'Opprett': function() {
-            $('#lectureholderForm').submit();
-        }
-    }
-    })">+</a></h3>
+<h3>Foredragsholdere<a href="javascript:" class="speaker awesome right" href="#">+</a></h3>
 <hr>
 
    #{list items:lectureholders, as:'lectureholder'}
-                <div class="grid_2" style="width:180px;">
-                   <a href="javascript:" onclick="$('#lectureholder').dialog({
-    modal: true,
-    resizable: false,
-    width : 400,
-    buttons : {
-        'Oppdater': function() {
-              $('#lectureholderForm').submit();
-        }
-    }
-    });$('#lectureholderId').val('${lectureholder?.id}');$('#fullName').val('${lectureholder?.fullName}');$('#gravatarId').val('${lectureholder?.gravatarId}');"><img width="15px" src="/public/images/gtk-edit.png"></a>
-
-                    <a href="@{Admin.deleteLectureholder(lectureholder?.id)}"
+                <div class="grid_2 lectureholder">
+                  <a href="?gravatarId=${lectureholder?.gravatarId}&lectureholderId=${lectureholder?.id}&name=${lectureholder?.fullName}" class="speaker"><img width="15px" src="/public/images/gtk-edit.png"></a>
+                  <a href="@{Admin.deleteLectureholder(lectureholder?.id)}"
        onclick="return confirm('Er du sikker på at du vil slette foreleseren?')"><img width="15px" src="/public/images/edit-delete.png"></a>
-
-
-                    <br>
+                    <br />
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
-                    <br>
-                    <a href="mailto:${lectureholder?.gravatarId}" class="awesome" style="background-color:purple">${lectureholder?.fullName}</a>
+                    <a href="mailto:${lectureholder?.gravatarId}" class="awesome epost_knapp">${lectureholder?.fullName}</a>
                 </div>
-
         #{/list}
 
 </div>
 
-<div id="lectureholder" title="Foreleser" style="display:none">
+<div id="lectureholder" title="Foreleser" class="hidden">
 	#{form id:'lectureholderForm', action:@Admin.saveLectureHolder()}
     <label>Navn</label><input id="fullName" name="lectureHolder.fullName" type="text"/>
     <label>Gravatar email</label><input id="gravatarId" name="lectureHolder.gravatarId" type="text"/>

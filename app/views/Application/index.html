@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'www.java.no' /}
+#{set title:'index' /}
 #{list items:announcements, as:'announcement'}
 <div class="grid_12">
     <h2>${announcement?.title}</h2>
@@ -30,21 +30,19 @@
     <h2>
         <a class="eventTitle" href="@{Application.event(event.id)}">${event?.title}</a>
         <span class="date">${event?.date.format("dd.MM.yyyy")}</span>
-
-        #{if event?.address}
-        <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img
-                src="/public/images/map.png" alt="kart" class="map"/></a>
-        #{/if}
-
-        <a class="awesome participants #{if event?.participantCount >0} participantList #{/if}"><b>
-            ${event?.participantCount}</b><img src="/public/images/folk.png" class="people" alt="antall påmeldte"/></a>
-        <p><a class="attend"
-           href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><img
-                style="vertical-align:middle" src="/public/images/add.png" alt="meld meg på!"/> Meld meg på!</a>
-        </p>
     </h2>
-
-    <p>${event?.description} <br/><a href="@{Application.event(event.id)}">Les mer..</a></p>
+    <p classs="description">${event?.description} </p>
+	<p>#{if event?.address}
+    <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img
+            src="/public/images/icons/map.png" alt="kart" class="map"/></a>
+    #{/if}
+    <a class="awesome participants #{if event?.participantCount >0} participantList #{/if}"><b>
+        ${event?.participantCount}</b> påmeldte</a> <a class="attend"
+       href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName}
+       : ${event?.title}"><img class="icon"
+            src="/public/images/icons/add.png" alt="meld meg på!"/> Meld
+            meg på!</a> <a class="show"
+            href="@{Application.event(event.id)}"><img class="icon" src="/public/images/icons/information.png"></img> Les mer</a></p>
 </div>
 <div class="clear"></div>
 #{/list}
@@ -52,7 +50,7 @@
 <input type="hidden" id="eventId" value=""/>
 <input type="hidden" id="randomId" name="randomId" value="${randomId}"/>
 
-<div style="display:none" id="registrering" title="Påmelding til møte">
+<div class="hidden" id="registrering" title="Påmelding til møte">
     <p id="eventTitle"></p>
     <table border="0" cellspacing="5" cellpadding="5">
         <tr>

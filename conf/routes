@@ -6,14 +6,15 @@
 GET     /                                       Application.index
 GET 	/tidligere								Application.listOldEvents
 GET 	/om-javabin								Application.confluence(name:'Om javaBin')
+GET 	/medlemskap								Application.confluence(name:'Medlemskap')
 GET 	/foredragsholdere						Application.lectureholders
 GET 	/kontakt-oss							Application.contact
 GET		/avregistrer/{id}						Application.regretSigningUp
 GET		/event/{id}						        Application.event
 GET		/event/{id}/pdf						    Application.pdf
 GET		/static/{<[^/].*>name}					Application.confluence
+GET     /bidra                                  Application.confluence(name:'Bidra')
 GET     /admin                                  Admin.index
-GET     /admin/nyheter                          Admin.announcements
 GET     /admin/foredragsholdere                 Admin.lectureholders
 GET     /admin/deltagere                        Admin.participants
 

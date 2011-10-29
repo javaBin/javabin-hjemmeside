@@ -1,11 +1,11 @@
 #{extends 'admin.html' /}
-#{set title:'www.java.no' /}
+#{set title:'deltagere' /}
 
 <div class="grid_12">
 <br/>
 <h3>Deltagere :  ${participants.size()}</h3>
 <hr/>
    #{list items:participants, as:'participant'}
-    <a class="awesome" href="mailto:${participant?.email}" style="background-color:purple">${participant?.name} (${participant?.email})</a>
+    <a class="awesome epost_knapp" href="mailto:${participant?.email}">${participant?.name} (${participant?.email})</a>
     #{/list}
 </div>

@@ -50,7 +50,7 @@ h2 {
 
 
 .lineItem {
-	margin-top: 50px;
+	margin-top: 30px;
 	height: 140px;
 	background-color: #ccc;
 	-webkit-box-shadow: 3px 3px 5px #D4D4D4;
@@ -61,7 +61,7 @@ h2 {
 }
 
 .lineItemText {
-	padding-top: 70px;
+	padding-top: 40px;
 	color: #494949;
 }
 
@@ -129,7 +129,7 @@ p ul {
 	padding: 5px 10px 6px;
 	color: #fff;
 	text-decoration: none;
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 1;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -275,11 +275,6 @@ label {
 	cursor: pointer;
 }
 
-h3 a {
-	font-family: Arial, Helvetica, sans-serif;
-	float:right;
-}
-
 p a {
     color:#999;
     background-color:transparent;
@@ -313,10 +308,109 @@ div.participant {
 h2 a.eventTitle {
     color: #494949;
     text-decoration: none;
-
 }
 
-.centeredtext {
+a.attend {
 
-	text-align: center;	
+	color: #1C5890;
+	text-decoration: none;	
+}
+
+a.show {
+	color: #1C5890;
+	text-decoration: none;	
+}
+
+a.show:hover {
+	text-decoration: none;	
+}
+
+a.right{
+	float:right;
+}
+
+a.attend:hover {
+
+	text-decoration: none;	
+}
+
+.event-detail-label {
+    font-weight: bold;	
+}
+
+/* for generic bold text */
+.bold-text {
+
+	font-weight: bold;	
+}
+
+table.meetings {
+  width: 100%
+}
+
+.meetings td.small {
+  width: 100px;
+}
+
+.endre_knapp { 
+  background-color:yellow;
+  color:black;
+}
+
+.slette_knapp { 
+  background-color:red;
+  color:black;
+}
+
+.info_knapp {
+  background-color:green;
+}
+
+.epost_knapp {
+  background-color:purple;
+}
+
+.bleste_knapp { 
+  margin-right:2px;
+  background-color:darkblue;
+}
+
+.lectureholder { 
+  width: 180px;
+}
+
+.lectureholder_small { 
+  width: 130px;
+}
+
+.lectureholder_xsmall { 
+  width: 120px;
+}
+
+#published { 
+  float:left;
+  font-size:8pt;
+}
+
+
+.checklist { 
+  font-size: 10pt;
+}
+
+.icon { 
+  vertical-align: middle;
+}
+
+.description { 
+  height:40px
+}
+
+.contactus { 
+  color:white;
+  font-size:11pt;
+}
+.register_button { 
+  position: relative; 
+  top: 45px; 
+  left: 260px;
 }
