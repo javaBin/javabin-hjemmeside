@@ -262,8 +262,9 @@ span.infotxt {
 }
 
 #footer {
-	margin-top: 100px;
-	height: 30px;
+	position:absolute;
+	bottom: 0px;
+	width: 100%;
 	background-color: #494949;
 }
 
