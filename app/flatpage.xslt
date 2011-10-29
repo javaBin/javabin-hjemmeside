@@ -17,4 +17,7 @@
            		<xsl:value-of select="substring(., 36)" />
 			</xsl:attribute>
 	</xsl:template>
+	<xsl:template match="html:img[starts-with(@src, '/download/attachments/')]/@src" >
+			<xsl:attribute name="src">http://wiki.java.no<xsl:value-of select="." /></xsl:attribute>
+	</xsl:template>
 </xsl:stylesheet>
