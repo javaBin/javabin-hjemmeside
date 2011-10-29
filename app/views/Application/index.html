@@ -17,12 +17,11 @@
     </div>
 </div>
 <div class="lineItemText grid_8">
-
     <div class="participants hidden">
         #{list items:event.participants, as:'participant'}
         <div class="participant">
-            <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid"/><br/>
-            ${participant.name}
+            <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}}?d=monsterid&s=120"/><br/>
+            <div class="participant_text">${participant.name}</div>
         </div>
         #{/list}
     </div>
@@ -32,17 +31,15 @@
         <span class="date">${event?.date.format("dd.MM.yyyy")}</span>
     </h2>
     <p classs="description">${event?.description} </p>
-	<p>#{if event?.address}
-    <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img
-            src="/public/images/icons/map.png" alt="kart" class="map"/></a>
-    #{/if}
-    <a class="awesome participants #{if event?.participantCount >0} participantList #{/if}"><b>
-        ${event?.participantCount}</b> påmeldte</a> <a class="attend"
-       href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName}
-       : ${event?.title}"><img class="icon"
-            src="/public/images/icons/add.png" alt="meld meg på!"/> Meld
-            meg på!</a> <a class="show"
-            href="@{Application.event(event.id)}"><img class="icon" src="/public/images/icons/information.png"></img> Les mer</a></p>
+    <p>
+      #{if event?.address}
+        <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img src="/public/images/icons/map.png" alt="kart" class="map"/></a>
+      #{/if}
+      <a class="awesome participants #{if event?.participantCount >0} participantList #{/if}"><b> ${event?.participantCount}</b> påmeldte</a> 
+      <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}">
+        <img class="icon" src="/public/images/icons/add.png" alt="meld meg på!"/> Meld meg på!</a> 
+      <a class="show" href="@{Application.event(event.id)}"><img class="icon" src="/public/images/icons/information.png"></img> Les mer</a>
+    </p>
 </div>
 <div class="clear"></div>
 #{/list}

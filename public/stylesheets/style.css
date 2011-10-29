@@ -107,6 +107,7 @@ p ul {
 }
 
 
+
 .image .lectureholder_text {
 	position:absolute;
 	top:110px;
@@ -295,8 +296,20 @@ div.participant {
     zoom:1;
     *display:inline;
     margin-right: 5px;
-    margin-bottom: 5px;
+    vertical-align: top;
 }
+.participant .participant_text{
+  width: 110px;
+  height: 50px;
+  margin-bottom: 5px;
+}
+.grid_1 .participant_text{
+  width: 60px;
+  height: 30px;
+  margin-bottom: 5px;
+  font-size: 10px;
+}
+
 
 #participants {
     display:none;
