@@ -17,7 +17,6 @@
     #{/if}
 
 
-
     $( "#event_date" ).datepicker({ dateFormat: 'dd.mm.yy'});
     $( "#published" ).buttonset();
     $( "#checklist" ).buttonset();
@@ -28,7 +27,7 @@
 
 #{if !event}
 <div class="grid_4 prefix_7 suffix_0">
-	<a href="javascript:" onclick="$('#eventForm').submit()" class="awesome">Opprett</a>
+	<a class="cuevent awesome">Opprett</a>
 </div>
 
 #{/if}
@@ -36,9 +35,8 @@
 
 #{if event}
 <div class="grid_4 prefix_9 suffix_0">
-    <a href="@{Admin.deleteEvent(event?.id)}" class="awesome slette_knapp"
-       onclick="return confirm('Er du sikker på at du vil slette møtet?')">Slett</a> <a href="javascript:" onclick="$('#eventForm').submit()"
-                                                                                        class="awesome">Oppdater</a>
+    <a href="@{Admin.deleteEvent(event?.id)}" class="awesome slette_knapp" onclick="return confirm('Er du sikker på at du vil slette møtet?')">Slett</a> 
+    <a class="cuevent awesome">Oppdater</a>
 </div>
 
 <div class="grid_4">
@@ -127,17 +125,9 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     #{field 'event.address'}
     <div class="field">
         <label for="${field.id}">Adresse : </label>
-        <input id="${field.id}" type="text" name="${field.name}" size="30" value="${field.value}"
-               class="${field.errorClass}"/>
+        <input id="${field.id}" type="text" name="${field.name}" size="30" value="${field.value}" class="${field.errorClass}"/>
         <span class="error">${field.error}</span>
-    <a  href="javascript:" onclick="$('#kart').html('${event?.location}, ${event?.address}<br/><img src=\&quot;http://maps.google.com/maps/api/staticmap?center=${event?.address}&zoom=14&size=590x540&maptype=roadmap&markers=color:yellow%7C${event?.address}&sensor=false\&quot; alt=\&quot;Her skal vi møtes!\&quot;/>');
-    $('#kart').dialog({
-            modal: true,
-            resizable: false,
-            width : 625,
-            height : 625
-            });">
-        <img src="/public/images/icons/map.png" alt="kart" class="map"/>
+        <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img src="/public/images/icons/map.png" alt="kart" class="map"/></a>
     </a>
     </div>
     #{/field}
@@ -176,27 +166,16 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 #{if event}
 <div class="grid_4">
     <br/>
-    <h3>Foreleser(e)<a href="javascript:" class="awesome right" onclick="$('#addLectureholder').dialog({
-        modal: true,
-        buttons: {
-                    'Legg til foreleser': function() {
-                        $.post('@{addLectureHolder()}',
-                            {eventId : ${event?.id}, lectureholderId: $('#lectureHolderId').val(), lectureholderName : $('#lectureholderAC').val(), lectureholderGravatar : $('#gravatarId').val()}, function(data){
-                             $( '#lectureholderContainer' ).append($('#lectureholderAC').val() + ' ' +$('#gravatarId').val());
-                        });
-                        $( this ).dialog( 'close' );
-                    }
-				}
-	    });">+</a></h3>
+    <h3>Foreleser(e)<a class="awesome right newspeaker" href="@{addLectureHolder()}?eventId=${event?.id}">+</a></h3>
     <hr/>
     <div id="lectureholderContainer">
         #{list items:event?.lectureholders, as:'lectureholder'}
                 <div id="lec_${lectureholder?.id}" class="grid_2 lectureholder_small">
                    <img src="http://www.gravatar.com/avatar/${lectureholder?.gravatarhash(lectureholder?.gravatarId)}?d=mm"/>
                     <br/>
-                    <a href="mailto:${lectureholder?.gravatarId}" class="awesome epost_knapp"> ${lectureholder?.fullName}</a><a href="javascript:" onclick="$.post('@{removeLectureHolder()}', {eventId : ${event?.id}, lectureholderId: ${lectureholder?.id}}, function(data){
-                         $('#lec_${lectureholder?.id}').toggle();});" class="awesome">x</a>
-     </div>
+                    <a href="mailto:${lectureholder?.gravatarId}" class="awesome epost_knapp"> ${lectureholder?.fullName}</a>
+                    <a href="@{removeLectureHolder()}?eventId=${event?.id}&lectureholderId=${lectureholder?.id}" class="rmspeaker awesome">x</a>
+                </div>
         #{/list}
     </div>
 </div>
@@ -205,25 +184,16 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
 <div class="grid_11">
     <br/>
-    <h3>Antall påmeldte : <input type="text" size="3" name="event.participantCount" value="${event?.participantCount}"/> Maks antall : <input type="text" size="3" name="event.participantLimit“" value="${event?.participantLimit}"><a href="javascript:" class="awesome right" onclick="$('#addParticipant').dialog({
-        modal: true,
-        resizable: false,
-        buttons: {
-        'Legg til deltager': function() {
-            $.post('@{addParticipant()}',
-                            {eventId : ${event?.id}, participantName: $('#participantName').val(), participantEmail : $('#participantEmail').val()}, function(data){
-                            $( '#particiapantContainer' ).append($('#participantName').val() + ' ' + $('#participantEmail').val());
-                        });
-             $( this ).dialog( 'close' );
-        }}
-		});"
-        >+</a>
-		<a class="awesome right bleste_knapp" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{sendMeetingMail()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}">Blest om møtet</a>
-		<a href="javascript:" onclick="if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){$.post('@{remindParticipants()}', {eventId : ${event?.id}}, function(data){alert('Mail er sendt.')});}" class="awesome right bleste_knapp">Send ut påminnelsesmail til de påmeldte</a></h3>
+    <h3>Antall påmeldte : <input type="text" size="3" name="event.participantCount" value="${event?.participantCount}"/> 
+      Maks antall : <input type="text" size="3" name="event.participantLimit“" value="${event?.participantLimit}">
+      <a href="@{addParticipant()}?eventId=${event?.id}" class="awesome right addparticipant">+</a>
+      <a class="awesome right bleste_knapp sendmail"href="@{sendMeetingMail()}?eventId=${event?.id}">Blest om møtet</a>
+      <a href="@{remindParticipants()}?eventId=${event?.id}" class="sendmail awesome right bleste_knapp">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
     <p id="particiapantContainer">		
     #{list items:event?.participants, as:'participant'}
-    <a id="par${participant?.id}" class="awesome epost_knapp" href="mailto:${participant?.email}">${participant?.name} (${participant?.email})</a><a class="awesome" id="parx${participant?.id}" href="javascript:" onclick="if(confirm('Er du sikker på at du vil fjerne deltageren?')){$.post('@{removeParticipant()}', {eventId : ${event?.id}, participantId: ${participant?.id}}, function(data){$('#par${participant?.id}').toggle();$('#parx${participant?.id}').toggle();});}">x</a>
+      <a id="par${participant?.id}" class="awesome epost_knapp" href="mailto:${participant?.email}">${participant?.name} (${participant?.email})</a>
+      <a class="awesome rmparticipant" id="parx${participant?.id}" href="@{removeParticipant()}?eventId=${event?.id}&participantId=${participant?.id}">x</a>
     #{/list}
     </p>
 	#{if event?.participantCount == 0}
@@ -235,7 +205,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 <div class="grid_11">
 	    <h3>Notater</h3>
 	<hr>
-	<textarea rows="4" cols="120" name="event.notepad">${event.notepad}</textarea>
+	<textarea rows="4" cols="120" name="event.notepad">${event?.notepad}</textarea>
 </div>
 
     #{/form}
