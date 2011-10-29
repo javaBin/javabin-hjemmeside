@@ -13,7 +13,7 @@ GET		/avregistrer/{id}						Application.regretSigningUp
 GET		/event/{id}						        Application.event
 GET		/event/{id}/pdf						    Application.pdf
 GET		/static/{<[^/].*>name}					Application.confluence
-GET     /bidra                                  Application.contribute
+GET     /bidra                                  Application.confluence(name:'Bidra')
 GET     /admin                                  Admin.index
 GET     /admin/foredragsholdere                 Admin.lectureholders
 GET     /admin/deltagere                        Admin.participants

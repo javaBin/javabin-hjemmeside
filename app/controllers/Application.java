@@ -290,8 +290,4 @@ public class Application extends Controller {
         renderPDF(event);
     }
 
-    public static void contribute() {
-
-        render();
-    }
 }
