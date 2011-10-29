@@ -30,6 +30,7 @@ $(function() {
     $('#participants').html(participants);
     $('#participants').dialog({
       maxHeight : 600,
+      maxWidth: 600,
       modal     : true
     });
   });
