@@ -94,9 +94,37 @@
             <td class="label">Gjenta koden</td>
             <td class="input"><input type="text" name="code" id="code" value=""/></td>
         </tr>
-
+        <tr>
+            <td colspan="2">
+                <hr/>
+            </td>
+        </tr>
+        <tr>
+            <td class="centeredtext" colspan="2">
+                <p>... eller meld meg på med Facebook-kontoen min:</p>
+                <fb:login-button v="2" size="large" autologoutlink="true" perms="email,publish_stream"  onlogin='window.location = "@{signUpForEventWithFacebook()}?eventId=${event?.id}&fromfront=true";'>Meld meg på via Facebook</fb:login-button>
+            </td>
+        </tr>
     </table>
 </div>
 
 <div id="kart" title="Her skal vi møtes"></div>
 <div id="participants" title="Deltagere på møtet"></div>
+
+<div id="fb-root"></div>
+<script>
+
+    /* Facebook connect init */
+    window.fbAsyncInit = function() {
+      FB.init({appId: '227599930584065', status: true, cookie: true,
+               xfbml: true});
+    };
+    (function() {
+      var e = document.createElement('script');
+      e.type = 'text/javascript';
+      e.src = document.location.protocol +
+        '//connect.facebook.net/en_GB/all.js';
+      e.async = true;
+      document.getElementById('fb-root').appendChild(e);
+    }());
+</script>

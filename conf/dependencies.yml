@@ -19,4 +19,5 @@ require:
  - play -> secure
  - play -> playapps 1.4
  - xalan -> xalan 2.7.1
+ - com.google.code.facebookapi -> facebook-java-api 3.0.4
 

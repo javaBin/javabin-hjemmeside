@@ -37,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.json.JSONArray;
 
 import play.Logger;
 import play.cache.Cache;
@@ -49,9 +50,12 @@ import play.mvc.Controller;
 import play.mvc.Http.Cookie;
 import utils.facebook.FacebookHelper;
 
+import com.google.code.facebookapi.FacebookJsonRestClient;
+import com.google.code.facebookapi.ProfileField;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 
 import controllers.confluence.Confluence;
 import controllers.confluence.NewsItem;
@@ -64,6 +68,12 @@ public class Application extends Controller {
     private static final String XML_POSTFIX = "</xml>";
 
     private static final String XML_PREFIX = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xml> ";
+
+    private static final String FACEBOOK_COOKIE_KEY = "fbs_227599930584065";
+
+    private static final String FACEBOOK_API_SECRET = "34a5a0101025c27cae5d92882e421a2b";
+
+    private static final String FACEBOOK_API_KEY = "e4e44da4796f00b0e97933b35e720f33";
 
     private static Confluence confluence;
 
@@ -139,7 +149,6 @@ public class Application extends Controller {
         renderJSON(validation); // be bruker sjekke postkassa si.
     }
 
-<<<<<<< HEAD
     private static void signUpValidatedUser(final Long eventId, final String email,
             final String name, final Integer howMany) {
 
@@ -162,7 +171,7 @@ public class Application extends Controller {
 
     }
 
-    public static void signUpForEventWithFacebook(final Long eventId) {
+    public static void signUpForEventWithFacebook(final Long eventId, final Boolean fromfront) {
 
         Logger.debug("Signing up with Facebook for event " + eventId);
         Cookie fbCookie = request.cookies.get(FACEBOOK_COOKIE_KEY);
@@ -201,15 +210,18 @@ public class Application extends Controller {
             }
 
         } else {
+            Logger.debug("Validation errors detected - aborting facebook signup.");
 
+        }
+
+        if (fromfront) {
+            index();
+        } else {
             event(eventId);
         }
 
-        event(eventId); // be bruker sjekke postkassa si.
     }
 
-=======
->>>>>>> origin/master
     public static void regretSigningUp(final String id) {
 
         String decrypted = Crypto.decryptAES(id);

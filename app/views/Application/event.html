@@ -67,9 +67,16 @@
                 #{/if}
                 #{list items:event?.participants, as:'participant'}
                  <div class="grid_1 participant">
+                 #{if participant.email.contains('@proxymail.facebook.com')}
+                 <img src="/public/images/duke-fb.png"/><br/>
+                    ${participant.name}
+                </div>
+                #{/if}
+                #{else}
                 <img src="http://www.gravatar.com/avatar/${models.LectureHolder.gravatarhash(participant?.email).raw()}?s=60&d=monsterid"/><br/>
                     ${participant.name}
                 </div>
+                #{/else}
 
               #{/list}
 
