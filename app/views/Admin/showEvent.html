@@ -27,7 +27,7 @@
 
 #{if !event}
 <div class="grid_4 prefix_7 suffix_0">
-	<a class="cuevent" class="awesome">Opprett</a>
+	<a class="cuevent awesome">Opprett</a>
 </div>
 
 #{/if}
@@ -36,7 +36,7 @@
 #{if event}
 <div class="grid_4 prefix_9 suffix_0">
     <a href="@{Admin.deleteEvent(event?.id)}" class="awesome slette_knapp" onclick="return confirm('Er du sikker på at du vil slette møtet?')">Slett</a> 
-    <a class="cuevent" class="awesome">Oppdater</a>
+    <a class="cuevent awesome">Oppdater</a>
 </div>
 
 <div class="grid_4">
@@ -186,14 +186,14 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
     <br/>
     <h3>Antall påmeldte : <input type="text" size="3" name="event.participantCount" value="${event?.participantCount}"/> 
       Maks antall : <input type="text" size="3" name="event.participantLimit“" value="${event?.participantLimit}">
-      <a href="@{addParticiaptn()}?eventId=${event?.id}" class="awesome right addparticipant">+</a>
-      <a class="awesome right bleste_knapp sendmail"href="@{sendMeetingMail()}?eventId=${event?.id}"> >Blest om møtet</a>
+      <a href="@{addParticipant()}?eventId=${event?.id}" class="awesome right addparticipant">+</a>
+      <a class="awesome right bleste_knapp sendmail"href="@{sendMeetingMail()}?eventId=${event?.id}">Blest om møtet</a>
       <a href="@{remindParticipants()}?eventId=${event?.id}" class="sendmail awesome right bleste_knapp">Send ut påminnelsesmail til de påmeldte</a></h3>
     <hr/>
     <p id="particiapantContainer">		
     #{list items:event?.participants, as:'participant'}
       <a id="par${participant?.id}" class="awesome epost_knapp" href="mailto:${participant?.email}">${participant?.name} (${participant?.email})</a>
-      <a class="awesome rmparticipant" id="parx${participant?.id}" href="@{removeParticipant()?eventId=${event?id}&participantId=${participant?.id}}">x</a>
+      <a class="awesome rmparticipant" id="parx${participant?.id}" href="@{removeParticipant()}?eventId=${event?.id}&participantId=${participant?.id}">x</a>
     #{/list}
     </p>
 	#{if event?.participantCount == 0}
@@ -205,7 +205,7 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 <div class="grid_11">
 	    <h3>Notater</h3>
 	<hr>
-	<textarea rows="4" cols="120" name="event.notepad">${event.notepad}</textarea>
+	<textarea rows="4" cols="120" name="event.notepad">${event?.notepad}</textarea>
 </div>
 
     #{/form}

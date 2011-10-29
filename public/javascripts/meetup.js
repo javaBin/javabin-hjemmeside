@@ -130,12 +130,12 @@ $(function() {
     var submitUrl = url.split("?")[0];
     var params = getQueryParams(url);
 
+    console.log(params);
     var id = params['lectureholderId'];
-    $.post(submitUrl, params, function(data){
+    $.post(submitUrl, { eventId: params['eventId'], lectureholderId: params['lectureholderId']}, function(data){
       $('#' + id).toggle();});
-      //her burde vi egentlig fjerne speakerholder fra dom
-      location.reload(true);
   });
+
 
   $("a.addparticipant").click(function(event){
     event.preventDefault();
@@ -153,7 +153,8 @@ $(function() {
             eventId          : params['eventId'],
             participantName  : $('#participantName').val(),
             participantEmail : $('#participantEmail').val()}, function(data){
-              $( '#particiapantContainer' ).append($('#participantName').val() + ' ' + $('#participantEmail').val());
+                location.reload(true);
+                //her burde vi fikse dom og ikke reloade
             });
             $( this ).dialog( 'close' );
         }
