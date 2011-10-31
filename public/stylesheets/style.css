@@ -50,9 +50,8 @@ h2 {
 
 
 .lineItem {
-	margin-top: 30px;
+	margin-top: 10px;
 	height: 140px;
-	background-color: #ccc;
 	-webkit-box-shadow: 3px 3px 5px #D4D4D4;
 	-moz-box-shadow: 3px 3px 3px #D4D4D4;
 	box-shadow: 3px 3px 5px #D4D4D4;
@@ -61,19 +60,93 @@ h2 {
 }
 
 .lineItemText {
-	padding-top: 40px;
 	color: #494949;
+	position: relative;
+	margin-top: 10px;
 }
 
 .lineItemText h2 {
 	font-family: 'Lobster13Regular', Helvetica, sans-serif;
 	font-weight: normal;
-	margin-bottom: 0;
+	margin-bottom: 6px;
+	width: 85%;
 }
 
 .lineItemText p {
 	font-size: 13px;
 	font-family: 'CaviarDreamsRegular', Helvetica, sans-serif;
+}
+
+.lineItemText .participantCount {
+	position: absolute;
+	right: 10px;
+	top: 0px;
+	margin: 0 auto;
+	text-align: center;
+	line-height: 26px;
+}
+
+.lineItemText .participantCount .count {
+	font-size: 42px;
+}
+
+.lineItemText .description {
+	width: 85%;
+}
+
+.lineItemText .eventActions {
+	padding-top: 20px;
+}
+
+.eventActions .icon {
+	background: url(/public/images/sprite-eventActions.png) no-repeat;
+	padding: 2px 8px;
+	margin-top: 20px;
+}
+
+.eventActions .attend .icon {
+	background-position: 0px 0px;
+}
+
+.eventActions .show .icon {
+	background-position: 0px -26px;
+}
+
+.eventActions .map .icon {
+	background-position: 0px -50px;
+	padding: 4px 9px;
+}
+
+.eventActions .participants .icon {
+	background-position: 0px -76px;
+	padding: 8px 12px;
+}
+
+.eventActions .calendar .icon {
+	background-position: 0px -112px;
+}
+
+.eventActions .pdf .icon {
+	background-position: 0px -136px;
+	padding: 4px 8px;
+}
+
+.eventActions .tweet .icon {
+	background-position: 0px -164px;
+}
+
+.eventActions .slides .icon {
+	background-position: 0px -190px;
+}
+
+.eventActions a {
+	color: #1C5890;
+	text-decoration: none;
+	margin-right: 10px;
+}
+
+.eventActions a:hover {
+	text-decoration: none;
 }
 
 p {
@@ -146,11 +219,6 @@ p ul {
 }
 .awesome:hover { text-decoration: none;}
 .awesome:active { top: 1px; }
-
-.map {
-	width:30px;
-	vertical-align:middle;
-}
 
 .people {
 	width:18px;
@@ -324,28 +392,8 @@ h2 a.eventTitle {
     text-decoration: none;
 }
 
-a.attend {
-
-	color: #1C5890;
-	text-decoration: none;	
-}
-
-a.show {
-	color: #1C5890;
-	text-decoration: none;	
-}
-
-a.show:hover {
-	text-decoration: none;	
-}
-
 a.right{
 	float:right;
-}
-
-a.attend:hover {
-
-	text-decoration: none;	
 }
 
 .event-detail-label {

@@ -26,20 +26,26 @@
         #{/list}
     </div>
 
+	<div class="participantCount">
+		<div class="count">${event?.participantCount}</div>påmeldte
+	</div>
+
     <h2>
         <a class="eventTitle" href="@{Application.event(event.id)}">${event?.title}</a>
-        <span class="date">${event?.date.format("dd.MM.yyyy")}</span>
+        <span class="date" title="Fra kl. ${event?.startHour?.format('00')}:${event?.startMin?.format('00')} til ${event?.endHour?.format('00')}:${event?.endMin?.format('00')}">${event?.date.format("dd.MM.yyyy")}</span>
     </h2>
-    <p classs="description">${event?.description} </p>
-    <p>
-      #{if event?.address}
-        <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img src="/public/images/icons/map.png" alt="kart" class="map"/></a>
-      #{/if}
-      <a class="awesome participants #{if event?.participantCount >0} participantList #{/if}"><b> ${event?.participantCount}</b> påmeldte</a> 
-      <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}">
-        <img class="icon" src="/public/images/icons/add.png" alt="meld meg på!"/> Meld meg på!</a> 
-      <a class="show" href="@{Application.event(event.id)}"><img class="icon" src="/public/images/icons/information.png"></img> Les mer</a>
-    </p>
+    <p class="description">${event?.description} </p>
+	<p class="eventActions">
+	    <a class="show" href="@{Application.event(event.id)}"><span class="icon">&nbsp;</span>Les mer</a>
+	    <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}">
+	   		<span class="icon">&nbsp;</span>Meld meg på!
+	    </a>
+
+		#{if event?.address}
+	    	<a class="map" href="?location=${event?.location}&address=${event?.address}"><span class="icon">&nbsp;</span>Se kart</a>
+	    #{/if}
+	    <a class="participants" href=""><span class="icon">&nbsp;</span>Se hvem som kommer</a>
+	</p>
 </div>
 <div class="clear"></div>
 #{/list}

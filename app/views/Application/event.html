@@ -13,21 +13,24 @@
 <p class="bold-text">${event?.description}</p>
 <p>${event?.extraInfo?.raw()}</p>
 <br/>
-<p>#{if new Date().before(event?.date?.plus(1))}
+<p class="eventActions">
 
-    <a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName}
-      : ${event?.title}"><img class="icon" src="/public/images/icons/add.png" alt="meld meg på!"/> Meld meg på!</a><br/><br/>
- <a href="@{Application.ical(event?.id)}"><img src="/public/images/icons/calendar.png" class="map" alt="kalender"/></a>
-    <a href="@{Application.pdf(event?.id)}"><img src="/public/images/pdf.png" class="map" alt="få den i pdf og skriv den ut"/></a>
+	#{if new Date().before(event?.date?.plus(1))}
+    	<a class="attend" href="@{signUpForEvent()}?eventId=${event?.id}&eventTitle=${event?.region?.realName} : ${event?.title}"><span class="icon">&nbsp;</span>Meld meg på!</a>
+ 		<a class="calendar" href="@{Application.ical(event?.id)}"><span class="icon">&nbsp;</span>Legg til kalender</a>
+    	<a class="pdf" href="@{Application.pdf(event?.id)}"><span class="icon">&nbsp;</span>PDF</a>
     #{/if}
+    #{if event?.address}
+          <a class="map" href="?location=${event?.location}&address=${event?.address}"><span class="icon">&nbsp;</span>Se kart</a>
+    #{/if}
+
+    <a class="tweet" href="http://twitter.com/share?text=%23javaBin%20ftw!&url=http%3A%2F%2Fjava.no/event/${event?.id}"><span class="icon">&nbsp;</span>Del møtet på twitter</a>
+
+
     #{if new Date().after(event?.date)}
-    <a href="javascript:" onclick="$('#slides').dialog({modal: true});"><img src="/public/images/slides.png" class="map" alt="slides fra foreleser"/></a>
+    	<a class="slides" href="javascript:" onclick="$('#slides').dialog({modal: true});"><span class="icon">&nbsp;</span>Slides fra møtet</a>
     #{/if}
-
-      #{if event?.address}
-          <a class="maplink" href="?location=${event?.location}&address=${event?.address}"><img src="/public/images/icons/map.png" alt="kart" class="map"/></a>
-         #{/if}
-    <a href="http://twitter.com/share?text=%23javaBin%20ftw!&url=http%3A%2F%2Fjava.no/event/${event?.id}"><img class="map" src="/public/images/twitter_3.png" alt="Del møtet på twitter"></a>
+    
 </p>
 <br/>
 

@@ -6,7 +6,7 @@ if (typeof console == "undefined") {
 
 $(function() {
 
-  $("a.maplink").click(function(event) {
+  $(".eventActions .map").click(function(event) {
     event.preventDefault();
 
     var link = $(this);
@@ -23,7 +23,7 @@ $(function() {
     });
   });
 
-  $("a.participantList").click(function(event) {
+  $(".eventActions .participants").click(function(event) {
     event.preventDefault();
 
     var participants = $(this).parent().parent().find("div.participants").html();
@@ -35,7 +35,7 @@ $(function() {
     });
   });
 
-  $("a.attend").click(function(event) {
+  $(".eventActions .attend").click(function(event) {
 
     event.preventDefault();
     var url = $(this).attr("href");
