@@ -70,10 +70,11 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
     <h3>Presentasjoner</h3>
     <hr/>
-	#1 <input size="20" type="text" name="event.slidedescription1" value="${event.slidedescription1}"/><input size="20" type="text" name="event.slidelink1" value="${event.slidelink1}"/><br/>
-	#2 <input size="20" type="text" name="event.slidedescription2" value="${event.slidedescription2}"/><input size="20" type="text" name="event.slidelink2" value="${event.slidelink2}"/><br/>
-	#3 <input size="20" type="text" name="event.slidedescription3" value="${event.slidedescription3}"/><input size="20" type="text" name="event.slidelink3" value="${event.slidelink3}"/><br/>
-	#4 <input size="20" type="text" name="event.slidedescription4" value="${event.slidedescription4}"/><input size="20" type="text" name="event.slidelink4" value="${event.slidelink4}"/><br/>
+    	#{list items:event?.slides, as:'slide'}
+			<input size="20" type="text" name="slide${slide.id}.description" value="${slide.description}"/><input size="20" type="text" name="slide${slide.id}.link" value="${slide.link}"/><br/>
+        #{/list}
+    
+	Ny: <a class="awesome right addslide" href="@{addSlide()}?eventId=${event?.id}">+</a>
 </div>
 
 
@@ -220,6 +221,10 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 
 <div id="addParticipant" title="Legg til deltager" class="hidden">
     <label>Navn</label><input size="28" id="participantName" type="text"/>
-    <label>Epost</label><input size="28" id="participantEmail" type="text"/>
+    <label>Epost</label><input size="28" id="participantEmail" type="text"/> <!-- TODO test type email -->
 </div>
 
+<div id="addSlide" title="Legg til slide" class="hidden">
+    <label>Beskrivelse</label><input size="100" type="text" id="description"/>
+    <label>Url</label><input type="text" id="link"/>
+</div>

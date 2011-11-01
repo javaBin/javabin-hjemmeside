@@ -162,6 +162,32 @@ $(function() {
       }
     });
   });
+  
+  $("a.addslide").click(function(event){
+	    event.preventDefault();
+	    var url = $(this).attr("href");
+	    var submitUrl = url.split("?")[0];
+	    var params = getQueryParams(url);
+
+
+	    $('#addSlide').dialog({
+	      modal: true,
+	      resizable: false,
+	      buttons: {
+	        'Legg til slide': function() {
+	          $.post(submitUrl, {
+	            eventId     : params['eventId'],
+	            description : $('#description').val(),
+	            link 		: $('#link').val()}, function(data){
+	                location.reload(true);
+	                //her burde vi fikse dom og ikke reloade
+	            });
+	            $( this ).dialog( 'close' );
+	        }
+	      }
+	    });
+	  });
+
 
   $("a.cuevent").click(function(event){
     event.preventDefault();

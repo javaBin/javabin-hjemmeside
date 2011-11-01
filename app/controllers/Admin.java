@@ -76,6 +76,20 @@ public class Admin extends Controller {
         event.lectureholders.add(lectureholder);
         event.save();
     }
+    
+    public static void addSlide(Long eventId, String description, String link){
+		System.out.println("EventId: " + eventId + ", Description: "
+				+ description + ", String: " + link);
+        Event event = Event.findById(eventId);
+        Slides slide = new Slides();
+        slide.event = event;
+        slide.description = description;
+        slide.link = link;
+        event.slides.add(slide);
+        event.save();
+        System.out.println(slide.toString());
+    }
+
 
     public static void removeLectureHolder(Long eventId, Long lectureholderId){
         Event event = Event.findById(eventId);

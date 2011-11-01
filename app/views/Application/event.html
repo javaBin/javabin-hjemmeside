@@ -131,18 +131,13 @@
                 <p>Vi jobber med det</p>
             </div>
             <div id="slides" style="display:none" title="Slides">
-				 #{if !event?.slidedescription1?.equals("Beskrivelse")}
-                <p>${event.slidedescription1} - <a href="${event.slidelink1}">${event.slidelink1}</a></p>
-				#{/if}
-				#{if !event?.slidedescription2?.equals("Beskrivelse")}
-	            <p>${event.slidedescription2} - <a href="${event.slidelink2}">${event.slidelink2}</a></p>
-				#{/if}
-				#{if !event?.slidedescription3?.equals("Beskrivelse")}
-	          	<p>${event.slidedescription3} - <a href="${event.slidelink3}">${event.slidelink3}</a></p>
-				#{/if}
-				#{if !event?.slidedescription4?.equals("Beskrivelse")}
-				<p>${event.slidedescription4} - <a href="${event.slidelink4}">${event.slidelink4}</a></p>
-				#{/if}
+	%{
+    	for(slide in event.slides) { 
+    }%
+    	<p>${slide.description} - <a href="${slide.link}">${slide.link}</a></p>
+	%{
+	}
+	}%
             </div>
 
 

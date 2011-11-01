@@ -46,20 +46,6 @@ public class Event extends Model {
     @Required
     public Integer endMin = 0;
 
-	public String slidelink1 = "http://";
-	@MaxSize(100)
-	public String slidedescription1 = "Beskrivelse";
-	public String slidelink2 = "http://";
-	@MaxSize(100)
-	public String slidedescription2 = "Beskrivelse";
-	public String slidelink3 = "http://";
-	@MaxSize(100)
-	public String slidedescription3 = "Beskrivelse";
-	public String slidelink4 = "http://";
-	@MaxSize(100)
-	public String slidedescription4 = "Beskrivelse";
-
-
 
 	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<Participant> participants;
@@ -67,6 +53,8 @@ public class Event extends Model {
 	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<LectureHolder> lectureholders;
 
+	@OneToMany(cascade = {CascadeType.PERSIST}, mappedBy="event")
+	public Set<Slides> slides;
 
     public Boolean orderedFood = false;
     public Boolean bookedPlace = false;
