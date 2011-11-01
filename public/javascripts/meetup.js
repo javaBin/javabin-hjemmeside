@@ -26,13 +26,9 @@ $(function() {
   $("a.participantList").click(function(event) {
     event.preventDefault();
 
-    var participants = $(this).parent().parent().find("div.participants").html();
-    $('#participants').html(participants);
-    $('#participants').dialog({
-      maxHeight : 600,
-      maxWidth: 600,
-      modal     : true
-    });
+    $(this).parent().parent().find("div.participants").toggle();
+    //var participants = $(this).parent().parent().find("div.participants").html();
+    //$('.participants').CreateBubblePopup({ innerHtml: participants, position : 'bottom', align: 'center', themeName: 'azure', themePath: '/public/images/jquerybubblepopup-theme'});
   });
 
   $("a.attend").click(function(event) {

@@ -297,6 +297,7 @@ div.participant {
     *display:inline;
     margin-right: 5px;
     vertical-align: top;
+    width: 150px;
 }
 .participant .participant_text{
   width: 110px;
@@ -315,7 +316,10 @@ div.participant {
     display:none;
     margin:0 auto;
     text-align:left;
-    width: 200px;
+    width: 95%;
+    overflow: scroll;
+    border: 1px solid #0066CC; 
+    padding: 10px;
 }
 
 
