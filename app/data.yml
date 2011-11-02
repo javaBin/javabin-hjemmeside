@@ -1,0 +1,28 @@
+Event(oslo):
+    title: Byggekveld
+    description: Torsdag 10.mars vil det være en gjennomgang av byggeverktøy som er aktuelle for den vanlige javautvikler. Ivy, Gradle, Buildr og vi får høre om alt som er nytt med maven 3. Formatet er i lyntaler. Pizza fra 17.30.
+    region: OSLO
+    location: The Scotsman
+    address: Karl Johans gate 17, Oslo
+    published: true
+    date: 2012-03-10
+
+LectureHolder(1):
+        fullName: Trygve Lie
+        gravatarId: post@trygve-lie.com
+        
+LectureHolder(2):
+        fullName: Thomas K. Nilsson
+        gravatarId: thomas@kjeldahlnilsson.net
+
+User(espen):
+    email:          es@udp.no
+    password:       espen
+    fullname:       Espen Schulstad
+    isAdmin:        true
+
+User(admin):
+    email:          portal@java.no
+    password:       w0mbat
+    fullname:       javaBin-person
+    isAdmin:        true

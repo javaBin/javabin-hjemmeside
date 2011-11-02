@@ -134,13 +134,9 @@
                 <p>Vi jobber med det</p>
             </div>
             <div id="slides" style="display:none" title="Slides">
-	%{
-    	for(slide in event.slides) { 
-    }%
-    	<p>${slide.description} - <a href="${slide.link}">${slide.link}</a></p>
-	%{
-	}
-	}%
+	    	#{list items:event?.slides, as:'slide'}
+		    	<p>${slide.description} - <a href="${slide.link}">${slide.link}</a></p>
+	        #{/list}
             </div>
 
 

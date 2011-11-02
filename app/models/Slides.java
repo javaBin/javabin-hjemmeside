@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -17,6 +18,7 @@ public class Slides extends Model {
 	
 	public String link = "http://";
 	@MaxSize(100)
+	@Column(length = 100)
 	public String description = "Beskrivelse";
 
 }
