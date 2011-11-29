@@ -393,6 +393,10 @@ div.participant {
 	margin-bottom: 5px;
 }
 
+.smallText {
+	font-size: 6pt;
+}
+
 #participants .participant {
 	width: 130px;
 	height: 30px;

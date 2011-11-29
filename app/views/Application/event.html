@@ -64,7 +64,12 @@
     </div>
     #{/list}
 <div class="clear"></div>
-    <br/><b>Påmeldte så langt:</b><br/><br/>
+    <br/><b>Påmeldte så langt:</b>
+    <div class="smallText"> 
+    (Bilder fra <a href="http://gravatar.com">Gravatar.com</a>)
+    </div>
+    <br/>
+    <br/>
                #{if event?.participants?.size() == 0}
                 Det er ennå ingen påmeldte deltagere. <br/>Sjekk senere :)
                 #{/if}
