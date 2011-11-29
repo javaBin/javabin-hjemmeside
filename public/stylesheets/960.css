@@ -2,17 +2,24 @@ body {
 	min-width: 960px;
 }
 
-.container_12,.container_16 {
+.container_12_scroll_wrapper {
 	margin-left: auto;
 	margin-right: auto;
 	float: inherit;
-	width: 960px;
+	width: auto;
 	overflow: scroll;
 	position: absolute;
 	bottom: 40px;
 	top: 200px;
 	left: 0px;
 	right: 0px;
+	
+}
+
+.container_12,.container_16 {
+	margin-left: 25%;
+	float: inherit;
+	width: 960px;
 }
 
 .grid_1,.grid_2,.grid_3,.grid_4,.grid_5,.grid_6,.grid_7,.grid_8,.grid_9,.grid_10,.grid_11,.grid_12,.grid_13,.grid_14,.grid_15,.grid_16
