@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'tips oss' /}
-<div class="lineItem">
+<div class="container_12">
     <h1>Tips oss!</h1>
     <p>
         I javaBin er vi alltid på utkikk etter nye foredragsholdere og annet som skjer i utviklermiljøet i Norge. 
@@ -8,6 +8,29 @@
     <p>
         På denne siden gir vi deg muligheten til å tipse oss (også annonymt!). 
     </p>
+ </div>
+<div class="container_12">
+    <div class="tipform">
+	    <h1>Tyst på foredragsholder!</h1>
+	     <form action="/tipsoss">
+	         <table>
+	             <tr>
+	                 <td>Navn på foredragsholder:</td>
+	                 <td><input id="name" /></td>                    
+	             </tr>
+	             <tr>
+	                 <td>E-post til foredragsholder:</td>
+	                 <td><input id="email" /></td>                    
+	             </tr>
+	             <tr>
+	                 <td colspan="2">Nærmere informasjon:<br/>
+	                     <textarea></textarea>
+	                 </td>
+	             </tr>	             
+	         </table> 
+	         <input type="submit" value=" Send tips! " />       
+	     </form>
+	</div>    
 </div>
 
 

@@ -539,3 +539,28 @@ table.meetings {
 	float: right;
 	padding-top: 25px;
 }
+
+div.tipform {
+	
+    background: green;
+    width: 450px;
+    padding: 20px;
+    color: white;	
+}
+
+div.tipform h1{
+	
+	font-weight: bold;
+	font-size: 14px;
+}
+
+div.tipform input {
+	
+	width: 280px;
+}
+
+div.tipform textarea {
+	
+	width: 440px;
+	height: 150px;
+}
