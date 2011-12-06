@@ -289,5 +289,10 @@ public class Application extends Controller {
         Event event = Event.findById(id);
         renderPDF(event);
     }
+    
+    public static void tip() {
+    	
+    	render();
+    }
 
 }
