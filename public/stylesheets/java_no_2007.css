@@ -49,13 +49,11 @@ ul.horiz {
 	padding:0pt;
 }
 
-a, a:link, a:visited {
+a:link, a:visited {
 	text-decoration:none;
+	color: #1C5890;
 }
 
-a:hover {
-  text-decoration: underline;
-}
 table {
 	border-collapse:separate;
 	border-spacing:0;

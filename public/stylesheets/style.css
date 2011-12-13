@@ -365,7 +365,6 @@ label {
 }
 
 p a {
-	color: #999;
 	background-color: transparent;
 }
 
@@ -527,4 +526,10 @@ table.meetings {
 	position: relative;
 	top: 45px;
 	left: 260px;
+}
+
+ a.external-link:hover {
+	
+	text-decoration: underline;
+	
 }
