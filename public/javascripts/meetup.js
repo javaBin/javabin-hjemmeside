@@ -197,7 +197,7 @@ $(function() {
     var params = getQueryParams(url);
 
     if(confirm('Er du sikker på at du vil du sende ut mail til alle disse menneskene?')){
-      $.post(subtmitUrl, {eventId : params['eventId']}, function(data){alert('Mail er sendt.')});
+      $.post(submitUrl, {eventId : params['eventId']}, function(data){alert('Mail er sendt.')});
     }
   });
 
