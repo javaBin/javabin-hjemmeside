@@ -543,7 +543,7 @@ table.meetings {
 div.tipform {
 	
     background: green;
-    width: 450px;
+    width: 600px;
     padding: 20px;
     color: white;	
 }
@@ -551,16 +551,21 @@ div.tipform {
 div.tipform h1{
 	
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 16px;
 }
 
 div.tipform input {
 	
-	width: 280px;
+	width: 300px;
+}
+
+div.tipform label {
+	
+	width: 250px;
 }
 
 div.tipform textarea {
 	
-	width: 440px;
+	width: 580px;
 	height: 150px;
 }
