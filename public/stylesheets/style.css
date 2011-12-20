@@ -533,3 +533,39 @@ table.meetings {
 	text-decoration: underline;
 	
 }
+
+.tipsoss {
+
+	float: right;
+	padding-top: 25px;
+}
+
+div.tipform {
+	
+    background: green;
+    width: 600px;
+    padding: 20px;
+    color: white;	
+}
+
+div.tipform h1{
+	
+	font-weight: bold;
+	font-size: 16px;
+}
+
+div.tipform input {
+	
+	width: 300px;
+}
+
+div.tipform label {
+	
+	width: 250px;
+}
+
+div.tipform textarea {
+	
+	width: 580px;
+	height: 150px;
+}

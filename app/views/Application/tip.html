@@ -1,0 +1,58 @@
+#{extends 'main.html' /} #{set title:'tips oss' /}
+<div class="container_12">
+	<h1>Tips oss!</h1>
+	<p>I javaBin er vi alltid på utkikk etter nye foredragsholdere og
+		annet som skjer i utviklermiljøet i Norge.</p>
+	<p>På denne siden gir vi deg muligheten til å tipse oss om
+		foredragsholdre og andre saker du mener vi bør gjøres oppmerksomme på.</p>
+</div>
+<div class="container_12">
+	<div class="tipform">
+		<h1>Tyst på foredragsholder!</h1>
+		<p>I javaBin er vi alltid på utkikk etter nye foredragsholdere.
+			Jobber du sammen med noen som du vet jobber med noe interessant og
+			som du ønsker skal holde et foredrag? Tips oss i så fall om dem, så
+			tar vi kontakt og hører om vedkommende kunne tenke seg å komme på
+			javaBin for å holde foredrag. Det er selvfølgelig også lov å tipse om
+			seg selv dersom DU ønsker å holde foredrag!</p>
+		<p>
+			<i>Tips som sendes fra denne siden er annonyme, med mindre du
+				velger å identifisere deg gjennom meldingen.</i>
+		</p>
+		#{form @Application.sendtip()} #{ifErrors}
+		<div style="clear: both">
+			<span class="error">Oops... du må fylle ut all informasjonen
+				før vi kan sende tipset.</span>
+		</div>
+		#{/ifErrors}
+		<table>
+			<tr>
+				<td><label for="tip.who">Hvem ønsker du å tipse?</label></td>
+				<td><select name="tip.who">
+						<option value="alle-regioner" selected="selected">Alle
+							regioner</option>
+						<option value="styret-bergen">javaBin Bergen</option>
+						<option value="moter-oslo">javaBin Oslo</option>
+						<option value="styret-stavanger">javaBin Stavanger</option>
+						<option value="styret-sorlandet">javaBin Sørlandet</option>
+						<option value="styret-trondheim">javaBin Trondheim</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td><label for="tip.name">Navn på foredragsholder:</label></td>
+				<td><input name="tip.name" value="${flash['tip.name']}" /></td>
+			</tr>
+			<tr>
+				<td><label for="tip.email">E-post til foredragsholder:</label></td>
+				<td><input name="tip.email" value="${flash['tip.email']}" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><label for="tip.info">Nærmere
+						informasjon:</label><br /> <textarea name="tip.info">${flash['tip.info']}</textarea></td>
+			</tr>
+		</table>
+		<input type="submit" value=" Send tips! " /> #{/form}
+	</div>
+</div>
+
+

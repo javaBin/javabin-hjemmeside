@@ -1,0 +1,23 @@
+Hei!
+
+Noen har sendt tips om foredragsholder på java.no! Vi foreslår at dere følger opp og tar kontakt med 
+personen det tipses om umiddelbart. Under finner dere informasjonen som ble lagt inn på java.no, 
+samt et utkast til første mail for kontakt med vedkommende. 
+
+ Navn på foredragsholder: ${tip?.name}
+ Epost til foredragsholder: ${tip?.email}
+ Nærmere informasjon: ${tip?.info}
+
+== Forslag til første e-post ==
+
+Hei! 
+
+Gjennom java.no har vi fått et tips om at du jobber med noe spennende som andre kunne ønske å høre mer om 
+på et fagmøte i javaBin. 
+
+På bakgrunn av dette tipset tar vi nå kontakt for å høre om du kunne tenke deg å holde foredrag på javaBin?
+
+Vi håper du tar kontakt for en uforpliktende prat!  
+
+Mvh
+javaBin REGION  

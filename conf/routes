@@ -14,6 +14,8 @@ GET		/event/{id}						        Application.event
 GET		/event/{id}/pdf						    Application.pdf
 GET		/static/{<[^/].*>name}					Application.confluence
 GET     /bidra                                  Application.confluence(name:'Bidra')
+GET     /tipsoss                                Application.tip
+POST    /sendtip                                Application.sendtip
 GET     /admin                                  Admin.index
 GET     /admin/foredragsholdere                 Admin.lectureholders
 GET     /admin/deltagere                        Admin.participants
