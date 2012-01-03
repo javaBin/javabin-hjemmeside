@@ -38,32 +38,44 @@ $(function() {
     var submitUrl = url.split("?")[0];
     var params = getQueryParams(url);
 
+    var submitSignup = function(keypressEvent) {
+    	
+    	if(keypressEvent.which == 13) {
+    	    		
+    		postSignup();
+    	}
+    }
+    
+    var postSignup = function() {
+    	$.post(submitUrl, {
+    
+        eventId  : $('#eventId').val(),
+        randomId : $('#randomId').val(),
+        code     : $('#code').val(),
+        name     : $('#name').val(),
+        email    : $('#email').val(),
+        howMany  : $('#howMany').val()}, function(data) {
+          if (data['errors'].length > 0) {
+            for (var i = 0; i < data['errors'].length; i++) {
+              $('#' + data['errors'][i].key).addClass('ui-state-error');
+            }
+          } else {
+            //Her burde vi egentlig legge til div'en i dommen ikke reloaded
+            location.reload(true);
+          }
+        });
+    }
+    
     $('#eventId').val(params['eventId']);
     $('#eventTitle').html(params['eventTitle']);
-
+    $('#code').keyup(submitSignup);
+        
 
     $('#registrering').dialog({
       modal : true,
       width : 420,
       buttons: {
-        'Meld meg på!': function() {
-          $.post(submitUrl, {
-            eventId  : $('#eventId').val(),
-            randomId : $('#randomId').val(),
-            code     : $('#code').val(),
-            name     : $('#name').val(),
-            email    : $('#email').val(),
-            howMany  : $('#howMany').val()}, function(data) {
-              if (data['errors'].length > 0) {
-                for (var i = 0; i < data['errors'].length; i++) {
-                  $('#' + data['errors'][i].key).addClass('ui-state-error');
-                }
-              } else {
-                //Her burde vi egentlig legge til div'en i dommen ikke reloaded
-                location.reload(true);
-              }
-            });
-        }
+        'Meld meg på!': postSignup
       }
     });
   });
