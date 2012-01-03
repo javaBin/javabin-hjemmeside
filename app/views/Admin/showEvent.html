@@ -189,7 +189,8 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
       Maks antall : <input type="text" size="3" name="event.participantLimit“" value="${event?.participantLimit}">
       <a href="@{addParticipant()}?eventId=${event?.id}" class="awesome right addparticipant">+</a>
       <a class="awesome right bleste_knapp sendmail"href="@{sendMeetingMail()}?eventId=${event?.id}">Blest om møtet</a>
-      <a href="@{remindParticipants()}?eventId=${event?.id}" class="sendmail awesome right bleste_knapp">Send ut påminnelsesmail til de påmeldte</a></h3>
+      <a href="@{remindParticipants()}?eventId=${event?.id}" class="sendmail awesome right bleste_knapp">Send ut påminnelsesmail til de påmeldte</a>
+      </h3>
     <hr/>
     <p id="particiapantContainer">		
     #{list items:event?.participants, as:'participant'}
@@ -200,6 +201,30 @@ Vin til foreleser(e)  <input type="checkbox" id="event.boughtWine" name="event.b
 	#{if event?.participantCount == 0}
 		Ingen her. INGEN har meldt seg på.<br/><br/>
 	#{/if}
+	#{else}
+	   <h3>Send en oppdatering til de påmeldte:</h3>
+	   <hr/>
+	   <form method="post">
+	       Subject: <input type="text" style="width: 500px;" id="subject" value="Oppdatert info ang. javaBin-møte: &quot;${event?.title}&quot;"/><br/>
+	       <p><textarea id="body" style="width: 100%; height: 200px;">
+Kjære %name%!
+
+Det har skjedd endring av javaBin-møtet "${event?.title}" som du er påmeldt til. 
+
+**** BESKRIV ENDRINGEN HER *****
+
+Vi håper du fremdeles har mulighet til å delta, og trenger i så fall ikke foreta deg noe.
+	           
+Mvh
+javaBin ${event?.location}
+	           	           
+	       </textarea>
+	       </p>
+	       <p>
+            <input type="submit" class="sendmail awesome right send_info" value="Send oppdatering til de påmeldte"/>
+            </p>
+      </form>
+	#{/else}
 </div>
 #{/if}
 

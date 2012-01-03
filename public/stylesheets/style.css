@@ -488,6 +488,11 @@ table.meetings {
 	background-color: darkblue;
 }
 
+.send_info {
+	margin-right: 2px;
+	background-color: darkblue;
+}
+
 .lectureholder {
 	width: 180px;
 }
