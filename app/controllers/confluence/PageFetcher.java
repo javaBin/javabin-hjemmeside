@@ -2,6 +2,7 @@ package controllers.confluence;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
+import org.apache.abdera.model.Collection;
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Link;
 import org.codehaus.httpcache4j.cache.HTTPCache;
@@ -60,8 +61,8 @@ public class PageFetcher {
             if (entry != null) {
                 try {
                     Link selfLink = entry.getSelfLink();
-                    Link replies = entry.getLink("replies");
-                    URI children = replies != null ? replies.getHref().toURI() : null;
+                    Collection collection = entry.getExtension(Collection.class);
+                    URI children = collection != null ? collection.getHref().toURI() : null;
                     return new Page(space, selfLink.getHref().toURI(), new DateTime(entry.getPublished()), entry.getTitle(), entry.getContent(), children);
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
