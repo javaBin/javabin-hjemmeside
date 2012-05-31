@@ -8,7 +8,7 @@ repositories:
 
 #application dependencies
 require:
- - play 1.2.3
+ - play 1.2.4
  - com.google.guava -> guava r09
  - org.codehaus.httpcache4j -> httpcache4j-core 3.3
  - org.codehaus.httpcache4j.resolvers -> resolvers-httpcomponents-httpclient 3.3
