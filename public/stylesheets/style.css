@@ -331,28 +331,27 @@ div.jqi button.jqidefaultbutton {
 	cursor: pointer;
 }
 
-table {
+table.listOldEvents {
 	width: 100%;
     margin-top: 10pt;
-    border: 1pt solid silver;
     margin-left: auto;
     margin-right: auto;
     padding: 0;
     border-collapse: collapse;
 }
 
-tr {
+table.listOldEvents tr {
   background: #F4F4F7;
   border-bottom: 1px solid #eee;
   margin: 10pt;
 
 }
 
-tr:nth-of-type(odd) {
+table.listOldEvents tr:nth-of-type(odd) {
   background: #fafafa;
 }
 
-tr > td {
+table.listOldEvents tr > td {
   padding: 0.5em;
 }
 

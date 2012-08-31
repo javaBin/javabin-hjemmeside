@@ -2,7 +2,7 @@
 #{set title:'tidligere møter' /}
 <div class="lineItemText grid_6">
 <h2>Oslo</h2>	
- <table>
+ <table class="listOldEvents">
     #{list items:osloEvents, as:'event'}
         <tr>
             <td class ="label">${event?.date?.format('dd.MM.yyyy')}</td>
@@ -14,7 +14,7 @@
 </div>
 <div class="lineItemText grid_6">
 <h2>Trondheim</h2>	
- <table>
+ <table class="listOldEvents">
     #{list items:trondheimEvents, as:'event'}
         <tr >
             <td class ="label">${event?.date?.format('dd.MM.yyyy')}</td>
@@ -26,7 +26,7 @@
 <div class="clear"></div>
 <div class="lineItemText grid_6">
 <h2>Stavanger</h2>	
- <table>
+ <table class="listOldEvents">
     #{list items:stavangerEvents, as:'event'}
         <tr>
             <td class ="label">${event?.date?.format('dd.MM.yyyy')}</td>
@@ -37,7 +37,7 @@
 </div>
 <div class="lineItemText grid_6">
 <h2>Bergen</h2>	
-    <table>
+    <table class="listOldEvents">
     #{list items:bergenEvents, as:'event'}
         <tr>
             <td class ="label">${event?.date?.format('dd.MM.yyyy')}</td>
@@ -49,7 +49,7 @@
 <div class="clear"></div>
 <div class="lineItemText grid_6">
 <h2>Sørlandet</h2>
-    <table>
+    <table class="listOldEvents">
     #{list items:sorlandetEvents, as:'event'}
         <tr>
             <td class="label">${event?.date?.format('dd.MM.yyyy')}</td>
