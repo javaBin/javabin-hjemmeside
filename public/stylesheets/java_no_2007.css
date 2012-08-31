@@ -54,16 +54,6 @@ a:link, a:visited {
 	color: #1C5890;
 }
 
-table {
-	border-collapse:separate;
-	border-spacing:0;
-}
-
-caption, th, td {
-	font-weight:normal;
-	text-align:left;
-}
-
 blockquote:before, blockquote:after, q:before, q:after {
 	content:"";
 }
